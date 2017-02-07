@@ -1,0 +1,2 @@
+class UserFlag < ApplicationRecord
+end

@@ -1,0 +1,2 @@
+class ExpertEvidence < ApplicationRecord
+end

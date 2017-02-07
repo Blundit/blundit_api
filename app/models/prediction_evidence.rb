@@ -1,0 +1,2 @@
+class PredictionEvidence < ApplicationRecord
+end

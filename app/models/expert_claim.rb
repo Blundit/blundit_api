@@ -1,0 +1,2 @@
+class ExpertClaim < ApplicationRecord
+end

@@ -1,0 +1,2 @@
+class ExpertFlag < ApplicationRecord
+end

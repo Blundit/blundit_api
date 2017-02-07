@@ -1,0 +1,2 @@
+class PredictionExpert < ApplicationRecord
+end

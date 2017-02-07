@@ -16,6 +16,7 @@ Rails.application.routes.draw do
         resources :prediction_experts
         resources :prediction_evidences
         resources :prediction_votes
+        resources :prediction_flags
       end
 
       resources :claims do
@@ -24,6 +25,7 @@ Rails.application.routes.draw do
         resources :claim_categories
         resources :claim_evidences
         resources :claim_votes
+        resources :claim_flags
       end
 
       resources :categories
@@ -32,6 +34,7 @@ Rails.application.routes.draw do
         resources :expert_categories
         resources :expert_claims
         resources :expert_comments
+        resources :expert_flags
       end
 
       resources :publications do

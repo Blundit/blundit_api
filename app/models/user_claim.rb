@@ -1,0 +1,2 @@
+class UserClaim < ApplicationRecord
+end

@@ -1,0 +1,2 @@
+class PredictionFlag < ApplicationRecord
+end

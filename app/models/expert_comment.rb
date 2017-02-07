@@ -1,0 +1,2 @@
+class ExpertComment < ApplicationRecord
+end

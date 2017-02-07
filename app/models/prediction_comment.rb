@@ -1,0 +1,2 @@
+class PredictionComment < ApplicationRecord
+end

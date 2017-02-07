@@ -1,0 +1,2 @@
+class UserContribution < ApplicationRecord
+end

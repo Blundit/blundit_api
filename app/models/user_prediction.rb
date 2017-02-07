@@ -1,0 +1,2 @@
+class UserPrediction < ApplicationRecord
+end

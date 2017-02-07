@@ -1,0 +1,2 @@
+class PredictionVote < ApplicationRecord
+end

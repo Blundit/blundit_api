@@ -10,7 +10,131 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170206151743) do
+ActiveRecord::Schema.define(version: 20170207150257) do
+
+  create_table "categories", force: :cascade do |t|
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.string   "name"
+    t.text     "description"
+    t.integer  "user_id"
+    t.integer  "claim_id"
+    t.integer  "expert_id"
+    t.integer  "prediction_id"
+  end
+
+  create_table "claim_categories", force: :cascade do |t|
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "claim_id"
+    t.integer  "category_id"
+    t.integer  "user_id"
+  end
+
+  create_table "claim_comments", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "user_id"
+    t.integer  "comment_id"
+    t.integer  "claim_id"
+  end
+
+  create_table "claim_evidences", force: :cascade do |t|
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "claim_id"
+    t.integer  "evidence_id"
+  end
+
+  create_table "claim_experts", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "claim_id"
+    t.integer  "user_id"
+    t.integer  "expert_id"
+  end
+
+  create_table "claim_flags", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "claim_id"
+    t.integer  "flag_id"
+  end
+
+  create_table "claim_votes", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "claim_id"
+    t.integer  "vote_id"
+  end
+
+  create_table "claims", force: :cascade do |t|
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.string   "title"
+    t.text     "description"
+    t.string   "url"
+    t.datetime "added"
+    t.float    "accuracy"
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "user_id"
+    t.string   "title"
+    t.text     "content"
+  end
+
+  create_table "contributions", force: :cascade do |t|
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "user_id"
+    t.text     "description"
+  end
+
+  create_table "evidences", force: :cascade do |t|
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.string   "title"
+    t.string   "url"
+    t.text     "description"
+  end
+
+  create_table "expert_categories", force: :cascade do |t|
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "expert_id"
+    t.integer  "category_id"
+  end
+
+  create_table "expert_claims", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "expert_id"
+    t.integer  "claim_id"
+  end
+
+  create_table "expert_comments", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "expert_id"
+    t.integer  "comment_id"
+  end
+
+  create_table "expert_evidences", force: :cascade do |t|
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "expert_id"
+    t.integer  "evidence_id"
+  end
+
+  create_table "expert_flags", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "expert_id"
+    t.integer  "flag_id"
+  end
 
   create_table "experts", force: :cascade do |t|
     t.datetime "created_at",          null: false
@@ -32,6 +156,112 @@ ActiveRecord::Schema.define(version: 20170206151743) do
     t.datetime "avatar_updated_at"
   end
 
+  create_table "flags", force: :cascade do |t|
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "user_id"
+    t.text     "description"
+    t.text     "url"
+  end
+
+  create_table "prediction_categories", force: :cascade do |t|
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "prediction_id"
+    t.integer  "category_id"
+  end
+
+  create_table "prediction_comments", force: :cascade do |t|
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "prediction_id"
+    t.integer  "comment_id"
+  end
+
+  create_table "prediction_evidences", force: :cascade do |t|
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "prediction_id"
+    t.integer  "evidence_id"
+  end
+
+  create_table "prediction_experts", force: :cascade do |t|
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "prediction_id"
+    t.integer  "expert_id"
+  end
+
+  create_table "prediction_flags", force: :cascade do |t|
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "prediction_id"
+    t.integer  "flag_id"
+  end
+
+  create_table "prediction_votes", force: :cascade do |t|
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "prediction_id"
+    t.integer  "vote_id"
+  end
+
+  create_table "predictions", force: :cascade do |t|
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.string   "title"
+    t.text     "description"
+    t.integer  "status"
+    t.integer  "vote_count"
+    t.integer  "vote_value"
+  end
+
+  create_table "publications", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "user_claims", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "user_id"
+    t.integer  "claim_id"
+  end
+
+  create_table "user_comments", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "user_contributions", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "user_experts", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "user_id"
+    t.integer  "expert_id"
+  end
+
+  create_table "user_flags", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "user_predictions", force: :cascade do |t|
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "user_id"
+    t.integer  "prediction_id"
+  end
+
+  create_table "user_votes", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
@@ -47,6 +277,13 @@ ActiveRecord::Schema.define(version: 20170206151743) do
     t.datetime "updated_at",                          null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "votes", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "user_id"
+    t.integer  "vote"
   end
 
 end

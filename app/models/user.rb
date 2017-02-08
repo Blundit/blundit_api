@@ -22,6 +22,5 @@ class User < ApplicationRecord
   has_many :user_predictions, dependent: :destroy
   has_many :predictions, :through => :user_predictions
 
-  has_many :user_votes, dependent: :destroy
-  has_many :votes, :through => :user_votes
+  has_many :votes
 end

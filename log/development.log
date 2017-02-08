@@ -4071,3 +4071,130 @@ Migrating to MissingFields (20170208145137)
   [1m[36mExpert Load (0.1ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" ORDER BY "experts"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
   [1m[36mPrediction Load (0.2ms)[0m  [1m[34mSELECT "predictions".* FROM "predictions" INNER JOIN "expert_predictions" ON "predictions"."id" = "expert_predictions"."prediction_id" WHERE "expert_predictions"."expert_id" = ?[0m  [["expert_id", 4]]
   [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "votes"[0m
+  [1m[36mPrediction Load (0.5ms)[0m  [1m[34mSELECT  "predictions".* FROM "predictions" ORDER BY "predictions"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mVote Load (0.7ms)[0m  [1m[34mSELECT "votes".* FROM "votes" INNER JOIN "prediction_votes" ON "votes"."id" = "prediction_votes"."vote_id" WHERE "prediction_votes"."prediction_id" = ?[0m  [["prediction_id", 3]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (1.8ms)[0m  [1m[34mSELECT COUNT(*) FROM "votes"[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "votes"[0m
+  [1m[36mVote Load (0.3ms)[0m  [1m[34mSELECT "votes".* FROM "votes"[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+#<ActiveModel::Errors:0x007fdcdea70720 @base=#<Vote id: nil, created_at: nil, updated_at: nil, user_id: 1, vote: 1>, @messages={:claim=>["must exist"], :prediction=>["must exist"]}, @details={:claim=>[{:error=>:blank}], :prediction=>[{:error=>:blank}]}>
+  [1m[36mPrediction Load (0.4ms)[0m  [1m[34mSELECT  "predictions".* FROM "predictions" ORDER BY "predictions"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mPrediction Load (0.5ms)[0m  [1m[34mSELECT  "predictions".* FROM "predictions" ORDER BY "predictions"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mVote Load (0.5ms)[0m  [1m[34mSELECT "votes".* FROM "votes" INNER JOIN "prediction_votes" ON "votes"."id" = "prediction_votes"."vote_id" WHERE "prediction_votes"."prediction_id" = ?[0m  [["prediction_id", 3]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mPrediction Load (0.2ms)[0m  [1m[34mSELECT  "predictions".* FROM "predictions" ORDER BY "predictions"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mVote Load (0.1ms)[0m  [1m[34mSELECT "votes".* FROM "votes" INNER JOIN "prediction_votes" ON "votes"."id" = "prediction_votes"."vote_id" WHERE "prediction_votes"."prediction_id" = ?[0m  [["prediction_id", 3]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mPrediction Load (0.2ms)[0m  [1m[34mSELECT  "predictions".* FROM "predictions" WHERE "predictions"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (2.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "votes"[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mPrediction Load (0.5ms)[0m  [1m[34mSELECT  "predictions".* FROM "predictions" ORDER BY "predictions"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.9ms)[0m  [1m[32mINSERT INTO "votes" ("created_at", "updated_at", "user_id", "vote") VALUES (?, ?, ?, ?)[0m  [["created_at", 2017-02-08 15:51:24 UTC], ["updated_at", 2017-02-08 15:51:24 UTC], ["user_id", 1], ["vote", 1]]
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "prediction_votes" ("created_at", "updated_at", "prediction_id", "vote_id") VALUES (?, ?, ?, ?)[0m  [["created_at", 2017-02-08 15:51:24 UTC], ["updated_at", 2017-02-08 15:51:24 UTC], ["prediction_id", 3], ["vote_id", 1]]
+  [1m[35m (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "votes"[0m
+  [1m[36mVote Load (0.5ms)[0m  [1m[34mSELECT  "votes".* FROM "votes" ORDER BY "votes"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "prediction_votes"[0m
+  [1m[36mPredictionVote Load (0.2ms)[0m  [1m[34mSELECT  "prediction_votes".* FROM "prediction_votes" ORDER BY "prediction_votes"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mPredictionVote Load (0.1ms)[0m  [1m[34mSELECT  "prediction_votes".* FROM "prediction_votes" ORDER BY "prediction_votes"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mPrediction Load (0.2ms)[0m  [1m[34mSELECT  "predictions".* FROM "predictions" WHERE "predictions"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mPredictionVote Load (0.1ms)[0m  [1m[34mSELECT  "prediction_votes".* FROM "prediction_votes" ORDER BY "prediction_votes"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mVote Load (0.2ms)[0m  [1m[34mSELECT  "votes".* FROM "votes" WHERE "votes"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mPredictionVote Load (0.1ms)[0m  [1m[34mSELECT  "prediction_votes".* FROM "prediction_votes" ORDER BY "prediction_votes"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mVote Load (0.1ms)[0m  [1m[34mSELECT  "votes".* FROM "votes" WHERE "votes"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."vote_id" = ? LIMIT ?[0m  [["vote_id", 1], ["LIMIT", 1]]
+  [1m[36mPredictionVote Load (0.1ms)[0m  [1m[34mSELECT  "prediction_votes".* FROM "prediction_votes" ORDER BY "prediction_votes"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mVote Load (0.1ms)[0m  [1m[34mSELECT  "votes".* FROM "votes" WHERE "votes"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mVote Load (0.1ms)[0m  [1m[34mSELECT  "votes".* FROM "votes" ORDER BY "votes"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."vote_id" = ? LIMIT ?[0m  [["vote_id", 1], ["LIMIT", 1]]
+  [1m[36mVote Load (0.2ms)[0m  [1m[34mSELECT  "votes".* FROM "votes" ORDER BY "votes"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mVote Load (0.1ms)[0m  [1m[34mSELECT  "votes".* FROM "votes" ORDER BY "votes"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" INNER JOIN "user_votes" ON "users"."id" = "user_votes"."user_id" WHERE "user_votes"."vote_id" = ? LIMIT ?[0m  [["vote_id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" ORDER BY "users"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mVote Load (0.1ms)[0m  [1m[34mSELECT  "votes".* FROM "votes" ORDER BY "votes"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mVote Load (0.1ms)[0m  [1m[34mSELECT  "votes".* FROM "votes" ORDER BY "votes"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mUserVote Load (0.2ms)[0m  [1m[34mSELECT  "user_votes".* FROM "user_votes" WHERE "user_votes"."vote_id" = ? LIMIT ?[0m  [["vote_id", 1], ["LIMIT", 1]]
+  [1m[36mUserVote Load (0.1ms)[0m  [1m[34mSELECT  "user_votes".* FROM "user_votes" ORDER BY "user_votes"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mVote Load (0.1ms)[0m  [1m[34mSELECT  "votes".* FROM "votes" ORDER BY "votes"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mVote Load (0.1ms)[0m  [1m[34mSELECT  "votes".* FROM "votes" ORDER BY "votes"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" INNER JOIN "user_votes" ON "users"."id" = "user_votes"."user_id" WHERE "user_votes"."id" = ? LIMIT ?[0m  [["id", nil], ["LIMIT", 1]]
+  [1m[36mVote Load (0.1ms)[0m  [1m[34mSELECT  "votes".* FROM "votes" ORDER BY "votes"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mVote Load (0.2ms)[0m  [1m[34mSELECT  "votes".* FROM "votes" ORDER BY "votes"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mVote Load (0.1ms)[0m  [1m[34mSELECT  "votes".* FROM "votes" ORDER BY "votes"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" ORDER BY "users"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mVote Load (0.2ms)[0m  [1m[34mSELECT "votes".* FROM "votes" INNER JOIN "user_votes" ON "votes"."id" = "user_votes"."vote_id" WHERE "user_votes"."user_id" = ?[0m  [["user_id", 1]]
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" ORDER BY "users"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mVote Load (0.1ms)[0m  [1m[34mSELECT "votes".* FROM "votes" WHERE "votes"."user_id" = ?[0m  [["user_id", 1]]
+  [1m[36mVote Load (0.2ms)[0m  [1m[34mSELECT  "votes".* FROM "votes" ORDER BY "votes"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mPrediction Load (0.1ms)[0m  [1m[34mSELECT  "predictions".* FROM "predictions" ORDER BY "predictions"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mVote Load (0.2ms)[0m  [1m[34mSELECT  "votes".* FROM "votes" INNER JOIN "prediction_votes" ON "votes"."id" = "prediction_votes"."vote_id" WHERE "prediction_votes"."prediction_id" = ? ORDER BY "votes"."id" DESC LIMIT ?[0m  [["prediction_id", 3], ["LIMIT", 1]]
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mPrediction Load (0.2ms)[0m  [1m[34mSELECT  "predictions".* FROM "predictions" ORDER BY "predictions"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mVote Load (0.3ms)[0m  [1m[34mSELECT  "votes".* FROM "votes" INNER JOIN "prediction_votes" ON "votes"."id" = "prediction_votes"."vote_id" WHERE "prediction_votes"."prediction_id" = ? ORDER BY "votes"."id" DESC LIMIT ?[0m  [["prediction_id", 3], ["LIMIT", 1]]
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mVote Load (0.1ms)[0m  [1m[34mSELECT  "votes".* FROM "votes" ORDER BY "votes"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mPrediction Load (0.2ms)[0m  [1m[34mSELECT  "predictions".* FROM "predictions" INNER JOIN "prediction_votes" ON "predictions"."id" = "prediction_votes"."prediction_id" WHERE "prediction_votes"."vote_id" = ? LIMIT ?[0m  [["vote_id", 1], ["LIMIT", 1]]
+  [1m[36mClaim Load (0.2ms)[0m  [1m[34mSELECT  "claims".* FROM "claims" INNER JOIN "claim_votes" ON "claims"."id" = "claim_votes"."claim_id" WHERE "claim_votes"."vote_id" = ? LIMIT ?[0m  [["vote_id", 1], ["LIMIT", 1]]
+  [1m[36mVote Load (0.1ms)[0m  [1m[34mSELECT  "votes".* FROM "votes" ORDER BY "votes"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mClaim Load (0.2ms)[0m  [1m[34mSELECT  "claims".* FROM "claims" INNER JOIN "claim_votes" ON "claims"."id" = "claim_votes"."claim_id" WHERE "claim_votes"."vote_id" = ? LIMIT ?[0m  [["vote_id", 1], ["LIMIT", 1]]
+  [1m[36mPrediction Load (0.2ms)[0m  [1m[34mSELECT  "predictions".* FROM "predictions" INNER JOIN "prediction_votes" ON "predictions"."id" = "prediction_votes"."prediction_id" WHERE "prediction_votes"."vote_id" = ? LIMIT ?[0m  [["vote_id", 1], ["LIMIT", 1]]
+  [1m[36mVote Load (0.1ms)[0m  [1m[34mSELECT  "votes".* FROM "votes" ORDER BY "votes"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mClaim Load (0.2ms)[0m  [1m[34mSELECT  "claims".* FROM "claims" INNER JOIN "claim_votes" ON "claims"."id" = "claim_votes"."claim_id" WHERE "claim_votes"."vote_id" = ? LIMIT ?[0m  [["vote_id", 1], ["LIMIT", 1]]
+  [1m[36mPrediction Load (0.1ms)[0m  [1m[34mSELECT  "predictions".* FROM "predictions" INNER JOIN "prediction_votes" ON "predictions"."id" = "prediction_votes"."prediction_id" WHERE "prediction_votes"."vote_id" = ? LIMIT ?[0m  [["vote_id", 1], ["LIMIT", 1]]
+  [1m[36mClaim Load (0.2ms)[0m  [1m[34mSELECT  "claims".* FROM "claims" ORDER BY "claims"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "votes" ("created_at", "updated_at", "user_id", "vote") VALUES (?, ?, ?, ?)[0m  [["created_at", 2017-02-08 15:58:53 UTC], ["updated_at", 2017-02-08 15:58:53 UTC], ["user_id", 1], ["vote", 0]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "claim_votes" ("created_at", "updated_at", "claim_id", "vote_id") VALUES (?, ?, ?, ?)[0m  [["created_at", 2017-02-08 15:58:53 UTC], ["updated_at", 2017-02-08 15:58:53 UTC], ["claim_id", 2], ["vote_id", 2]]
+  [1m[35m (2.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mVote Load (0.3ms)[0m  [1m[34mSELECT "votes".* FROM "votes" INNER JOIN "claim_votes" ON "votes"."id" = "claim_votes"."vote_id" WHERE "claim_votes"."claim_id" = ?[0m  [["claim_id", 2]]
+  [1m[36mVote Load (0.1ms)[0m  [1m[34mSELECT  "votes".* FROM "votes" ORDER BY "votes"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mVote Load (0.2ms)[0m  [1m[34mSELECT  "votes".* FROM "votes" ORDER BY "votes"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mClaim Load (0.1ms)[0m  [1m[34mSELECT  "claims".* FROM "claims" INNER JOIN "claim_votes" ON "claims"."id" = "claim_votes"."claim_id" WHERE "claim_votes"."vote_id" = ? LIMIT ?[0m  [["vote_id", 1], ["LIMIT", 1]]
+  [1m[36mPrediction Load (0.1ms)[0m  [1m[34mSELECT  "predictions".* FROM "predictions" INNER JOIN "prediction_votes" ON "predictions"."id" = "prediction_votes"."prediction_id" WHERE "prediction_votes"."vote_id" = ? LIMIT ?[0m  [["vote_id", 1], ["LIMIT", 1]]
+  [1m[36mVote Load (0.1ms)[0m  [1m[34mSELECT  "votes".* FROM "votes" ORDER BY "votes"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mClaim Load (0.1ms)[0m  [1m[34mSELECT  "claims".* FROM "claims" INNER JOIN "claim_votes" ON "claims"."id" = "claim_votes"."claim_id" WHERE "claim_votes"."vote_id" = ? LIMIT ?[0m  [["vote_id", 2], ["LIMIT", 1]]
+  [1m[36mVote Load (0.1ms)[0m  [1m[34mSELECT  "votes".* FROM "votes" ORDER BY "votes"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mClaim Load (0.2ms)[0m  [1m[34mSELECT  "claims".* FROM "claims" INNER JOIN "claim_votes" ON "claims"."id" = "claim_votes"."claim_id" WHERE "claim_votes"."vote_id" = ? LIMIT ?[0m  [["vote_id", 2], ["LIMIT", 1]]
+  [1m[36mVote Load (0.2ms)[0m  [1m[34mSELECT  "votes".* FROM "votes" ORDER BY "votes"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mClaim Load (0.1ms)[0m  [1m[34mSELECT  "claims".* FROM "claims" INNER JOIN "claim_votes" ON "claims"."id" = "claim_votes"."claim_id" WHERE "claim_votes"."vote_id" = ? LIMIT ?[0m  [["vote_id", 1], ["LIMIT", 1]]
+  [1m[36mPrediction Load (0.3ms)[0m  [1m[34mSELECT  "predictions".* FROM "predictions" INNER JOIN "prediction_votes" ON "predictions"."id" = "prediction_votes"."prediction_id" WHERE "prediction_votes"."vote_id" = ? LIMIT ?[0m  [["vote_id", 1], ["LIMIT", 1]]
+  [1m[36mVote Load (0.1ms)[0m  [1m[34mSELECT  "votes".* FROM "votes" ORDER BY "votes"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mClaim Load (0.2ms)[0m  [1m[34mSELECT  "claims".* FROM "claims" INNER JOIN "claim_votes" ON "claims"."id" = "claim_votes"."claim_id" WHERE "claim_votes"."vote_id" = ? LIMIT ?[0m  [["vote_id", 1], ["LIMIT", 1]]
+  [1m[36mPrediction Load (0.1ms)[0m  [1m[34mSELECT  "predictions".* FROM "predictions" INNER JOIN "prediction_votes" ON "predictions"."id" = "prediction_votes"."prediction_id" WHERE "prediction_votes"."vote_id" = ? LIMIT ?[0m  [["vote_id", 1], ["LIMIT", 1]]
+  [1m[36mVote Load (0.2ms)[0m  [1m[34mSELECT  "votes".* FROM "votes" ORDER BY "votes"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mClaim Load (0.1ms)[0m  [1m[34mSELECT  "claims".* FROM "claims" INNER JOIN "claim_votes" ON "claims"."id" = "claim_votes"."claim_id" WHERE "claim_votes"."vote_id" = ? LIMIT ?[0m  [["vote_id", 2], ["LIMIT", 1]]
+  [1m[36mVote Load (0.7ms)[0m  [1m[34mSELECT "votes".* FROM "votes" WHERE (claim_id IS NOT NULL)[0m
+  [1m[36mClaimVote Load (0.2ms)[0m  [1m[34mSELECT "claim_votes".* FROM "claim_votes"[0m
+  [1m[36mClaimVote Load (0.2ms)[0m  [1m[34mSELECT "claim_votes".* FROM "claim_votes"[0m
+  [1m[36mClaimVote Load (0.8ms)[0m  [1m[34mSELECT "claim_votes".* FROM "claim_votes"[0m
+  [1m[36mClaimVote Load (0.2ms)[0m  [1m[34mSELECT "claim_votes".* FROM "claim_votes"[0m
+  [1m[36mClaimVote Load (0.2ms)[0m  [1m[34mSELECT "claim_votes".* FROM "claim_votes"[0m
+  [1m[36mVote Load (0.5ms)[0m  [1m[34mSELECT  "votes".* FROM "votes" WHERE "votes"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mClaimVote Load (0.6ms)[0m  [1m[34mSELECT "claim_votes".* FROM "claim_votes"[0m
+  [1m[36mVote Load (0.4ms)[0m  [1m[34mSELECT  "votes".* FROM "votes" WHERE "votes"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mPredictionVote Load (0.5ms)[0m  [1m[34mSELECT "prediction_votes".* FROM "prediction_votes"[0m
+  [1m[36mVote Load (0.2ms)[0m  [1m[34mSELECT  "votes".* FROM "votes" WHERE "votes"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]

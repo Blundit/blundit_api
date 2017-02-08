@@ -1,4 +1,4 @@
 class ClaimExpert < ApplicationRecord
-    has_one :claim
-    has_one :expert
+    belongs_to :claim
+    belongs_to :expert
 end

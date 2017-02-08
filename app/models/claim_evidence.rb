@@ -1,4 +1,4 @@
 class ClaimEvidence < ApplicationRecord
-    has_one :claim
-    has_one :evidence
+    belongs_to :claim
+    belongs_to :evidence
 end

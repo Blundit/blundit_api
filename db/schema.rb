@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170207150257) do
+ActiveRecord::Schema.define(version: 20170208145137) do
 
   create_table "categories", force: :cascade do |t|
     t.datetime "created_at",    null: false
@@ -136,6 +136,13 @@ ActiveRecord::Schema.define(version: 20170207150257) do
     t.integer  "flag_id"
   end
 
+  create_table "expert_predictions", force: :cascade do |t|
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "expert_id"
+    t.integer  "prediction_id"
+  end
+
   create_table "experts", force: :cascade do |t|
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
@@ -231,11 +238,15 @@ ActiveRecord::Schema.define(version: 20170207150257) do
   create_table "user_comments", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "user_id"
+    t.integer  "comment_id"
   end
 
   create_table "user_contributions", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.integer  "user_id"
+    t.integer  "contribution_id"
   end
 
   create_table "user_experts", force: :cascade do |t|
@@ -248,6 +259,8 @@ ActiveRecord::Schema.define(version: 20170207150257) do
   create_table "user_flags", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "user_id"
+    t.integer  "flag_id"
   end
 
   create_table "user_predictions", force: :cascade do |t|
@@ -260,6 +273,8 @@ ActiveRecord::Schema.define(version: 20170207150257) do
   create_table "user_votes", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "user_id"
+    t.integer  "vote_id"
   end
 
   create_table "users", force: :cascade do |t|

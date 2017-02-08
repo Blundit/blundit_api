@@ -1,4 +1,4 @@
 class ExpertCategory < ApplicationRecord
-    has_one :expert
-    has_one :category
+    belongs_to :expert
+    belongs_to :category
 end

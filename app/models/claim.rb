@@ -1,4 +1,6 @@
 class Claim < ApplicationRecord
+    has_many :contributions
+    
     has_many :claim_experts, dependent: :destroy
     has_many :experts, :through => :claim_experts
 

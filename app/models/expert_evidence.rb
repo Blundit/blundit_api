@@ -1,2 +1,0 @@
-class ExpertEvidence < ApplicationRecord
-end

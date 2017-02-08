@@ -1,4 +1,4 @@
 class ClaimFlag < ApplicationRecord
-    has_one :claim
-    has_one :flag
+    belongs_to :claim
+    belongs_to :flag
 end

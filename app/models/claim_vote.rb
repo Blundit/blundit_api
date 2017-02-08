@@ -1,4 +1,4 @@
 class ClaimVote < ApplicationRecord
-    has_one :claim
-    has_one :vote
+    belongs_to :claim
+    belongs_to :vote
 end

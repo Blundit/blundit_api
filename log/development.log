@@ -3892,3 +3892,182 @@ Migrating to AddClaimidToClaimComments (20170207150257)
   [1m[36mEvidence Load (0.5ms)[0m  [1m[34mSELECT "evidences".* FROM "evidences" INNER JOIN "claim_evidences" ON "evidences"."claim_evidence_id" = "claim_evidences"."id" WHERE "claim_evidences"."claim_id" = ?[0m  [["claim_id", 1]]
   [1m[36mCategory Load (0.4ms)[0m  [1m[34mSELECT "categories".* FROM "categories" INNER JOIN "claim_categories" ON "categories"."claim_category_id" = "claim_categories"."id" WHERE "claim_categories"."claim_id" = ?[0m  [["claim_id", 1]]
   [1m[36mCategory Load (0.6ms)[0m  [1m[34mSELECT "categories".* FROM "categories" INNER JOIN "claim_categories" ON "categories"."claim_category_id" = "claim_categories"."id" WHERE "claim_categories"."claim_id" = ?[0m  [["claim_id", 1]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to AddPredicitionsToExperts (20170208140635)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.8ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170208140635"]]
+  [1m[35m (1.3ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateExpertPredictions (20170208140656)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE TABLE "expert_predictions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "expert_id" integer, "prediction_id" integer)[0m
+  [1m[35mSQL (1.6ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170208140656"]]
+  [1m[35m (1.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", :environment], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_email' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.2ms)[0m  [1m[32mINSERT INTO "claims" ("created_at", "updated_at", "title") VALUES (?, ?, ?)[0m  [["created_at", 2017-02-08 14:34:03 UTC], ["updated_at", 2017-02-08 14:34:03 UTC], ["title", "Test Claim"]]
+  [1m[35m (1.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mCategory Load (0.6ms)[0m  [1m[34mSELECT "categories".* FROM "categories" INNER JOIN "claim_categories" ON "categories"."claim_category_id" = "claim_categories"."id" WHERE "claim_categories"."claim_id" = ?[0m  [["claim_id", 2]]
+  [1m[36mComment Load (3.6ms)[0m  [1m[34mSELECT "comments".* FROM "comments" INNER JOIN "claim_comments" ON "comments"."claim_comment_id" = "claim_comments"."id" WHERE "claim_comments"."claim_id" = ?[0m  [["claim_id", 2]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (2.0ms)[0m  [1m[32mINSERT INTO "experts" ("created_at", "updated_at", "name") VALUES (?, ?, ?)[0m  [["created_at", 2017-02-08 14:35:06 UTC], ["updated_at", 2017-02-08 14:35:06 UTC], ["name", "Expert"]]
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mClaim Load (0.3ms)[0m  [1m[34mSELECT "claims".* FROM "claims" INNER JOIN "expert_claims" ON "claims"."expert_claim_id" = "expert_claims"."id" WHERE "expert_claims"."expert_id" = ?[0m  [["expert_id", 4]]
+  [1m[36mCategory Load (0.4ms)[0m  [1m[34mSELECT "categories".* FROM "categories" INNER JOIN "expert_categories" ON "categories"."expert_category_id" = "expert_categories"."id" WHERE "expert_categories"."expert_id" = ?[0m  [["expert_id", 4]]
+  [1m[36mComment Load (0.4ms)[0m  [1m[34mSELECT "comments".* FROM "comments" INNER JOIN "expert_comments" ON "comments"."expert_comment_id" = "expert_comments"."id" WHERE "expert_comments"."expert_id" = ?[0m  [["expert_id", 4]]
+  [1m[36mExpert Load (0.2ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" ORDER BY "experts"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mCategory Load (0.6ms)[0m  [1m[34mSELECT "categories".* FROM "categories" INNER JOIN "expert_categories" ON "categories"."expert_category_id" = "expert_categories"."id" WHERE "expert_categories"."expert_id" = ?[0m  [["expert_id", 4]]
+  [1m[36mExpert Load (0.1ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" ORDER BY "experts"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mExpert Load (0.6ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" ORDER BY "experts"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mCategory Load (0.4ms)[0m  [1m[34mSELECT "categories".* FROM "categories" INNER JOIN "expert_categories" ON "categories"."expert_category_id" = "expert_categories"."id" WHERE "expert_categories"."expert_id" = ?[0m  [["expert_id", 4]]
+  [1m[36mExpertCategory Load (1.7ms)[0m  [1m[34mSELECT "expert_categories".* FROM "expert_categories" WHERE "expert_categories"."expert_id" = ?[0m  [["expert_id", 4]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (2.4ms)[0m  [1m[32mINSERT INTO "categories" ("created_at", "updated_at", "name") VALUES (?, ?, ?)[0m  [["created_at", 2017-02-08 14:40:35 UTC], ["updated_at", 2017-02-08 14:40:35 UTC], ["name", "Cat"]]
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "expert_categories"[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "expert_categories" ("created_at", "updated_at", "expert_id", "category_id") VALUES (?, ?, ?, ?)[0m  [["created_at", 2017-02-08 14:41:25 UTC], ["updated_at", 2017-02-08 14:41:25 UTC], ["expert_id", 4], ["category_id", 1]]
+  [1m[35mSQL (0.2ms)[0m  [1m[33mUPDATE "experts" SET "updated_at" = ?, "expert_category_id" = ? WHERE "experts"."id" = ?[0m  [["updated_at", 2017-02-08 14:41:25 UTC], ["expert_category_id", 1], ["id", 4]]
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "expert_categories" ("created_at", "updated_at", "expert_id", "category_id") VALUES (?, ?, ?, ?)[0m  [["created_at", 2017-02-08 14:41:25 UTC], ["updated_at", 2017-02-08 14:41:25 UTC], ["expert_id", 4], ["category_id", 1]]
+  [1m[35mSQL (0.2ms)[0m  [1m[33mUPDATE "experts" SET "updated_at" = ?, "expert_category_id" = ? WHERE "experts"."id" = ?[0m  [["updated_at", 2017-02-08 14:41:25 UTC], ["expert_category_id", 2], ["id", 4]]
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "expert_categories"[0m
+  [1m[36mExpertCategory Load (0.2ms)[0m  [1m[34mSELECT "expert_categories".* FROM "expert_categories"[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "expert_categories" WHERE "expert_categories"."expert_id" = ?[0m  [["expert_id", 4]]
+  [1m[36mExpert Load (0.2ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" ORDER BY "experts"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mExpertCategory Load (0.1ms)[0m  [1m[34mSELECT "expert_categories".* FROM "expert_categories" WHERE "expert_categories"."expert_id" = ?[0m  [["expert_id", 4]]
+  [1m[36mCategory Load (0.2ms)[0m  [1m[34mSELECT "categories".* FROM "categories" INNER JOIN "expert_categories" ON "categories"."id" = "expert_categories"."category_id" WHERE "expert_categories"."expert_id" = ?[0m  [["expert_id", 4]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "categories" INNER JOIN "expert_categories" ON "categories"."id" = "expert_categories"."category_id" WHERE "expert_categories"."expert_id" = ?[0m  [["expert_id", 4]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[33mUPDATE "categories" SET "updated_at" = ?, "name" = ? WHERE "categories"."id" = ?[0m  [["updated_at", 2017-02-08 14:43:38 UTC], ["name", "Cat 2"], ["id", 1]]
+  [1m[35m (2.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mExpert Load (0.3ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mCategory Load (0.1ms)[0m  [1m[34mSELECT "categories".* FROM "categories" INNER JOIN "expert_categories" ON "categories"."id" = "expert_categories"."category_id" WHERE "expert_categories"."expert_id" = ?[0m  [["expert_id", 4]]
+  [1m[36mExpertCategory Load (0.2ms)[0m  [1m[34mSELECT  "expert_categories".* FROM "expert_categories" WHERE "expert_categories"."expert_id" = ? ORDER BY "expert_categories"."id" DESC LIMIT ?[0m  [["expert_id", 4], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[31mDELETE FROM "expert_categories" WHERE "expert_categories"."id" = ?[0m  [["id", 2]]
+  [1m[35m (2.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mExpertCategory Load (0.2ms)[0m  [1m[34mSELECT "expert_categories".* FROM "expert_categories" WHERE "expert_categories"."expert_id" = ?[0m  [["expert_id", 4]]
+  [1m[36mExpert Load (0.1ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mCategory Load (0.1ms)[0m  [1m[34mSELECT "categories".* FROM "categories" INNER JOIN "expert_categories" ON "categories"."id" = "expert_categories"."category_id" WHERE "expert_categories"."expert_id" = ?[0m  [["expert_id", 4]]
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" ORDER BY "users"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mComment Load (0.3ms)[0m  [1m[34mSELECT "comments".* FROM "comments" INNER JOIN "user_comments" ON "comments"."id" = "user_comments"."comment_id" WHERE "user_comments"."user_id" = ?[0m  [["user_id", 1]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to MissingFields (20170208145137)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.9ms)[0m  [1m[35mALTER TABLE "user_contributions" ADD "user_id" integer[0m
+  [1m[35m (0.2ms)[0m  [1m[35mALTER TABLE "user_contributions" ADD "contribution_id" integer[0m
+  [1m[35m (0.2ms)[0m  [1m[35mALTER TABLE "user_comments" ADD "user_id" integer[0m
+  [1m[35m (0.2ms)[0m  [1m[35mALTER TABLE "user_comments" ADD "comment_id" integer[0m
+  [1m[35m (0.2ms)[0m  [1m[35mALTER TABLE "user_flags" ADD "user_id" integer[0m
+  [1m[35m (0.2ms)[0m  [1m[35mALTER TABLE "user_flags" ADD "flag_id" integer[0m
+  [1m[35m (0.2ms)[0m  [1m[35mALTER TABLE "user_votes" ADD "user_id" integer[0m
+  [1m[35m (0.2ms)[0m  [1m[35mALTER TABLE "user_votes" ADD "vote_id" integer[0m
+  [1m[35mSQL (1.9ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170208145137"]]
+  [1m[35m (1.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.5ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", :environment], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_email' AND type='index'
+[0m
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" ORDER BY "users"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mComment Load (0.3ms)[0m  [1m[34mSELECT "comments".* FROM "comments" INNER JOIN "user_comments" ON "comments"."id" = "user_comments"."comment_id" WHERE "user_comments"."user_id" = ?[0m  [["user_id", 1]]
+  [1m[36mVote Load (0.2ms)[0m  [1m[34mSELECT "votes".* FROM "votes" INNER JOIN "user_votes" ON "votes"."id" = "user_votes"."vote_id" WHERE "user_votes"."user_id" = ?[0m  [["user_id", 1]]
+  [1m[36mPrediction Load (0.2ms)[0m  [1m[34mSELECT "predictions".* FROM "predictions" INNER JOIN "user_predictions" ON "predictions"."id" = "user_predictions"."prediction_id" WHERE "user_predictions"."user_id" = ?[0m  [["user_id", 1]]
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" ORDER BY "users"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mClaim Load (0.3ms)[0m  [1m[34mSELECT "claims".* FROM "claims" INNER JOIN "user_claims" ON "claims"."id" = "user_claims"."claim_id" WHERE "user_claims"."user_id" = ?[0m  [["user_id", 1]]
+  [1m[36mComment Load (0.1ms)[0m  [1m[34mSELECT "comments".* FROM "comments" INNER JOIN "user_comments" ON "comments"."id" = "user_comments"."comment_id" WHERE "user_comments"."user_id" = ?[0m  [["user_id", 1]]
+  [1m[36mContribution Load (0.1ms)[0m  [1m[34mSELECT "contributions".* FROM "contributions" INNER JOIN "user_contributions" ON "contributions"."id" = "user_contributions"."contribution_id" WHERE "user_contributions"."user_id" = ?[0m  [["user_id", 1]]
+  [1m[36mExpert Load (0.2ms)[0m  [1m[34mSELECT "experts".* FROM "experts" INNER JOIN "user_experts" ON "experts"."id" = "user_experts"."expert_id" WHERE "user_experts"."user_id" = ?[0m  [["user_id", 1]]
+  [1m[36mFlag Load (0.1ms)[0m  [1m[34mSELECT "flags".* FROM "flags" INNER JOIN "user_flags" ON "flags"."id" = "user_flags"."flag_id" WHERE "user_flags"."user_id" = ?[0m  [["user_id", 1]]
+  [1m[36mPrediction Load (0.2ms)[0m  [1m[34mSELECT "predictions".* FROM "predictions" INNER JOIN "user_predictions" ON "predictions"."id" = "user_predictions"."prediction_id" WHERE "user_predictions"."user_id" = ?[0m  [["user_id", 1]]
+  [1m[36mVote Load (0.1ms)[0m  [1m[34mSELECT "votes".* FROM "votes" INNER JOIN "user_votes" ON "votes"."id" = "user_votes"."vote_id" WHERE "user_votes"."user_id" = ?[0m  [["user_id", 1]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "predictions"[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "predictions" ("created_at", "updated_at", "title") VALUES (?, ?, ?)[0m  [["created_at", 2017-02-08 15:00:09 UTC], ["updated_at", 2017-02-08 15:00:09 UTC], ["title", "Prediction 1"]]
+  [1m[35m (2.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "predictions"[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "predictions" ("created_at", "updated_at", "title") VALUES (?, ?, ?)[0m  [["created_at", 2017-02-08 15:00:30 UTC], ["updated_at", 2017-02-08 15:00:30 UTC], ["title", "Prediction 2"]]
+  [1m[35m (2.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "predictions"[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "predictions" ("created_at", "updated_at", "title") VALUES (?, ?, ?)[0m  [["created_at", 2017-02-08 15:00:56 UTC], ["updated_at", 2017-02-08 15:00:56 UTC], ["title", "Prediction 3"]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "user_predictions" ("created_at", "updated_at", "user_id", "prediction_id") VALUES (?, ?, ?, ?)[0m  [["created_at", 2017-02-08 15:00:56 UTC], ["updated_at", 2017-02-08 15:00:56 UTC], ["user_id", 1], ["prediction_id", 3]]
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mPrediction Load (0.2ms)[0m  [1m[34mSELECT  "predictions".* FROM "predictions" ORDER BY "predictions"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mPrediction Load (0.2ms)[0m  [1m[34mSELECT  "predictions".* FROM "predictions" ORDER BY "predictions"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mPrediction Load (0.1ms)[0m  [1m[34mSELECT  "predictions".* FROM "predictions" ORDER BY "predictions"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mComment Load (0.2ms)[0m  [1m[34mSELECT "comments".* FROM "comments" INNER JOIN "prediction_comments" ON "comments"."id" = "prediction_comments"."comment_id" WHERE "prediction_comments"."prediction_id" = ?[0m  [["prediction_id", 1]]
+  [1m[36mEvidence Load (0.2ms)[0m  [1m[34mSELECT "evidences".* FROM "evidences" INNER JOIN "prediction_evidences" ON "evidences"."id" = "prediction_evidences"."evidence_id" WHERE "prediction_evidences"."prediction_id" = ?[0m  [["prediction_id", 1]]
+  [1m[36mExpert Load (0.2ms)[0m  [1m[34mSELECT "experts".* FROM "experts" INNER JOIN "prediction_experts" ON "experts"."id" = "prediction_experts"."expert_id" WHERE "prediction_experts"."prediction_id" = ?[0m  [["prediction_id", 1]]
+  [1m[36mVote Load (0.1ms)[0m  [1m[34mSELECT "votes".* FROM "votes" INNER JOIN "prediction_votes" ON "votes"."id" = "prediction_votes"."vote_id" WHERE "prediction_votes"."prediction_id" = ?[0m  [["prediction_id", 1]]
+  [1m[36mPredictionCategory Load (0.1ms)[0m  [1m[34mSELECT "prediction_categories".* FROM "prediction_categories" WHERE "prediction_categories"."prediction_id" = ?[0m  [["prediction_id", 1]]
+  [1m[36mPrediction Load (0.1ms)[0m  [1m[34mSELECT  "predictions".* FROM "predictions" ORDER BY "predictions"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mPrediction Load (0.2ms)[0m  [1m[34mSELECT  "predictions".* FROM "predictions" ORDER BY "predictions"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mCategory Load (0.6ms)[0m  [1m[34mSELECT "categories".* FROM "categories" INNER JOIN "prediction_categories" ON "categories"."id" = "prediction_categories"."category_id" WHERE "prediction_categories"."prediction_id" = ?[0m  [["prediction_id", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "categories"[0m
+  [1m[36mCategory Load (0.2ms)[0m  [1m[34mSELECT  "categories".* FROM "categories" ORDER BY "categories"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mCategory Load (0.1ms)[0m  [1m[34mSELECT  "categories".* FROM "categories" ORDER BY "categories"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mExpert Load (0.1ms)[0m  [1m[34mSELECT "experts".* FROM "experts" INNER JOIN "expert_categories" ON "experts"."id" = "expert_categories"."expert_id" WHERE "expert_categories"."category_id" = ?[0m  [["category_id", 1]]
+  [1m[36mClaim Load (0.2ms)[0m  [1m[34mSELECT  "claims".* FROM "claims" ORDER BY "claims"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mComment Load (0.1ms)[0m  [1m[34mSELECT "comments".* FROM "comments" INNER JOIN "claim_comments" ON "comments"."id" = "claim_comments"."comment_id" WHERE "claim_comments"."claim_id" = ?[0m  [["claim_id", 2]]
+  [1m[36mClaim Load (0.1ms)[0m  [1m[34mSELECT  "claims".* FROM "claims" ORDER BY "claims"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mCategory Load (0.2ms)[0m  [1m[34mSELECT "categories".* FROM "categories" INNER JOIN "claim_categories" ON "categories"."id" = "claim_categories"."category_id" WHERE "claim_categories"."claim_id" = ?[0m  [["claim_id", 2]]
+  [1m[36mEvidence Load (0.1ms)[0m  [1m[34mSELECT  "evidences".* FROM "evidences" ORDER BY "evidences"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mEvidence Load (0.2ms)[0m  [1m[34mSELECT "evidences".* FROM "evidences" INNER JOIN "claim_evidences" ON "evidences"."id" = "claim_evidences"."evidence_id" WHERE "claim_evidences"."claim_id" = ?[0m  [["claim_id", 2]]
+  [1m[36mExpert Load (0.1ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" ORDER BY "experts"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mCategory Load (0.2ms)[0m  [1m[34mSELECT "categories".* FROM "categories" INNER JOIN "expert_categories" ON "categories"."id" = "expert_categories"."category_id" WHERE "expert_categories"."expert_id" = ?[0m  [["expert_id", 4]]
+  [1m[36mClaim Load (0.2ms)[0m  [1m[34mSELECT "claims".* FROM "claims" INNER JOIN "expert_claims" ON "claims"."id" = "expert_claims"."claim_id" WHERE "expert_claims"."expert_id" = ?[0m  [["expert_id", 4]]
+  [1m[36mComment Load (0.2ms)[0m  [1m[34mSELECT "comments".* FROM "comments" INNER JOIN "expert_comments" ON "comments"."id" = "expert_comments"."comment_id" WHERE "expert_comments"."expert_id" = ?[0m  [["expert_id", 4]]
+  [1m[36mExpert Load (0.3ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" ORDER BY "experts"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mPrediction Load (0.2ms)[0m  [1m[34mSELECT "predictions".* FROM "predictions" INNER JOIN "expert_predictions" ON "predictions"."id" = "expert_predictions"."prediction_id" WHERE "expert_predictions"."expert_id" = ?[0m  [["expert_id", 4]]
+  [1m[36mExpert Load (0.2ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" ORDER BY "experts"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mFlag Load (0.2ms)[0m  [1m[34mSELECT "flags".* FROM "flags" INNER JOIN "expert_flags" ON "flags"."id" = "expert_flags"."flag_id" WHERE "expert_flags"."expert_id" = ?[0m  [["expert_id", 4]]
+  [1m[36mPrediction Load (0.2ms)[0m  [1m[34mSELECT "predictions".* FROM "predictions" INNER JOIN "expert_predictions" ON "predictions"."id" = "expert_predictions"."prediction_id" WHERE "expert_predictions"."expert_id" = ?[0m  [["expert_id", 4]]
+  [1m[36mPrediction Load (0.2ms)[0m  [1m[34mSELECT  "predictions".* FROM "predictions" ORDER BY "predictions"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mCategory Load (0.2ms)[0m  [1m[34mSELECT "categories".* FROM "categories" INNER JOIN "prediction_categories" ON "categories"."id" = "prediction_categories"."category_id" WHERE "prediction_categories"."prediction_id" = ?[0m  [["prediction_id", 3]]
+  [1m[36mComment Load (0.1ms)[0m  [1m[34mSELECT "comments".* FROM "comments" INNER JOIN "prediction_comments" ON "comments"."id" = "prediction_comments"."comment_id" WHERE "prediction_comments"."prediction_id" = ?[0m  [["prediction_id", 3]]
+  [1m[36mEvidence Load (0.2ms)[0m  [1m[34mSELECT "evidences".* FROM "evidences" INNER JOIN "prediction_evidences" ON "evidences"."id" = "prediction_evidences"."evidence_id" WHERE "prediction_evidences"."prediction_id" = ?[0m  [["prediction_id", 3]]
+  [1m[36mExpert Load (0.2ms)[0m  [1m[34mSELECT "experts".* FROM "experts" INNER JOIN "prediction_experts" ON "experts"."id" = "prediction_experts"."expert_id" WHERE "prediction_experts"."prediction_id" = ?[0m  [["prediction_id", 3]]
+  [1m[36mPrediction Load (0.2ms)[0m  [1m[34mSELECT  "predictions".* FROM "predictions" ORDER BY "predictions"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mFlag Load (0.2ms)[0m  [1m[34mSELECT "flags".* FROM "flags" INNER JOIN "prediction_flags" ON "flags"."id" = "prediction_flags"."flag_id" WHERE "prediction_flags"."prediction_id" = ?[0m  [["prediction_id", 3]]
+  [1m[36mVote Load (0.1ms)[0m  [1m[34mSELECT "votes".* FROM "votes" INNER JOIN "prediction_votes" ON "votes"."id" = "prediction_votes"."vote_id" WHERE "prediction_votes"."prediction_id" = ?[0m  [["prediction_id", 3]]
+  [1m[36mExpert Load (0.1ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" ORDER BY "experts"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mPrediction Load (0.2ms)[0m  [1m[34mSELECT "predictions".* FROM "predictions" INNER JOIN "expert_predictions" ON "predictions"."id" = "expert_predictions"."prediction_id" WHERE "expert_predictions"."expert_id" = ?[0m  [["expert_id", 4]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "votes"[0m

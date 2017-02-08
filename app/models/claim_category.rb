@@ -1,4 +1,4 @@
 class ClaimCategory < ApplicationRecord
-    has_one :claim
-    has_one :category
+    belongs_to :claim
+    belongs_to :category
 end

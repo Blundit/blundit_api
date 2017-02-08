@@ -1,4 +1,4 @@
 class PredictionCategory < ApplicationRecord
-    has_one :prediction
-    has_one :category
+    belongs_to :prediction
+    belongs_to :category
 end

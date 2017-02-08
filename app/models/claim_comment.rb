@@ -1,4 +1,4 @@
 class ClaimComment < ApplicationRecord
-    has_one :claim
-    has_one :comment
+    belongs_to :claim
+    belongs_to :comment
 end

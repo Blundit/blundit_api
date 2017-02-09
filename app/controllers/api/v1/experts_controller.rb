@@ -1,5 +1,6 @@
 module Api::V1
   class ExpertsController < ApiController
+    before_action :set_expert, only: [:show, :edit, :update, :destroy]
 
     def index
       # GET /CONTROLLER
@@ -13,7 +14,7 @@ module Api::V1
 
     def new
       # GET /pundits/new
-
+      @expert = Expert.new
     end
 
     def create
@@ -21,27 +22,55 @@ module Api::V1
       @expert = Expert.new(expert_params)
 
       if @expert.save
+        add_contribution(@expert, :created_expert)
         render json: { result: "success" }
       else
         render json: { result: "error" }
       end
 
-
-
     end
 
     def edit
       # PUT /pundits/:id
+      if @expert.update(expert_params)
+        add_contribution(@expert, :edited_expert)
+        render json: { result: "success" }
+      else
+        render json: { result: "error" }
+      end
 
     end
 
     def destroy
       # DELETE /pundits/:id
+      if params[:id]
+        if @expert.destroy
+          add_contribution(@expert, :destroyed_expert)
+          render json: { result: "success" }
+        else
+          render json: { result: "error" }
+        end
+      else
+        render json: { result: "error" }
+      end
+    end
+
+    private
+
+    def set_expert
+      @expert = Expert.find params[:id]
     end
 
     def expert_params
         params.permit(
-          :name
+          :name,
+          :description,
+          :email,
+          :twitter,
+          :facebook,
+          :instagram,
+          :youtube,
+          :avatar_file_name
         )
     end
   end

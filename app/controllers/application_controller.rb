@@ -14,6 +14,23 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  def add_contribution (object, type)
+    if !@current_user
+      # TODO : REMOVE THIS WHEN ACTUAL USER STUFF EXISTS
+      user = User.find(1)
+    else
+      user = @current_user
+    end
+
+    user.contributions << @contribution = Contribution.create({ user_id: user.id })
+    @contribution.description = object.contributions[type].to_s
+    @contribution.set_object(object)
+    @contribution.save
+
+  end
+
+
   def http_token
       @http_token ||= if request.headers['Authorization'].present?
         request.headers['Authorization'].split(' ').last

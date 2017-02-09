@@ -4198,3 +4198,721 @@ Migrating to MissingFields (20170208145137)
   [1m[36mVote Load (0.4ms)[0m  [1m[34mSELECT  "votes".* FROM "votes" WHERE "votes"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
   [1m[36mPredictionVote Load (0.5ms)[0m  [1m[34mSELECT "prediction_votes".* FROM "prediction_votes"[0m
   [1m[36mVote Load (0.2ms)[0m  [1m[34mSELECT  "votes".* FROM "votes" WHERE "votes"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" ORDER BY "users"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mVote Load (0.2ms)[0m  [1m[34mSELECT "votes".* FROM "votes" WHERE "votes"."user_id" = ?[0m  [["user_id", 1]]
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" ORDER BY "users"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "votes" WHERE "votes"."user_id" = ?[0m  [["user_id", 1]]
+Started GET "/api/v1/pundits" for 127.0.0.1 at 2017-02-09 08:48:13 -0500
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  
+ActionController::RoutingError (No route matches [GET] "/api/v1/pundits"):
+  
+actionpack (5.0.1) lib/action_dispatch/middleware/debug_exceptions.rb:53:in `call'
+web-console (3.4.0) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.4.0) lib/web_console/middleware.rb:28:in `block in call'
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `catch'
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.0.1) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.0.1) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.0.1) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.0.1) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.0.1) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.0.1) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.0) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/request_id.rb:24:in `call'
+rack (2.0.1) lib/rack/method_override.rb:22:in `call'
+rack (2.0.1) lib/rack/runtime.rb:22:in `call'
+activesupport (5.0.1) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/static.rb:136:in `call'
+rack (2.0.1) lib/rack/sendfile.rb:111:in `call'
+railties (5.0.1) lib/rails/engine.rb:522:in `call'
+puma (3.7.0) lib/puma/configuration.rb:226:in `call'
+puma (3.7.0) lib/puma/server.rb:578:in `handle_request'
+puma (3.7.0) lib/puma/server.rb:415:in `process_client'
+puma (3.7.0) lib/puma/server.rb:275:in `block in run'
+puma (3.7.0) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.2ms)
+  Rendered collection of /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/routes/_route.html.erb [201 times] (65.5ms)
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/routes/_table.html.erb (11.0ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (10.1ms)
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout (197.5ms)
+Started GET "/api/v1/experts" for 127.0.0.1 at 2017-02-09 08:48:16 -0500
+DEPRECATION WARNING: before_filter is deprecated and will be removed in Rails 5.1. Use before_action instead. (called from <class:ApiController> at /Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/controllers/api/v1/api_controller.rb:3)
+Processing by Api::V1::ExpertsController#index as HTML
+  Rendering api/v1/experts/index.json.jbuilder
+  [1m[36mExpert Load (0.5ms)[0m  [1m[34mSELECT "experts".* FROM "experts"[0m
+  Rendered api/v1/experts/index.json.jbuilder (32.7ms)
+Completed 200 OK in 66ms (Views: 44.6ms | ActiveRecord: 1.2ms)
+
+
+  [1m[36mActiveRecord::SchemaMigration Load (25.1ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to AddContributionFields (20170209141628)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.1ms)[0m  [1m[35mALTER TABLE "contributions" ADD "expert_id" integer[0m
+  [1m[35m (0.2ms)[0m  [1m[35mALTER TABLE "contributions" ADD "claim_id" integer[0m
+  [1m[35m (0.2ms)[0m  [1m[35mALTER TABLE "contributions" ADD "evidence_id" integer[0m
+  [1m[35m (0.2ms)[0m  [1m[35mALTER TABLE "contributions" ADD "comment_id" integer[0m
+  [1m[35m (0.2ms)[0m  [1m[35mALTER TABLE "contributions" ADD "flag_id" integer[0m
+  [1m[35m (0.2ms)[0m  [1m[35mALTER TABLE "contributions" ADD "prediction_" integer[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170209141628"]]
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.6ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", :environment], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_email' AND type='index'
+[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to FurtherContributionTweaks (20170209142938)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TEMPORARY TABLE "acontributions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "user_id" integer, "description" text, "expert_id" integer, "claim_id" integer, "evidence_id" integer, "comment_id" integer, "flag_id" integer, "prediction_id" integer)[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "acontributions" ("id","created_at","updated_at","user_id","description","expert_id","claim_id","evidence_id","comment_id","flag_id","prediction_id")
+                     SELECT "id","created_at","updated_at","user_id","description","expert_id","claim_id","evidence_id","comment_id","flag_id","prediction_" FROM "contributions"[0m
+  [1m[35m (0.8ms)[0m  [1m[35mDROP TABLE "contributions"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "contributions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "user_id" integer, "description" text, "expert_id" integer, "claim_id" integer, "evidence_id" integer, "comment_id" integer, "flag_id" integer, "prediction_id" integer)[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "contributions" ("id","created_at","updated_at","user_id","description","expert_id","claim_id","evidence_id","comment_id","flag_id","prediction_id")
+                     SELECT "id","created_at","updated_at","user_id","description","expert_id","claim_id","evidence_id","comment_id","flag_id","prediction_id" FROM "acontributions"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE "acontributions"[0m
+  [1m[35m (3.7ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to FurtherContributionTweaks (20170209142938)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TEMPORARY TABLE "acontributions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "user_id" integer, "description" text, "expert_id" integer, "claim_id" integer, "evidence_id" integer, "comment_id" integer, "flag_id" integer, "prediction_id" integer)[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "acontributions" ("id","created_at","updated_at","user_id","description","expert_id","claim_id","evidence_id","comment_id","flag_id","prediction_id")
+                     SELECT "id","created_at","updated_at","user_id","description","expert_id","claim_id","evidence_id","comment_id","flag_id","prediction_" FROM "contributions"[0m
+  [1m[35m (0.3ms)[0m  [1m[35mDROP TABLE "contributions"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "contributions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "user_id" integer, "description" text, "expert_id" integer, "claim_id" integer, "evidence_id" integer, "comment_id" integer, "flag_id" integer, "prediction_id" integer)[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "contributions" ("id","created_at","updated_at","user_id","description","expert_id","claim_id","evidence_id","comment_id","flag_id","prediction_id")
+                     SELECT "id","created_at","updated_at","user_id","description","expert_id","claim_id","evidence_id","comment_id","flag_id","prediction_id" FROM "acontributions"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "acontributions"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mALTER TABLE "contributions" ADD "payload" text[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170209142938"]]
+  [1m[35m (1.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", :environment], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_email' AND type='index'
+[0m
+DEPRECATION WARNING: alias_method_chain is deprecated. Please, use Module#prepend instead. From module, you can access the original method using super. (called from <class:Expert> at /Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/models/expert.rb:23)
+  [1m[36mExpert Load (0.2ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" ORDER BY "experts"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mExpert Load (0.2ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" ORDER BY "experts"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mExpert Load (0.1ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" ORDER BY "experts"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mExpert Load (0.1ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" ORDER BY "experts"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mExpert Load (0.1ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" ORDER BY "experts"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mExpert Load (0.2ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" ORDER BY "experts"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "experts"[0m
+Started GET "/api/v1/experts/4" for 127.0.0.1 at 2017-02-09 09:52:25 -0500
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+DEPRECATION WARNING: before_filter is deprecated and will be removed in Rails 5.1. Use before_action instead. (called from <class:ApiController> at /Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/controllers/api/v1/api_controller.rb:3)
+Processing by Api::V1::ExpertsController#show as */*
+  Parameters: {"id"=>"4"}
+Completed 500 Internal Server Error in 48ms (ActiveRecord: 0.0ms)
+
+
+  
+NoMethodError (undefined method `set_event' for #<Api::V1::ExpertsController:0x007fb633597928>
+Did you mean?  set_expert):
+  
+activesupport (5.0.1) lib/active_support/callbacks.rb:382:in `block in make_lambda'
+activesupport (5.0.1) lib/active_support/callbacks.rb:150:in `block (2 levels) in halting_and_conditional'
+actionpack (5.0.1) lib/abstract_controller/callbacks.rb:12:in `block (2 levels) in <module:Callbacks>'
+activesupport (5.0.1) lib/active_support/callbacks.rb:151:in `block in halting_and_conditional'
+activesupport (5.0.1) lib/active_support/callbacks.rb:454:in `block in call'
+activesupport (5.0.1) lib/active_support/callbacks.rb:454:in `each'
+activesupport (5.0.1) lib/active_support/callbacks.rb:454:in `call'
+activesupport (5.0.1) lib/active_support/callbacks.rb:101:in `__run_callbacks__'
+activesupport (5.0.1) lib/active_support/callbacks.rb:750:in `_run_process_action_callbacks'
+activesupport (5.0.1) lib/active_support/callbacks.rb:90:in `run_callbacks'
+actionpack (5.0.1) lib/abstract_controller/callbacks.rb:19:in `process_action'
+actionpack (5.0.1) lib/action_controller/metal/rescue.rb:20:in `process_action'
+actionpack (5.0.1) lib/action_controller/metal/instrumentation.rb:32:in `block in process_action'
+activesupport (5.0.1) lib/active_support/notifications.rb:164:in `block in instrument'
+activesupport (5.0.1) lib/active_support/notifications/instrumenter.rb:21:in `instrument'
+activesupport (5.0.1) lib/active_support/notifications.rb:164:in `instrument'
+actionpack (5.0.1) lib/action_controller/metal/instrumentation.rb:30:in `process_action'
+actionpack (5.0.1) lib/action_controller/metal/params_wrapper.rb:248:in `process_action'
+activerecord (5.0.1) lib/active_record/railties/controller_runtime.rb:18:in `process_action'
+actionpack (5.0.1) lib/abstract_controller/base.rb:126:in `process'
+actionview (5.0.1) lib/action_view/rendering.rb:30:in `process'
+actionpack (5.0.1) lib/action_controller/metal.rb:190:in `dispatch'
+actionpack (5.0.1) lib/action_controller/metal.rb:262:in `dispatch'
+actionpack (5.0.1) lib/action_dispatch/routing/route_set.rb:50:in `dispatch'
+actionpack (5.0.1) lib/action_dispatch/routing/route_set.rb:32:in `serve'
+actionpack (5.0.1) lib/action_dispatch/journey/router.rb:39:in `block in serve'
+actionpack (5.0.1) lib/action_dispatch/journey/router.rb:26:in `each'
+actionpack (5.0.1) lib/action_dispatch/journey/router.rb:26:in `serve'
+actionpack (5.0.1) lib/action_dispatch/routing/route_set.rb:725:in `call'
+warden (1.2.7) lib/warden/manager.rb:36:in `block in call'
+warden (1.2.7) lib/warden/manager.rb:35:in `catch'
+warden (1.2.7) lib/warden/manager.rb:35:in `call'
+rack (2.0.1) lib/rack/etag.rb:25:in `call'
+rack (2.0.1) lib/rack/conditional_get.rb:25:in `call'
+rack (2.0.1) lib/rack/head.rb:12:in `call'
+rack (2.0.1) lib/rack/session/abstract/id.rb:222:in `context'
+rack (2.0.1) lib/rack/session/abstract/id.rb:216:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/cookies.rb:613:in `call'
+activerecord (5.0.1) lib/active_record/migration.rb:553:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/callbacks.rb:38:in `block in call'
+activesupport (5.0.1) lib/active_support/callbacks.rb:97:in `__run_callbacks__'
+activesupport (5.0.1) lib/active_support/callbacks.rb:750:in `_run_call_callbacks'
+activesupport (5.0.1) lib/active_support/callbacks.rb:90:in `run_callbacks'
+actionpack (5.0.1) lib/action_dispatch/middleware/callbacks.rb:36:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/debug_exceptions.rb:49:in `call'
+web-console (3.4.0) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.4.0) lib/web_console/middleware.rb:28:in `block in call'
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `catch'
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.0.1) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.0.1) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.0.1) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.0.1) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.0.1) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.0.1) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.0) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/request_id.rb:24:in `call'
+rack (2.0.1) lib/rack/method_override.rb:22:in `call'
+rack (2.0.1) lib/rack/runtime.rb:22:in `call'
+activesupport (5.0.1) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/static.rb:136:in `call'
+rack (2.0.1) lib/rack/sendfile.rb:111:in `call'
+railties (5.0.1) lib/rails/engine.rb:522:in `call'
+puma (3.7.0) lib/puma/configuration.rb:226:in `call'
+puma (3.7.0) lib/puma/server.rb:578:in `handle_request'
+puma (3.7.0) lib/puma/server.rb:415:in `process_client'
+puma (3.7.0) lib/puma/server.rb:275:in `block in run'
+puma (3.7.0) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (4.4ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.7ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.0ms)
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (106.5ms)
+Started GET "/api/v1/experts/4" for 127.0.0.1 at 2017-02-09 09:52:52 -0500
+DEPRECATION WARNING: before_filter is deprecated and will be removed in Rails 5.1. Use before_action instead. (called from <class:ApiController> at /Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/controllers/api/v1/api_controller.rb:3)
+Processing by Api::V1::ExpertsController#show as */*
+  Parameters: {"id"=>"4"}
+Completed 500 Internal Server Error in 5ms (ActiveRecord: 0.0ms)
+
+
+  
+NameError (uninitialized constant Expert::Enumerize):
+  
+app/models/expert.rb:2:in `<class:Expert>'
+app/models/expert.rb:1:in `<top (required)>'
+app/controllers/api/v1/experts_controller.rb:61:in `set_expert'
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (5.4ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.8ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.4ms)
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (74.6ms)
+Started GET "/api/v1/experts/4" for 127.0.0.1 at 2017-02-09 09:53:46 -0500
+DEPRECATION WARNING: before_filter is deprecated and will be removed in Rails 5.1. Use before_action instead. (called from <class:ApiController> at /Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/controllers/api/v1/api_controller.rb:3)
+Processing by Api::V1::ExpertsController#show as */*
+  Parameters: {"id"=>"4"}
+  [1m[36mExpert Load (0.2ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  Rendering api/v1/experts/show.json.jbuilder
+  Rendered api/v1/experts/show.json.jbuilder (1.7ms)
+Completed 200 OK in 89ms (Views: 21.1ms | ActiveRecord: 3.1ms)
+
+
+Started DELETE "/api/v1/experts/4" for 127.0.0.1 at 2017-02-09 09:53:58 -0500
+Processing by Api::V1::ExpertsController#destroy as */*
+  Parameters: {"name"=>"Bob", "id"=>"4"}
+  [1m[36mExpert Load (0.1ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mExpertClaim Load (0.1ms)[0m  [1m[34mSELECT "expert_claims".* FROM "expert_claims" WHERE "expert_claims"."expert_id" = ?[0m  [["expert_id", 4]]
+  [1m[36mExpertCategory Load (0.1ms)[0m  [1m[34mSELECT "expert_categories".* FROM "expert_categories" WHERE "expert_categories"."expert_id" = ?[0m  [["expert_id", 4]]
+  [1m[35mSQL (1.3ms)[0m  [1m[31mDELETE FROM "expert_categories" WHERE "expert_categories"."id" = ?[0m  [["id", 1]]
+  [1m[36mExpertComment Load (0.2ms)[0m  [1m[34mSELECT "expert_comments".* FROM "expert_comments" WHERE "expert_comments"."expert_id" = ?[0m  [["expert_id", 4]]
+  [1m[36mExpertPrediction Load (0.2ms)[0m  [1m[34mSELECT "expert_predictions".* FROM "expert_predictions" WHERE "expert_predictions"."expert_id" = ?[0m  [["expert_id", 4]]
+  [1m[36mExpertFlag Load (0.3ms)[0m  [1m[34mSELECT "expert_flags".* FROM "expert_flags" WHERE "expert_flags"."expert_id" = ?[0m  [["expert_id", 4]]
+  [1m[35mSQL (0.2ms)[0m  [1m[31mDELETE FROM "experts" WHERE "experts"."id" = ?[0m  [["id", 4]]
+  [1m[35m (1.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" ORDER BY "users"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+Completed 500 Internal Server Error in 234ms (ActiveRecord: 7.1ms)
+
+
+  
+NameError (undefined local variable or method `obj' for #<Api::V1::ExpertsController:0x007fb633576d90>):
+  
+app/controllers/application_controller.rb:28:in `add_contribution'
+app/controllers/api/v1/experts_controller.rb:48:in `destroy'
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (4.2ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.2ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.1ms)
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (97.2ms)
+  [1m[36mExpert Load (0.2ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" ORDER BY "experts"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[33mUPDATE "experts" SET "updated_at" = ?, "user_id" = ? WHERE "experts"."id" = ?[0m  [["updated_at", 2017-02-09 14:57:06 UTC], ["user_id", 1], ["id", 3]]
+  [1m[35m (1.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mExpert Load (0.3ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mExpert Load (0.1ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" ORDER BY "experts"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+Started DELETE "/api/v1/experts/4" for 127.0.0.1 at 2017-02-09 09:59:44 -0500
+DEPRECATION WARNING: before_filter is deprecated and will be removed in Rails 5.1. Use before_action instead. (called from <class:ApiController> at /Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/controllers/api/v1/api_controller.rb:3)
+Processing by Api::V1::ExpertsController#destroy as */*
+  Parameters: {"name"=>"Bob", "id"=>"4"}
+  [1m[36mExpert Load (0.2ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+Completed 404 Not Found in 14ms (ActiveRecord: 1.0ms)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Expert with 'id'=4):
+  
+app/controllers/api/v1/experts_controller.rb:61:in `set_expert'
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (3.5ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.7ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (0.9ms)
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (61.9ms)
+Started DELETE "/api/v1/experts/3" for 127.0.0.1 at 2017-02-09 09:59:49 -0500
+Processing by Api::V1::ExpertsController#destroy as */*
+  Parameters: {"name"=>"Bob", "id"=>"3"}
+  [1m[36mExpert Load (0.1ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mExpertClaim Load (0.1ms)[0m  [1m[34mSELECT "expert_claims".* FROM "expert_claims" WHERE "expert_claims"."expert_id" = ?[0m  [["expert_id", 3]]
+  [1m[36mExpertCategory Load (0.1ms)[0m  [1m[34mSELECT "expert_categories".* FROM "expert_categories" WHERE "expert_categories"."expert_id" = ?[0m  [["expert_id", 3]]
+  [1m[36mExpertComment Load (0.1ms)[0m  [1m[34mSELECT "expert_comments".* FROM "expert_comments" WHERE "expert_comments"."expert_id" = ?[0m  [["expert_id", 3]]
+  [1m[36mExpertPrediction Load (0.1ms)[0m  [1m[34mSELECT "expert_predictions".* FROM "expert_predictions" WHERE "expert_predictions"."expert_id" = ?[0m  [["expert_id", 3]]
+  [1m[36mExpertFlag Load (0.1ms)[0m  [1m[34mSELECT "expert_flags".* FROM "expert_flags" WHERE "expert_flags"."expert_id" = ?[0m  [["expert_id", 3]]
+  [1m[35mSQL (0.3ms)[0m  [1m[31mDELETE FROM "experts" WHERE "experts"."id" = ?[0m  [["id", 3]]
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" ORDER BY "users"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+Completed 500 Internal Server Error in 103ms (ActiveRecord: 3.8ms)
+
+
+  
+NoMethodError (undefined method `set_object' for #<Contribution:0x007fb63340b730>):
+  
+app/controllers/application_controller.rb:28:in `add_contribution'
+app/controllers/api/v1/experts_controller.rb:48:in `destroy'
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (5.6ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.1ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (0.9ms)
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (64.6ms)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "experts" ("created_at", "updated_at", "user_id") VALUES (?, ?, ?)[0m  [["created_at", 2017-02-09 15:00:17 UTC], ["updated_at", 2017-02-09 15:00:17 UTC], ["user_id", 1]]
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "experts" ("created_at", "updated_at", "user_id") VALUES (?, ?, ?)[0m  [["created_at", 2017-02-09 15:00:20 UTC], ["updated_at", 2017-02-09 15:00:20 UTC], ["user_id", 1]]
+  [1m[35m (2.4ms)[0m  [1m[36mcommit transaction[0m
+Started DELETE "/api/v1/experts/5" for 127.0.0.1 at 2017-02-09 10:00:29 -0500
+DEPRECATION WARNING: before_filter is deprecated and will be removed in Rails 5.1. Use before_action instead. (called from <class:ApiController> at /Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/controllers/api/v1/api_controller.rb:3)
+Processing by Api::V1::ExpertsController#destroy as */*
+  Parameters: {"name"=>"Bob", "id"=>"5"}
+  [1m[36mExpert Load (0.2ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mExpertClaim Load (0.1ms)[0m  [1m[34mSELECT "expert_claims".* FROM "expert_claims" WHERE "expert_claims"."expert_id" = ?[0m  [["expert_id", 5]]
+  [1m[36mExpertCategory Load (0.2ms)[0m  [1m[34mSELECT "expert_categories".* FROM "expert_categories" WHERE "expert_categories"."expert_id" = ?[0m  [["expert_id", 5]]
+  [1m[36mExpertComment Load (0.2ms)[0m  [1m[34mSELECT "expert_comments".* FROM "expert_comments" WHERE "expert_comments"."expert_id" = ?[0m  [["expert_id", 5]]
+  [1m[36mExpertPrediction Load (0.2ms)[0m  [1m[34mSELECT "expert_predictions".* FROM "expert_predictions" WHERE "expert_predictions"."expert_id" = ?[0m  [["expert_id", 5]]
+  [1m[36mExpertFlag Load (0.2ms)[0m  [1m[34mSELECT "expert_flags".* FROM "expert_flags" WHERE "expert_flags"."expert_id" = ?[0m  [["expert_id", 5]]
+  [1m[35mSQL (0.4ms)[0m  [1m[31mDELETE FROM "experts" WHERE "experts"."id" = ?[0m  [["id", 5]]
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" ORDER BY "users"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+Completed 200 OK in 254ms (Views: 0.3ms | ActiveRecord: 7.2ms)
+
+
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "contributions"[0m
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" ORDER BY "users"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mContribution Load (0.2ms)[0m  [1m[34mSELECT "contributions".* FROM "contributions" INNER JOIN "user_contributions" ON "contributions"."id" = "user_contributions"."contribution_id" WHERE "user_contributions"."user_id" = ?[0m  [["user_id", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "contributions" ("created_at", "updated_at", "user_id", "expert_id") VALUES (?, ?, ?, ?)[0m  [["created_at", 2017-02-09 15:02:02 UTC], ["updated_at", 2017-02-09 15:02:02 UTC], ["user_id", 1], ["expert_id", 6]]
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mContribution Load (0.1ms)[0m  [1m[34mSELECT "contributions".* FROM "contributions" INNER JOIN "user_contributions" ON "contributions"."id" = "user_contributions"."contribution_id" WHERE "user_contributions"."user_id" = ?[0m  [["user_id", 1]]
+  [1m[36mUserContribution Load (0.2ms)[0m  [1m[34mSELECT "user_contributions".* FROM "user_contributions" WHERE "user_contributions"."user_id" = ?[0m  [["user_id", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "contributions" ("created_at", "updated_at", "user_id", "expert_id") VALUES (?, ?, ?, ?)[0m  [["created_at", 2017-02-09 15:03:37 UTC], ["updated_at", 2017-02-09 15:03:37 UTC], ["user_id", 1], ["expert_id", 6]]
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "user_contributions" ("created_at", "updated_at", "user_id", "contribution_id") VALUES (?, ?, ?, ?)[0m  [["created_at", 2017-02-09 15:03:37 UTC], ["updated_at", 2017-02-09 15:03:37 UTC], ["user_id", 1], ["contribution_id", 2]]
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mContribution Load (0.1ms)[0m  [1m[34mSELECT "contributions".* FROM "contributions" INNER JOIN "user_contributions" ON "contributions"."id" = "user_contributions"."contribution_id" WHERE "user_contributions"."user_id" = ?[0m  [["user_id", 1]]
+  [1m[36mUserContribution Load (0.2ms)[0m  [1m[34mSELECT  "user_contributions".* FROM "user_contributions" ORDER BY "user_contributions"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mContribution Load (0.2ms)[0m  [1m[34mSELECT  "contributions".* FROM "contributions" ORDER BY "contributions"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mExpert Load (0.1ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" ORDER BY "experts"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+Started DELETE "/api/v1/experts/6" for 127.0.0.1 at 2017-02-09 10:05:03 -0500
+DEPRECATION WARNING: before_filter is deprecated and will be removed in Rails 5.1. Use before_action instead. (called from <class:ApiController> at /Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/controllers/api/v1/api_controller.rb:3)
+Processing by Api::V1::ExpertsController#destroy as */*
+  Parameters: {"name"=>"Bob", "id"=>"6"}
+  [1m[36mExpert Load (0.2ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mExpertClaim Load (0.1ms)[0m  [1m[34mSELECT "expert_claims".* FROM "expert_claims" WHERE "expert_claims"."expert_id" = ?[0m  [["expert_id", 6]]
+  [1m[36mExpertCategory Load (0.2ms)[0m  [1m[34mSELECT "expert_categories".* FROM "expert_categories" WHERE "expert_categories"."expert_id" = ?[0m  [["expert_id", 6]]
+  [1m[36mExpertComment Load (0.2ms)[0m  [1m[34mSELECT "expert_comments".* FROM "expert_comments" WHERE "expert_comments"."expert_id" = ?[0m  [["expert_id", 6]]
+  [1m[36mExpertPrediction Load (0.2ms)[0m  [1m[34mSELECT "expert_predictions".* FROM "expert_predictions" WHERE "expert_predictions"."expert_id" = ?[0m  [["expert_id", 6]]
+  [1m[36mExpertFlag Load (0.2ms)[0m  [1m[34mSELECT "expert_flags".* FROM "expert_flags" WHERE "expert_flags"."expert_id" = ?[0m  [["expert_id", 6]]
+  [1m[35mSQL (0.3ms)[0m  [1m[31mDELETE FROM "experts" WHERE "experts"."id" = ?[0m  [["id", 6]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mUser Load (1.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" ORDER BY "users"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+Completed 422 Unprocessable Entity in 308ms (ActiveRecord: 10.4ms)
+
+
+  
+ActiveRecord::RecordInvalid (Validation failed: User must exist):
+  
+app/controllers/application_controller.rb:26:in `add_contribution'
+app/controllers/api/v1/experts_controller.rb:48:in `destroy'
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (10.5ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.2ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.3ms)
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (81.6ms)
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" ORDER BY "users"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mExpert Load (0.1ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" ORDER BY "experts"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "experts" ("created_at", "updated_at", "name", "user_id") VALUES (?, ?, ?, ?)[0m  [["created_at", 2017-02-09 15:05:43 UTC], ["updated_at", 2017-02-09 15:05:43 UTC], ["name", "Blah"], ["user_id", 1]]
+  [1m[35m (2.4ms)[0m  [1m[36mcommit transaction[0m
+Started DELETE "/api/v1/experts/7" for 127.0.0.1 at 2017-02-09 10:05:52 -0500
+DEPRECATION WARNING: before_filter is deprecated and will be removed in Rails 5.1. Use before_action instead. (called from <class:ApiController> at /Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/controllers/api/v1/api_controller.rb:3)
+Processing by Api::V1::ExpertsController#destroy as */*
+  Parameters: {"name"=>"Bob", "id"=>"7"}
+  [1m[36mExpert Load (0.1ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mExpertClaim Load (0.1ms)[0m  [1m[34mSELECT "expert_claims".* FROM "expert_claims" WHERE "expert_claims"."expert_id" = ?[0m  [["expert_id", 7]]
+  [1m[36mExpertCategory Load (0.1ms)[0m  [1m[34mSELECT "expert_categories".* FROM "expert_categories" WHERE "expert_categories"."expert_id" = ?[0m  [["expert_id", 7]]
+  [1m[36mExpertComment Load (0.1ms)[0m  [1m[34mSELECT "expert_comments".* FROM "expert_comments" WHERE "expert_comments"."expert_id" = ?[0m  [["expert_id", 7]]
+  [1m[36mExpertPrediction Load (0.1ms)[0m  [1m[34mSELECT "expert_predictions".* FROM "expert_predictions" WHERE "expert_predictions"."expert_id" = ?[0m  [["expert_id", 7]]
+  [1m[36mExpertFlag Load (0.1ms)[0m  [1m[34mSELECT "expert_flags".* FROM "expert_flags" WHERE "expert_flags"."expert_id" = ?[0m  [["expert_id", 7]]
+  [1m[35mSQL (0.2ms)[0m  [1m[31mDELETE FROM "experts" WHERE "experts"."id" = ?[0m  [["id", 7]]
+  [1m[35m (2.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+Completed 422 Unprocessable Entity in 140ms (ActiveRecord: 7.3ms)
+
+
+  
+ActiveRecord::RecordInvalid (Validation failed: User must exist):
+  
+app/controllers/application_controller.rb:26:in `add_contribution'
+app/controllers/api/v1/experts_controller.rb:48:in `destroy'
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (4.5ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.3ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (0.8ms)
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (61.3ms)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "experts" ("created_at", "updated_at", "name", "user_id") VALUES (?, ?, ?, ?)[0m  [["created_at", 2017-02-09 15:06:40 UTC], ["updated_at", 2017-02-09 15:06:40 UTC], ["name", "Blah"], ["user_id", 1]]
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+Started DELETE "/api/v1/experts/8" for 127.0.0.1 at 2017-02-09 10:06:47 -0500
+DEPRECATION WARNING: before_filter is deprecated and will be removed in Rails 5.1. Use before_action instead. (called from <class:ApiController> at /Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/controllers/api/v1/api_controller.rb:3)
+Processing by Api::V1::ExpertsController#destroy as */*
+  Parameters: {"name"=>"Bob", "id"=>"8"}
+  [1m[36mExpert Load (0.5ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mExpertClaim Load (0.1ms)[0m  [1m[34mSELECT "expert_claims".* FROM "expert_claims" WHERE "expert_claims"."expert_id" = ?[0m  [["expert_id", 8]]
+  [1m[36mExpertCategory Load (0.1ms)[0m  [1m[34mSELECT "expert_categories".* FROM "expert_categories" WHERE "expert_categories"."expert_id" = ?[0m  [["expert_id", 8]]
+  [1m[36mExpertComment Load (0.1ms)[0m  [1m[34mSELECT "expert_comments".* FROM "expert_comments" WHERE "expert_comments"."expert_id" = ?[0m  [["expert_id", 8]]
+  [1m[36mExpertPrediction Load (0.5ms)[0m  [1m[34mSELECT "expert_predictions".* FROM "expert_predictions" WHERE "expert_predictions"."expert_id" = ?[0m  [["expert_id", 8]]
+  [1m[36mExpertFlag Load (0.1ms)[0m  [1m[34mSELECT "expert_flags".* FROM "expert_flags" WHERE "expert_flags"."expert_id" = ?[0m  [["expert_id", 8]]
+  [1m[35mSQL (0.3ms)[0m  [1m[31mDELETE FROM "experts" WHERE "experts"."id" = ?[0m  [["id", 8]]
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+Completed 422 Unprocessable Entity in 143ms (ActiveRecord: 6.5ms)
+
+
+  
+ActiveRecord::RecordInvalid (Validation failed: User must exist):
+  
+app/controllers/application_controller.rb:28:in `add_contribution'
+app/controllers/api/v1/experts_controller.rb:48:in `destroy'
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (4.8ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.9ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.0ms)
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (76.4ms)
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mContribution Load (0.2ms)[0m  [1m[34mSELECT "contributions".* FROM "contributions" INNER JOIN "user_contributions" ON "contributions"."id" = "user_contributions"."contribution_id" WHERE "user_contributions"."user_id" = ?[0m  [["user_id", 1]]
+  [1m[35m (0.3ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "experts" ("created_at", "updated_at", "name", "user_id") VALUES (?, ?, ?, ?)[0m  [["created_at", 2017-02-09 15:08:46 UTC], ["updated_at", 2017-02-09 15:08:46 UTC], ["name", "Blah"], ["user_id", 1]]
+  [1m[35m (0.9ms)[0m  [1m[36mcommit transaction[0m
+Started DELETE "/api/v1/experts/9" for 127.0.0.1 at 2017-02-09 10:08:52 -0500
+DEPRECATION WARNING: before_filter is deprecated and will be removed in Rails 5.1. Use before_action instead. (called from <class:ApiController> at /Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/controllers/api/v1/api_controller.rb:3)
+Processing by Api::V1::ExpertsController#destroy as */*
+  Parameters: {"name"=>"Bob", "id"=>"9"}
+  [1m[36mExpert Load (0.3ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mExpertClaim Load (0.1ms)[0m  [1m[34mSELECT "expert_claims".* FROM "expert_claims" WHERE "expert_claims"."expert_id" = ?[0m  [["expert_id", 9]]
+  [1m[36mExpertCategory Load (0.1ms)[0m  [1m[34mSELECT "expert_categories".* FROM "expert_categories" WHERE "expert_categories"."expert_id" = ?[0m  [["expert_id", 9]]
+  [1m[36mExpertComment Load (0.3ms)[0m  [1m[34mSELECT "expert_comments".* FROM "expert_comments" WHERE "expert_comments"."expert_id" = ?[0m  [["expert_id", 9]]
+  [1m[36mExpertPrediction Load (0.2ms)[0m  [1m[34mSELECT "expert_predictions".* FROM "expert_predictions" WHERE "expert_predictions"."expert_id" = ?[0m  [["expert_id", 9]]
+  [1m[36mExpertFlag Load (0.1ms)[0m  [1m[34mSELECT "expert_flags".* FROM "expert_flags" WHERE "expert_flags"."expert_id" = ?[0m  [["expert_id", 9]]
+  [1m[35mSQL (0.3ms)[0m  [1m[31mDELETE FROM "experts" WHERE "experts"."id" = ?[0m  [["id", 9]]
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.4ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "contributions" ("created_at", "updated_at", "user_id") VALUES (?, ?, ?)[0m  [["created_at", 2017-02-09 15:08:53 UTC], ["updated_at", 2017-02-09 15:08:53 UTC], ["user_id", 1]]
+  [1m[35m (2.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "user_contributions" ("created_at", "updated_at", "user_id", "contribution_id") VALUES (?, ?, ?, ?)[0m  [["created_at", 2017-02-09 15:08:53 UTC], ["updated_at", 2017-02-09 15:08:53 UTC], ["user_id", 1], ["contribution_id", 3]]
+  [1m[35m (1.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mContribution Load (0.3ms)[0m  [1m[34mSELECT "contributions".* FROM "contributions" INNER JOIN "user_contributions" ON "contributions"."id" = "user_contributions"."contribution_id" WHERE "user_contributions"."user_id" = ?[0m  [["user_id", 1]]
+Completed 500 Internal Server Error in 236ms (ActiveRecord: 25.8ms)
+
+
+  
+NoMethodError (undefined method `description=' for #<Contribution::ActiveRecord_Associations_CollectionProxy:0x007fb634adc540>):
+  
+app/controllers/application_controller.rb:29:in `add_contribution'
+app/controllers/api/v1/experts_controller.rb:48:in `destroy'
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (4.5ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.8ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (0.9ms)
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (67.7ms)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "experts" ("created_at", "updated_at", "name", "user_id") VALUES (?, ?, ?, ?)[0m  [["created_at", 2017-02-09 15:09:14 UTC], ["updated_at", 2017-02-09 15:09:14 UTC], ["name", "Blah"], ["user_id", 1]]
+  [1m[35m (3.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "experts" ("created_at", "updated_at", "name", "user_id") VALUES (?, ?, ?, ?)[0m  [["created_at", 2017-02-09 15:09:34 UTC], ["updated_at", 2017-02-09 15:09:34 UTC], ["name", "Blah"], ["user_id", 1]]
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+Started DELETE "/api/v1/experts/11" for 127.0.0.1 at 2017-02-09 10:09:41 -0500
+DEPRECATION WARNING: before_filter is deprecated and will be removed in Rails 5.1. Use before_action instead. (called from <class:ApiController> at /Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/controllers/api/v1/api_controller.rb:3)
+Processing by Api::V1::ExpertsController#destroy as */*
+  Parameters: {"name"=>"Bob", "id"=>"11"}
+  [1m[36mExpert Load (0.1ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."id" = ? LIMIT ?[0m  [["id", 11], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mExpertClaim Load (0.1ms)[0m  [1m[34mSELECT "expert_claims".* FROM "expert_claims" WHERE "expert_claims"."expert_id" = ?[0m  [["expert_id", 11]]
+  [1m[36mExpertCategory Load (0.1ms)[0m  [1m[34mSELECT "expert_categories".* FROM "expert_categories" WHERE "expert_categories"."expert_id" = ?[0m  [["expert_id", 11]]
+  [1m[36mExpertComment Load (0.5ms)[0m  [1m[34mSELECT "expert_comments".* FROM "expert_comments" WHERE "expert_comments"."expert_id" = ?[0m  [["expert_id", 11]]
+  [1m[36mExpertPrediction Load (0.2ms)[0m  [1m[34mSELECT "expert_predictions".* FROM "expert_predictions" WHERE "expert_predictions"."expert_id" = ?[0m  [["expert_id", 11]]
+  [1m[36mExpertFlag Load (0.1ms)[0m  [1m[34mSELECT "expert_flags".* FROM "expert_flags" WHERE "expert_flags"."expert_id" = ?[0m  [["expert_id", 11]]
+  [1m[35mSQL (0.9ms)[0m  [1m[31mDELETE FROM "experts" WHERE "experts"."id" = ?[0m  [["id", 11]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "contributions" ("created_at", "updated_at", "user_id") VALUES (?, ?, ?)[0m  [["created_at", 2017-02-09 15:09:41 UTC], ["updated_at", 2017-02-09 15:09:41 UTC], ["user_id", 1]]
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "user_contributions" ("created_at", "updated_at", "user_id", "contribution_id") VALUES (?, ?, ?, ?)[0m  [["created_at", 2017-02-09 15:09:41 UTC], ["updated_at", 2017-02-09 15:09:41 UTC], ["user_id", 1], ["contribution_id", 4]]
+  [1m[35m (1.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mContribution Load (0.4ms)[0m  [1m[34mSELECT "contributions".* FROM "contributions" INNER JOIN "user_contributions" ON "contributions"."id" = "user_contributions"."contribution_id" WHERE "user_contributions"."user_id" = ?[0m  [["user_id", 1]]
+Completed 500 Internal Server Error in 162ms (ActiveRecord: 9.9ms)
+
+
+  
+NoMethodError (undefined method `description=' for #<Contribution::ActiveRecord_Associations_CollectionProxy:0x007fb6333a0d18>):
+  
+app/controllers/application_controller.rb:29:in `add_contribution'
+app/controllers/api/v1/experts_controller.rb:48:in `destroy'
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (5.1ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.7ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (0.9ms)
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (69.1ms)
+  [1m[36mExpert Load (0.2ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" ORDER BY "experts"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "contributions" ("created_at", "updated_at", "user_id") VALUES (?, ?, ?)[0m  [["created_at", 2017-02-09 15:11:37 UTC], ["updated_at", 2017-02-09 15:11:37 UTC], ["user_id", 1]]
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[33mUPDATE "contributions" SET "updated_at" = ?, "description" = ? WHERE "contributions"."id" = ?[0m  [["updated_at", 2017-02-09 15:11:44 UTC], ["description", "Created Expert"], ["id", 5]]
+  [1m[35m (2.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mContribution Load (0.3ms)[0m  [1m[34mSELECT  "contributions".* FROM "contributions" ORDER BY "contributions"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mExpert Load (0.3ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" ORDER BY "experts"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+Started DELETE "/api/v1/experts/10" for 127.0.0.1 at 2017-02-09 10:15:10 -0500
+DEPRECATION WARNING: before_filter is deprecated and will be removed in Rails 5.1. Use before_action instead. (called from <class:ApiController> at /Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/controllers/api/v1/api_controller.rb:3)
+Processing by Api::V1::ExpertsController#destroy as */*
+  Parameters: {"name"=>"Bob", "id"=>"10"}
+  [1m[36mExpert Load (0.1ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mExpertClaim Load (0.1ms)[0m  [1m[34mSELECT "expert_claims".* FROM "expert_claims" WHERE "expert_claims"."expert_id" = ?[0m  [["expert_id", 10]]
+  [1m[36mExpertCategory Load (0.1ms)[0m  [1m[34mSELECT "expert_categories".* FROM "expert_categories" WHERE "expert_categories"."expert_id" = ?[0m  [["expert_id", 10]]
+  [1m[36mExpertComment Load (0.1ms)[0m  [1m[34mSELECT "expert_comments".* FROM "expert_comments" WHERE "expert_comments"."expert_id" = ?[0m  [["expert_id", 10]]
+  [1m[36mExpertPrediction Load (0.2ms)[0m  [1m[34mSELECT "expert_predictions".* FROM "expert_predictions" WHERE "expert_predictions"."expert_id" = ?[0m  [["expert_id", 10]]
+  [1m[36mExpertFlag Load (0.1ms)[0m  [1m[34mSELECT "expert_flags".* FROM "expert_flags" WHERE "expert_flags"."expert_id" = ?[0m  [["expert_id", 10]]
+  [1m[35mSQL (0.3ms)[0m  [1m[31mDELETE FROM "experts" WHERE "experts"."id" = ?[0m  [["id", 10]]
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "contributions" ("created_at", "updated_at", "user_id") VALUES (?, ?, ?)[0m  [["created_at", 2017-02-09 15:15:11 UTC], ["updated_at", 2017-02-09 15:15:11 UTC], ["user_id", 1]]
+  [1m[35m (1.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "user_contributions" ("created_at", "updated_at", "user_id", "contribution_id") VALUES (?, ?, ?, ?)[0m  [["created_at", 2017-02-09 15:15:11 UTC], ["updated_at", 2017-02-09 15:15:11 UTC], ["user_id", 1], ["contribution_id", 6]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[33mUPDATE "contributions" SET "updated_at" = ?, "description" = ?, "expert_id" = ?, "payload" = ? WHERE "contributions"."id" = ?[0m  [["updated_at", 2017-02-09 15:15:11 UTC], ["description", "Destroyed Expert"], ["expert_id", 10], ["payload", "{\"id\"=>10, \"created_at\"=>Thu, 09 Feb 2017 15:09:14 UTC +00:00, \"updated_at\"=>Thu, 09 Feb 2017 15:09:14 UTC +00:00, \"name\"=>\"Blah\", \"description\"=>nil, \"email\"=>nil, \"twitter\"=>nil, \"facebook\"=>nil, \"instagram\"=>nil, \"youtube\"=>nil, \"accuracy\"=>nil, \"user_id\"=>1, \"happened\"=>nil, \"expert_category_id\"=>nil, \"avatar_file_name\"=>nil, \"avatar_content_type\"=>nil, \"avatar_file_size\"=>nil, \"avatar_updated_at\"=>nil}"], ["id", 6]]
+  [1m[35m (1.3ms)[0m  [1m[36mcommit transaction[0m
+Completed 200 OK in 131ms (Views: 0.3ms | ActiveRecord: 10.5ms)
+
+
+  [1m[36mContribution Load (0.1ms)[0m  [1m[34mSELECT  "contributions".* FROM "contributions" ORDER BY "contributions"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mExpert Load (0.4ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."contribution_id" = ? LIMIT ?[0m  [["contribution_id", 6], ["LIMIT", 1]]
+  [1m[36mExpert Load (0.5ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."contribution_id" = ? LIMIT ?[0m  [["contribution_id", 6], ["LIMIT", 1]]
+  [1m[36mExpert Load (0.5ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."contribution_id" = ? LIMIT ?[0m  [["contribution_id", 6], ["LIMIT", 1]]
+  [1m[36mExpert Load (0.5ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."contribution_id" = ? LIMIT ?[0m  [["contribution_id", 6], ["LIMIT", 1]]
+  [1m[36mContribution Load (0.3ms)[0m  [1m[34mSELECT  "contributions".* FROM "contributions" ORDER BY "contributions"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mExpert Load (0.4ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."contribution_id" = ? LIMIT ?[0m  [["contribution_id", 6], ["LIMIT", 1]]
+  [1m[36mExpert Load (0.4ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."contribution_id" = ? LIMIT ?[0m  [["contribution_id", 6], ["LIMIT", 1]]
+  [1m[36mContribution Load (0.2ms)[0m  [1m[34mSELECT  "contributions".* FROM "contributions" ORDER BY "contributions"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mExpert Load (0.6ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."contribution_id" = ? LIMIT ?[0m  [["contribution_id", 6], ["LIMIT", 1]]
+  [1m[36mContribution Load (0.2ms)[0m  [1m[34mSELECT  "contributions".* FROM "contributions" ORDER BY "contributions"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mExpert Load (0.3ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."contribution_id" = ? LIMIT ?[0m  [["contribution_id", 6], ["LIMIT", 1]]
+  [1m[36mContribution Load (0.2ms)[0m  [1m[34mSELECT  "contributions".* FROM "contributions" ORDER BY "contributions"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mExpert Load (0.4ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."contribution_id" = ? LIMIT ?[0m  [["contribution_id", 1], ["LIMIT", 1]]
+  [1m[36mContribution Load (0.1ms)[0m  [1m[34mSELECT  "contributions".* FROM "contributions" ORDER BY "contributions"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mContribution Load (0.2ms)[0m  [1m[34mSELECT  "contributions".* FROM "contributions" ORDER BY "contributions"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mExpert Load (0.4ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."contribution_id" = ? LIMIT ?[0m  [["contribution_id", 1], ["LIMIT", 1]]
+  [1m[36mExpert Load (0.2ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" ORDER BY "experts"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "experts" ("created_at", "updated_at", "name", "user_id") VALUES (?, ?, ?, ?)[0m  [["created_at", 2017-02-09 15:20:43 UTC], ["updated_at", 2017-02-09 15:20:43 UTC], ["name", "Short-lived"], ["user_id", 1]]
+  [1m[35m (1.3ms)[0m  [1m[36mcommit transaction[0m
+Started DELETE "/api/v1/experts/12" for 127.0.0.1 at 2017-02-09 10:20:50 -0500
+DEPRECATION WARNING: before_filter is deprecated and will be removed in Rails 5.1. Use before_action instead. (called from <class:ApiController> at /Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/controllers/api/v1/api_controller.rb:3)
+Processing by Api::V1::ExpertsController#destroy as */*
+  Parameters: {"name"=>"Bob", "id"=>"12"}
+  [1m[36mExpert Load (0.3ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."id" = ? LIMIT ?[0m  [["id", 12], ["LIMIT", 1]]
+  [1m[35m (1.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mExpertClaim Load (0.2ms)[0m  [1m[34mSELECT "expert_claims".* FROM "expert_claims" WHERE "expert_claims"."expert_id" = ?[0m  [["expert_id", 12]]
+  [1m[36mExpertCategory Load (0.1ms)[0m  [1m[34mSELECT "expert_categories".* FROM "expert_categories" WHERE "expert_categories"."expert_id" = ?[0m  [["expert_id", 12]]
+  [1m[36mExpertComment Load (0.2ms)[0m  [1m[34mSELECT "expert_comments".* FROM "expert_comments" WHERE "expert_comments"."expert_id" = ?[0m  [["expert_id", 12]]
+  [1m[36mExpertPrediction Load (0.2ms)[0m  [1m[34mSELECT "expert_predictions".* FROM "expert_predictions" WHERE "expert_predictions"."expert_id" = ?[0m  [["expert_id", 12]]
+  [1m[36mExpertFlag Load (0.2ms)[0m  [1m[34mSELECT "expert_flags".* FROM "expert_flags" WHERE "expert_flags"."expert_id" = ?[0m  [["expert_id", 12]]
+  [1m[35mSQL (0.3ms)[0m  [1m[31mDELETE FROM "experts" WHERE "experts"."id" = ?[0m  [["id", 12]]
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "contributions" ("created_at", "updated_at", "user_id") VALUES (?, ?, ?)[0m  [["created_at", 2017-02-09 15:20:51 UTC], ["updated_at", 2017-02-09 15:20:51 UTC], ["user_id", 1]]
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "user_contributions" ("created_at", "updated_at", "user_id", "contribution_id") VALUES (?, ?, ?, ?)[0m  [["created_at", 2017-02-09 15:20:51 UTC], ["updated_at", 2017-02-09 15:20:51 UTC], ["user_id", 1], ["contribution_id", 7]]
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[33mUPDATE "contributions" SET "updated_at" = ?, "description" = ?, "expert_id" = ?, "payload" = ? WHERE "contributions"."id" = ?[0m  [["updated_at", 2017-02-09 15:20:51 UTC], ["description", "Destroyed Expert"], ["expert_id", 12], ["payload", "{\"id\"=>12, \"created_at\"=>Thu, 09 Feb 2017 15:20:43 UTC +00:00, \"updated_at\"=>Thu, 09 Feb 2017 15:20:43 UTC +00:00, \"name\"=>\"Short-lived\", \"description\"=>nil, \"email\"=>nil, \"twitter\"=>nil, \"facebook\"=>nil, \"instagram\"=>nil, \"youtube\"=>nil, \"accuracy\"=>nil, \"user_id\"=>1, \"happened\"=>nil, \"expert_category_id\"=>nil, \"avatar_file_name\"=>nil, \"avatar_content_type\"=>nil, \"avatar_file_size\"=>nil, \"avatar_updated_at\"=>nil}"], ["id", 7]]
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+Completed 200 OK in 253ms (Views: 0.3ms | ActiveRecord: 13.0ms)
+
+
+  [1m[36mContribution Load (0.2ms)[0m  [1m[34mSELECT  "contributions".* FROM "contributions" ORDER BY "contributions"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mContribution Load (0.2ms)[0m  [1m[34mSELECT  "contributions".* FROM "contributions" ORDER BY "contributions"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mExpert Load (0.4ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."contribution_id" = ? LIMIT ?[0m  [["contribution_id", 7], ["LIMIT", 1]]
+  [1m[36mContribution Load (0.2ms)[0m  [1m[34mSELECT  "contributions".* FROM "contributions" ORDER BY "contributions"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mExpert Load (0.5ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."contribution_id" = ? LIMIT ?[0m  [["contribution_id", 7], ["LIMIT", 1]]
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mExpert Load (0.5ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."contribution_id" = ? LIMIT ?[0m  [["contribution_id", 7], ["LIMIT", 1]]
+  [1m[36mContribution Load (0.1ms)[0m  [1m[34mSELECT  "contributions".* FROM "contributions" ORDER BY "contributions"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mExpert Load (0.4ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."contribution_id" = ? LIMIT ?[0m  [["contribution_id", 7], ["LIMIT", 1]]
+  [1m[36mContribution Load (0.2ms)[0m  [1m[34mSELECT  "contributions".* FROM "contributions" ORDER BY "contributions"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "experts" ("created_at", "updated_at", "name", "user_id") VALUES (?, ?, ?, ?)[0m  [["created_at", 2017-02-09 15:23:38 UTC], ["updated_at", 2017-02-09 15:23:38 UTC], ["name", "Balthazar"], ["user_id", 1]]
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+Started DELETE "/api/v1/experts/13" for 127.0.0.1 at 2017-02-09 10:23:49 -0500
+DEPRECATION WARNING: before_filter is deprecated and will be removed in Rails 5.1. Use before_action instead. (called from <class:ApiController> at /Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/controllers/api/v1/api_controller.rb:3)
+Processing by Api::V1::ExpertsController#destroy as */*
+  Parameters: {"name"=>"Bob", "id"=>"13"}
+  [1m[36mExpert Load (0.5ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mExpertClaim Load (0.1ms)[0m  [1m[34mSELECT "expert_claims".* FROM "expert_claims" WHERE "expert_claims"."expert_id" = ?[0m  [["expert_id", 13]]
+  [1m[36mExpertCategory Load (0.1ms)[0m  [1m[34mSELECT "expert_categories".* FROM "expert_categories" WHERE "expert_categories"."expert_id" = ?[0m  [["expert_id", 13]]
+  [1m[36mExpertComment Load (0.1ms)[0m  [1m[34mSELECT "expert_comments".* FROM "expert_comments" WHERE "expert_comments"."expert_id" = ?[0m  [["expert_id", 13]]
+  [1m[36mExpertPrediction Load (0.1ms)[0m  [1m[34mSELECT "expert_predictions".* FROM "expert_predictions" WHERE "expert_predictions"."expert_id" = ?[0m  [["expert_id", 13]]
+  [1m[36mExpertFlag Load (0.1ms)[0m  [1m[34mSELECT "expert_flags".* FROM "expert_flags" WHERE "expert_flags"."expert_id" = ?[0m  [["expert_id", 13]]
+  [1m[35mSQL (0.3ms)[0m  [1m[31mDELETE FROM "experts" WHERE "experts"."id" = ?[0m  [["id", 13]]
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "contributions" ("created_at", "updated_at", "user_id") VALUES (?, ?, ?)[0m  [["created_at", 2017-02-09 15:23:49 UTC], ["updated_at", 2017-02-09 15:23:49 UTC], ["user_id", 1]]
+  [1m[35m (1.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "user_contributions" ("created_at", "updated_at", "user_id", "contribution_id") VALUES (?, ?, ?, ?)[0m  [["created_at", 2017-02-09 15:23:49 UTC], ["updated_at", 2017-02-09 15:23:49 UTC], ["user_id", 1], ["contribution_id", 8]]
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[33mUPDATE "contributions" SET "updated_at" = ?, "description" = ?, "expert_id" = ?, "payload" = ? WHERE "contributions"."id" = ?[0m  [["updated_at", 2017-02-09 15:23:49 UTC], ["description", "Destroyed Expert"], ["expert_id", 13], ["payload", "{\"id\"=>13, \"created_at\"=>Thu, 09 Feb 2017 15:23:38 UTC +00:00, \"updated_at\"=>Thu, 09 Feb 2017 15:23:38 UTC +00:00, \"name\"=>\"Balthazar\", \"description\"=>nil, \"email\"=>nil, \"twitter\"=>nil, \"facebook\"=>nil, \"instagram\"=>nil, \"youtube\"=>nil, \"accuracy\"=>nil, \"user_id\"=>1, \"happened\"=>nil, \"expert_category_id\"=>nil, \"avatar_file_name\"=>nil, \"avatar_content_type\"=>nil, \"avatar_file_size\"=>nil, \"avatar_updated_at\"=>nil}"], ["id", 8]]
+  [1m[35m (1.3ms)[0m  [1m[36mcommit transaction[0m
+Completed 200 OK in 132ms (Views: 0.2ms | ActiveRecord: 10.3ms)
+
+
+  [1m[36mContribution Load (0.2ms)[0m  [1m[34mSELECT  "contributions".* FROM "contributions" ORDER BY "contributions"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]

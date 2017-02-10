@@ -19,8 +19,18 @@ class Prediction < ApplicationRecord
     has_many :prediction_flags, dependent: :destroy
     has_many :flags, :through => :prediction_flags
 
-    before_save :generate_alias
 
+    attr_reader :contributions_list
+    def contributions_list
+        {
+            created_contribution: "Created Contribution",
+            edited_contribution: "Edited Contribution",
+            destroyed_contribution: "Destroyed Contribution"
+        }
+    end
+
+
+    before_save :generate_alias
     def generate_alias
         if self.alias.nil?
             self.alias = self.title.parameterize
@@ -35,6 +45,7 @@ class Prediction < ApplicationRecord
             end
         end
     end
+
 
     scope :search, -> (q) do
         qstr = "%#{q.downcase}%"

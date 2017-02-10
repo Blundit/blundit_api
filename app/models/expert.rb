@@ -1,6 +1,8 @@
 class Expert < ApplicationRecord
   # extend Enumerize
 
+  # TODO: Make this destroy? Or should 'destroy' simply hide the expert? 
+  # TODO: Decide this app-wide
   has_many :contributions
   
   has_many :expert_claims, dependent: :destroy
@@ -18,9 +20,9 @@ class Expert < ApplicationRecord
   has_many :expert_flags, dependent: :destroy
   has_many :flags, :through => :expert_flags
 
-  attr_reader :contributions
 
-  def contributions
+  attr_reader :contributions_list
+  def contributions_list
     {
       created_expert: "Created Expert",
       edited_expert: "Edited Expert",
@@ -30,7 +32,6 @@ class Expert < ApplicationRecord
 
 
   before_save :generate_alias
-
   def generate_alias
     if self.alias.nil?
       self.alias = self.name.parameterize
@@ -45,6 +46,7 @@ class Expert < ApplicationRecord
       end
     end
   end
+  
 
   scope :search, -> (q) do
     qstr = "%#{q.downcase}%"

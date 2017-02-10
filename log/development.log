@@ -5957,3 +5957,373 @@ Migrating to AddAliases (20170210013420)
   [1m[35mSQL (0.3ms)[0m  [1m[33mUPDATE "claims" SET "updated_at" = ?, "alias" = ? WHERE "claims"."id" = ?[0m  [["updated_at", 2017-02-10 01:36:24 UTC], ["alias", "test-claim"], ["id", 2]]
   [1m[35m (2.3ms)[0m  [1m[36mcommit transaction[0m
   [1m[36mClaim Load (0.2ms)[0m  [1m[34mSELECT  "claims".* FROM "claims" WHERE "claims"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mExpert Load (0.5ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" ORDER BY "experts"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mExpert Load (0.4ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" ORDER BY "experts"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mExpert Load (0.1ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" ORDER BY "experts"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mContribution Load (0.4ms)[0m  [1m[34mSELECT  "contributions".* FROM "contributions" ORDER BY "contributions"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mExpert Load (0.2ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  [1m[36mExpert Load (0.1ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."id" = ? LIMIT ?[0m  [["id", 12], ["LIMIT", 1]]
+  [1m[36mExpert Load (0.1ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."id" = ? LIMIT ?[0m  [["id", 11], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "experts"[0m
+  [1m[36mExpert Load (0.3ms)[0m  [1m[34mSELECT "experts".* FROM "experts"[0m
+  [1m[36mExpert Load (0.1ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+Started POST "/api/v1/experts" for 127.0.0.1 at 2017-02-10 08:44:11 -0500
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+DEPRECATION WARNING: before_filter is deprecated and will be removed in Rails 5.1. Use before_action instead. (called from <class:ApiController> at /Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/controllers/api/v1/api_controller.rb:3)
+Processing by Api::V1::ExpertsController#create as */*
+  Parameters: {"name"=>"Bob!!"}
+Unpermitted parameter: format
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT COUNT(*) FROM "experts" WHERE "experts"."alias" = ?[0m  [["alias", "bob"]]
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "experts" ("created_at", "updated_at", "name", "alias") VALUES (?, ?, ?, ?)[0m  [["created_at", 2017-02-10 13:44:12 UTC], ["updated_at", 2017-02-10 13:44:12 UTC], ["name", "Bob!!"], ["alias", "bob"]]
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "contributions" ("created_at", "updated_at", "user_id") VALUES (?, ?, ?)[0m  [["created_at", 2017-02-10 13:44:12 UTC], ["updated_at", 2017-02-10 13:44:12 UTC], ["user_id", 1]]
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "user_contributions" ("created_at", "updated_at", "user_id", "contribution_id") VALUES (?, ?, ?, ?)[0m  [["created_at", 2017-02-10 13:44:12 UTC], ["updated_at", 2017-02-10 13:44:12 UTC], ["user_id", 1], ["contribution_id", 9]]
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+Completed 500 Internal Server Error in 238ms (ActiveRecord: 9.4ms)
+
+
+  
+NoMethodError (undefined method `[]' for nil:NilClass):
+  
+app/controllers/application_controller.rb:27:in `add_contribution'
+app/controllers/api/v1/experts_controller.rb:40:in `create'
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (3.3ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.7ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (0.9ms)
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (82.4ms)
+Started POST "/api/v1/experts" for 127.0.0.1 at 2017-02-10 08:45:00 -0500
+DEPRECATION WARNING: before_filter is deprecated and will be removed in Rails 5.1. Use before_action instead. (called from <class:ApiController> at /Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/controllers/api/v1/api_controller.rb:3)
+Processing by Api::V1::ExpertsController#create as */*
+  Parameters: {"name"=>"Bob!!"}
+Unpermitted parameter: format
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "experts" WHERE "experts"."alias" = ?[0m  [["alias", "bob"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "experts" WHERE "experts"."alias" = ?[0m  [["alias", "bob-2"]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "experts" ("created_at", "updated_at", "name", "alias") VALUES (?, ?, ?, ?)[0m  [["created_at", 2017-02-10 13:45:01 UTC], ["updated_at", 2017-02-10 13:45:01 UTC], ["name", "Bob!!"], ["alias", "bob-2"]]
+  [1m[35m (1.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "contributions" ("created_at", "updated_at", "user_id") VALUES (?, ?, ?)[0m  [["created_at", 2017-02-10 13:45:01 UTC], ["updated_at", 2017-02-10 13:45:01 UTC], ["user_id", 1]]
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "user_contributions" ("created_at", "updated_at", "user_id", "contribution_id") VALUES (?, ?, ?, ?)[0m  [["created_at", 2017-02-10 13:45:01 UTC], ["updated_at", 2017-02-10 13:45:01 UTC], ["user_id", 1], ["contribution_id", 10]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[33mUPDATE "contributions" SET "updated_at" = ?, "description" = ?, "expert_id" = ?, "payload" = ? WHERE "contributions"."id" = ?[0m  [["updated_at", 2017-02-10 13:45:01 UTC], ["description", "Created Expert"], ["expert_id", 23], ["payload", "{\"id\"=>23, \"created_at\"=>Fri, 10 Feb 2017 13:45:01 UTC +00:00, \"updated_at\"=>Fri, 10 Feb 2017 13:45:01 UTC +00:00, \"name\"=>\"Bob!!\", \"description\"=>nil, \"email\"=>nil, \"twitter\"=>nil, \"facebook\"=>nil, \"instagram\"=>nil, \"youtube\"=>nil, \"accuracy\"=>nil, \"user_id\"=>nil, \"happened\"=>nil, \"expert_category_id\"=>nil, \"avatar_file_name\"=>nil, \"avatar_content_type\"=>nil, \"avatar_file_size\"=>nil, \"avatar_updated_at\"=>nil, \"alias\"=>\"bob-2\"}"], ["id", 10]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+Completed 200 OK in 110ms (Views: 0.3ms | ActiveRecord: 10.2ms)
+
+
+  [1m[36mExpert Load (0.1ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" ORDER BY "experts"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+Started POST "/api/v1/experts" for 127.0.0.1 at 2017-02-10 08:45:18 -0500
+Processing by Api::V1::ExpertsController#create as */*
+  Parameters: {"name"=>"Bob!!"}
+Unpermitted parameter: format
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "experts" WHERE "experts"."alias" = ?[0m  [["alias", "bob"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "experts" WHERE "experts"."alias" = ?[0m  [["alias", "bob-2"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "experts" WHERE "experts"."alias" = ?[0m  [["alias", "bob-3"]]
+  [1m[35mSQL (1.2ms)[0m  [1m[32mINSERT INTO "experts" ("created_at", "updated_at", "name", "alias") VALUES (?, ?, ?, ?)[0m  [["created_at", 2017-02-10 13:45:18 UTC], ["updated_at", 2017-02-10 13:45:18 UTC], ["name", "Bob!!"], ["alias", "bob-3"]]
+  [1m[35m (2.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "contributions" ("created_at", "updated_at", "user_id") VALUES (?, ?, ?)[0m  [["created_at", 2017-02-10 13:45:18 UTC], ["updated_at", 2017-02-10 13:45:18 UTC], ["user_id", 1]]
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "user_contributions" ("created_at", "updated_at", "user_id", "contribution_id") VALUES (?, ?, ?, ?)[0m  [["created_at", 2017-02-10 13:45:18 UTC], ["updated_at", 2017-02-10 13:45:18 UTC], ["user_id", 1], ["contribution_id", 11]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[33mUPDATE "contributions" SET "updated_at" = ?, "description" = ?, "expert_id" = ?, "payload" = ? WHERE "contributions"."id" = ?[0m  [["updated_at", 2017-02-10 13:45:18 UTC], ["description", "Created Expert"], ["expert_id", 24], ["payload", "{\"id\"=>24, \"created_at\"=>Fri, 10 Feb 2017 13:45:18 UTC +00:00, \"updated_at\"=>Fri, 10 Feb 2017 13:45:18 UTC +00:00, \"name\"=>\"Bob!!\", \"description\"=>nil, \"email\"=>nil, \"twitter\"=>nil, \"facebook\"=>nil, \"instagram\"=>nil, \"youtube\"=>nil, \"accuracy\"=>nil, \"user_id\"=>nil, \"happened\"=>nil, \"expert_category_id\"=>nil, \"avatar_file_name\"=>nil, \"avatar_content_type\"=>nil, \"avatar_file_size\"=>nil, \"avatar_updated_at\"=>nil, \"alias\"=>\"bob-3\"}"], ["id", 11]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+Completed 200 OK in 19ms (Views: 0.2ms | ActiveRecord: 7.1ms)
+
+
+  [1m[36mExpert Load (0.2ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" ORDER BY "experts"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+Started POST "/api/v1/experts" for 127.0.0.1 at 2017-02-10 08:46:49 -0500
+DEPRECATION WARNING: before_filter is deprecated and will be removed in Rails 5.1. Use before_action instead. (called from <class:ApiController> at /Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/controllers/api/v1/api_controller.rb:3)
+Processing by Api::V1::ExpertsController#create as */*
+  Parameters: {"name"=>"Bob!!"}
+Unpermitted parameter: format
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "experts" WHERE "experts"."alias" = ?[0m  [["alias", "bob"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "experts" WHERE "experts"."alias" = ?[0m  [["alias", "bob-2"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "experts" WHERE "experts"."alias" = ?[0m  [["alias", "bob-3"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "experts" WHERE "experts"."alias" = ?[0m  [["alias", "bob-4"]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "experts" ("created_at", "updated_at", "name", "alias") VALUES (?, ?, ?, ?)[0m  [["created_at", 2017-02-10 13:46:49 UTC], ["updated_at", 2017-02-10 13:46:49 UTC], ["name", "Bob!!"], ["alias", "bob-4"]]
+  [1m[35m (1.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "contributions" ("created_at", "updated_at", "user_id") VALUES (?, ?, ?)[0m  [["created_at", 2017-02-10 13:46:49 UTC], ["updated_at", 2017-02-10 13:46:49 UTC], ["user_id", 1]]
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "user_contributions" ("created_at", "updated_at", "user_id", "contribution_id") VALUES (?, ?, ?, ?)[0m  [["created_at", 2017-02-10 13:46:49 UTC], ["updated_at", 2017-02-10 13:46:49 UTC], ["user_id", 1], ["contribution_id", 12]]
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+Completed 500 Internal Server Error in 92ms (ActiveRecord: 7.9ms)
+
+
+  
+NoMethodError (undefined method `object' for nil:NilClass):
+  
+app/models/contribution.rb:24:in `set_object'
+app/controllers/application_controller.rb:28:in `add_contribution'
+app/controllers/api/v1/experts_controller.rb:40:in `create'
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (4.2ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.9ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.3ms)
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (70.3ms)
+Started POST "/api/v1/experts" for 127.0.0.1 at 2017-02-10 08:47:42 -0500
+DEPRECATION WARNING: before_filter is deprecated and will be removed in Rails 5.1. Use before_action instead. (called from <class:ApiController> at /Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/controllers/api/v1/api_controller.rb:3)
+Processing by Api::V1::ExpertsController#create as */*
+  Parameters: {"name"=>"Bob!!"}
+Unpermitted parameter: format
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "experts" WHERE "experts"."alias" = ?[0m  [["alias", "bob"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "experts" WHERE "experts"."alias" = ?[0m  [["alias", "bob-2"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "experts" WHERE "experts"."alias" = ?[0m  [["alias", "bob-3"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "experts" WHERE "experts"."alias" = ?[0m  [["alias", "bob-4"]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "experts" WHERE "experts"."alias" = ?[0m  [["alias", "bob-5"]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "experts" ("created_at", "updated_at", "name", "alias") VALUES (?, ?, ?, ?)[0m  [["created_at", 2017-02-10 13:47:42 UTC], ["updated_at", 2017-02-10 13:47:42 UTC], ["name", "Bob!!"], ["alias", "bob-5"]]
+  [1m[35m (1.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "contributions" ("created_at", "updated_at", "user_id") VALUES (?, ?, ?)[0m  [["created_at", 2017-02-10 13:47:42 UTC], ["updated_at", 2017-02-10 13:47:42 UTC], ["user_id", 1]]
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "user_contributions" ("created_at", "updated_at", "user_id", "contribution_id") VALUES (?, ?, ?, ?)[0m  [["created_at", 2017-02-10 13:47:42 UTC], ["updated_at", 2017-02-10 13:47:42 UTC], ["user_id", 1], ["contribution_id", 13]]
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[33mUPDATE "contributions" SET "updated_at" = ?, "description" = ?, "expert_id" = ?, "payload" = ? WHERE "contributions"."id" = ?[0m  [["updated_at", 2017-02-10 13:47:42 UTC], ["description", "Created Expert"], ["expert_id", 26], ["payload", "{\"id\"=>26, \"created_at\"=>Fri, 10 Feb 2017 13:47:42 UTC +00:00, \"updated_at\"=>Fri, 10 Feb 2017 13:47:42 UTC +00:00, \"name\"=>\"Bob!!\", \"description\"=>nil, \"email\"=>nil, \"twitter\"=>nil, \"facebook\"=>nil, \"instagram\"=>nil, \"youtube\"=>nil, \"accuracy\"=>nil, \"user_id\"=>nil, \"happened\"=>nil, \"expert_category_id\"=>nil, \"avatar_file_name\"=>nil, \"avatar_content_type\"=>nil, \"avatar_file_size\"=>nil, \"avatar_updated_at\"=>nil, \"alias\"=>\"bob-5\"}"], ["id", 13]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+Completed 200 OK in 92ms (Views: 0.2ms | ActiveRecord: 8.8ms)
+
+
+  [1m[36mExpert Load (0.2ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" ORDER BY "experts"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mContribution Load (0.1ms)[0m  [1m[34mSELECT "contributions".* FROM "contributions" WHERE "contributions"."expert_id" = ?[0m  [["expert_id", 26]]
+  [1m[36mExpert Load (0.1ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" ORDER BY "experts"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mExpert Load (0.1ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" ORDER BY "experts"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mExpert Load (0.1ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" ORDER BY "experts"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mContribution Load (0.7ms)[0m  [1m[34mSELECT  "contributions".* FROM "contributions" ORDER BY "contributions"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mContribution Load (0.2ms)[0m  [1m[34mSELECT  "contributions".* FROM "contributions" ORDER BY "contributions"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mExpert Load (0.2ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."id" = ? LIMIT ?[0m  [["id", 26], ["LIMIT", 1]]
+  [1m[36mExpert Load (0.2ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" ORDER BY "experts"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mExpert Load (0.1ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" ORDER BY "experts"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mExpert Load (0.5ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" ORDER BY "experts"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mContribution Load (0.2ms)[0m  [1m[34mSELECT "contributions".* FROM "contributions" WHERE "contributions"."expert_id" = ?[0m  [["expert_id", 26]]
+Started GET "/api/v1/experts/26" for 127.0.0.1 at 2017-02-10 08:52:30 -0500
+DEPRECATION WARNING: before_filter is deprecated and will be removed in Rails 5.1. Use before_action instead. (called from <class:ApiController> at /Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/controllers/api/v1/api_controller.rb:3)
+Processing by Api::V1::ExpertsController#show as */*
+  Parameters: {"id"=>"26"}
+  [1m[36mExpert Load (0.2ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."id" = ? LIMIT ?[0m  [["id", 26], ["LIMIT", 1]]
+  Rendering api/v1/experts/show.json.jbuilder
+  Rendered api/v1/experts/show.json.jbuilder (5.5ms)
+Completed 200 OK in 49ms (Views: 16.2ms | ActiveRecord: 1.6ms)
+
+
+Started GET "/api/v1/experts/26" for 127.0.0.1 at 2017-02-10 08:53:14 -0500
+Processing by Api::V1::ExpertsController#show as */*
+  Parameters: {"id"=>"26"}
+  [1m[36mExpert Load (0.1ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."id" = ? LIMIT ?[0m  [["id", 26], ["LIMIT", 1]]
+  Rendering api/v1/experts/show.json.jbuilder
+  Rendered api/v1/experts/show.json.jbuilder (7.2ms)
+Completed 500 Internal Server Error in 23ms (ActiveRecord: 0.1ms)
+
+
+  
+ActionView::Template::Error (undefined method `map' for #<Expert:0x007fa7d3be16a8>
+Did you mean?  tap):
+    1: json.expert @expert do
+    2:     json.contributions @expert.contributions
+    3: end
+  
+app/views/api/v1/experts/show.json.jbuilder:1:in `_app_views_api_v__experts_show_json_jbuilder___1348392835654176342_70179383893620'
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/template_error.html.erb within rescues/layout
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (6.0ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.0ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (0.8ms)
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/template_error.html.erb within rescues/layout (64.7ms)
+Started GET "/api/v1/experts/26" for 127.0.0.1 at 2017-02-10 08:53:45 -0500
+Processing by Api::V1::ExpertsController#show as */*
+  Parameters: {"id"=>"26"}
+  [1m[36mExpert Load (0.1ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."id" = ? LIMIT ?[0m  [["id", 26], ["LIMIT", 1]]
+  Rendering api/v1/experts/show.json.jbuilder
+  [1m[36mContribution Load (0.1ms)[0m  [1m[34mSELECT "contributions".* FROM "contributions" WHERE "contributions"."expert_id" = ?[0m  [["expert_id", 26]]
+  Rendered api/v1/experts/show.json.jbuilder (40.6ms)
+Completed 200 OK in 53ms (Views: 49.9ms | ActiveRecord: 0.7ms)
+
+
+Started POST "/api/v1/experts" for 127.0.0.1 at 2017-02-10 08:55:44 -0500
+DEPRECATION WARNING: before_filter is deprecated and will be removed in Rails 5.1. Use before_action instead. (called from <class:ApiController> at /Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/controllers/api/v1/api_controller.rb:3)
+Processing by Api::V1::ExpertsController#create as */*
+  Parameters: {"name"=>"Bob!!"}
+Unpermitted parameter: format
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "experts" WHERE "experts"."alias" = ?[0m  [["alias", "bob"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "experts" WHERE "experts"."alias" = ?[0m  [["alias", "bob-2"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "experts" WHERE "experts"."alias" = ?[0m  [["alias", "bob-3"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "experts" WHERE "experts"."alias" = ?[0m  [["alias", "bob-4"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "experts" WHERE "experts"."alias" = ?[0m  [["alias", "bob-5"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "experts" WHERE "experts"."alias" = ?[0m  [["alias", "bob-6"]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "experts" ("created_at", "updated_at", "name", "alias") VALUES (?, ?, ?, ?)[0m  [["created_at", 2017-02-10 13:55:44 UTC], ["updated_at", 2017-02-10 13:55:44 UTC], ["name", "Bob!!"], ["alias", "bob-6"]]
+  [1m[35m (2.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "contributions" ("created_at", "updated_at", "user_id") VALUES (?, ?, ?)[0m  [["created_at", 2017-02-10 13:55:44 UTC], ["updated_at", 2017-02-10 13:55:44 UTC], ["user_id", 1]]
+  [1m[35m (2.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "user_contributions" ("created_at", "updated_at", "user_id", "contribution_id") VALUES (?, ?, ?, ?)[0m  [["created_at", 2017-02-10 13:55:44 UTC], ["updated_at", 2017-02-10 13:55:44 UTC], ["user_id", 1], ["contribution_id", 14]]
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[33mUPDATE "contributions" SET "updated_at" = ?, "description" = ?, "expert_id" = ?, "payload" = ? WHERE "contributions"."id" = ?[0m  [["updated_at", 2017-02-10 13:55:44 UTC], ["description", "Created Expert"], ["expert_id", 27], ["payload", "{\"id\"=>27, \"created_at\"=>Fri, 10 Feb 2017 13:55:44 UTC +00:00, \"updated_at\"=>Fri, 10 Feb 2017 13:55:44 UTC +00:00, \"name\"=>\"Bob!!\", \"description\"=>nil, \"email\"=>nil, \"twitter\"=>nil, \"facebook\"=>nil, \"instagram\"=>nil, \"youtube\"=>nil, \"accuracy\"=>nil, \"user_id\"=>nil, \"happened\"=>nil, \"expert_category_id\"=>nil, \"avatar_file_name\"=>nil, \"avatar_content_type\"=>nil, \"avatar_file_size\"=>nil, \"avatar_updated_at\"=>nil, \"alias\"=>\"bob-6\"}"], ["id", 14]]
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+Completed 200 OK in 90ms (Views: 0.3ms | ActiveRecord: 11.5ms)
+
+
+  [1m[36mExpert Load (0.2ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" ORDER BY "experts"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mExpert Load (0.1ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" ORDER BY "experts"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mContribution Load (0.2ms)[0m  [1m[34mSELECT  "contributions".* FROM "contributions" WHERE "contributions"."expert_id" = ? ORDER BY "contributions"."id" DESC LIMIT ?[0m  [["expert_id", 27], ["LIMIT", 1]]
+  [1m[36mExpert Load (0.1ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" ORDER BY "experts"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mContribution Load (0.1ms)[0m  [1m[34mSELECT  "contributions".* FROM "contributions" WHERE "contributions"."expert_id" = ? ORDER BY "contributions"."id" DESC LIMIT ?[0m  [["expert_id", 27], ["LIMIT", 1]]
+  [1m[36mExpert Load (0.1ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" ORDER BY "experts"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mContribution Load (0.2ms)[0m  [1m[34mSELECT  "contributions".* FROM "contributions" WHERE "contributions"."expert_id" = ? ORDER BY "contributions"."id" DESC LIMIT ?[0m  [["expert_id", 27], ["LIMIT", 1]]
+  [1m[36mExpert Load (0.1ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" ORDER BY "experts"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mContribution Load (0.1ms)[0m  [1m[34mSELECT  "contributions".* FROM "contributions" WHERE "contributions"."expert_id" = ? ORDER BY "contributions"."id" DESC LIMIT ?[0m  [["expert_id", 27], ["LIMIT", 1]]
+  [1m[36mExpert Load (0.2ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" ORDER BY "experts"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mContribution Load (0.2ms)[0m  [1m[34mSELECT  "contributions".* FROM "contributions" WHERE "contributions"."expert_id" = ? ORDER BY "contributions"."id" DESC LIMIT ?[0m  [["expert_id", 27], ["LIMIT", 1]]
+Started GET "/api/v1/experts/26" for 127.0.0.1 at 2017-02-10 09:00:54 -0500
+DEPRECATION WARNING: before_filter is deprecated and will be removed in Rails 5.1. Use before_action instead. (called from <class:ApiController> at /Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/controllers/api/v1/api_controller.rb:3)
+Processing by Api::V1::ExpertsController#show as */*
+  Parameters: {"id"=>"26"}
+  [1m[36mExpert Load (0.2ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."id" = ? LIMIT ?[0m  [["id", 26], ["LIMIT", 1]]
+  Rendering api/v1/experts/show.json.jbuilder
+  Rendered api/v1/experts/show.json.jbuilder (13.6ms)
+Completed 500 Internal Server Error in 53ms (ActiveRecord: 1.9ms)
+
+
+  
+ActionView::Template::Error (undefined method `contributions' for nil:NilClass):
+    1: json.expert @expert
+    2: json.expert.contributions @expert.contributions
+  
+app/views/api/v1/experts/show.json.jbuilder:2:in `_app_views_api_v__experts_show_json_jbuilder___1348392835654176342_70179413413080'
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/template_error.html.erb within rescues/layout
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (4.8ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.3ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (0.8ms)
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/template_error.html.erb within rescues/layout (69.5ms)
+Started GET "/api/v1/experts" for 127.0.0.1 at 2017-02-10 09:03:46 -0500
+DEPRECATION WARNING: before_filter is deprecated and will be removed in Rails 5.1. Use before_action instead. (called from <class:ApiController> at /Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/controllers/api/v1/api_controller.rb:3)
+Processing by Api::V1::ExpertsController#index as */*
+  Rendering api/v1/experts/index.json.jbuilder
+  [1m[36mExpert Load (0.5ms)[0m  [1m[34mSELECT "experts".* FROM "experts"[0m
+  Rendered api/v1/experts/index.json.jbuilder (15.7ms)
+Completed 200 OK in 38ms (Views: 24.6ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/api/v1/claims" for 127.0.0.1 at 2017-02-10 09:03:52 -0500
+Processing by Api::V1::ClaimsController#index as */*
+Completed 500 Internal Server Error in 7ms (ActiveRecord: 0.0ms)
+
+
+  
+SyntaxError (/Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/models/claim.rb:54: syntax error, unexpected end-of-input, expecting keyword_end):
+  
+app/models/claim.rb:54: syntax error, unexpected end-of-input, expecting keyword_end
+app/controllers/api/v1/claims_controller.rb:6:in `index'
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (4.7ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.1ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (0.8ms)
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (65.6ms)
+Started GET "/api/v1/claims" for 127.0.0.1 at 2017-02-10 09:04:17 -0500
+DEPRECATION WARNING: before_filter is deprecated and will be removed in Rails 5.1. Use before_action instead. (called from <class:ApiController> at /Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/controllers/api/v1/api_controller.rb:3)
+Processing by Api::V1::ClaimsController#index as */*
+  Rendering api/v1/claims/index.json.jbuilder
+  [1m[36mClaim Load (0.5ms)[0m  [1m[34mSELECT "claims".* FROM "claims"[0m
+  Rendered api/v1/claims/index.json.jbuilder (10.4ms)
+Completed 200 OK in 37ms (Views: 21.7ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/api/v1/predictions" for 127.0.0.1 at 2017-02-10 09:04:24 -0500
+  
+SyntaxError (/Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/controllers/api/v1/predictions_controller.rb:84: syntax error, unexpected end-of-input, expecting keyword_end):
+  
+app/controllers/api/v1/predictions_controller.rb:84: syntax error, unexpected end-of-input, expecting keyword_end
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (3.7ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (3.0ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.2ms)
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (66.0ms)
+Started GET "/api/v1/predictions" for 127.0.0.1 at 2017-02-10 09:05:26 -0500
+  
+SyntaxError (/Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/controllers/api/v1/predictions_controller.rb:84: syntax error, unexpected end-of-input, expecting keyword_end):
+  
+app/controllers/api/v1/predictions_controller.rb:84: syntax error, unexpected end-of-input, expecting keyword_end
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (5.0ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (3.7ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (2.5ms)
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (74.0ms)
+Started GET "/api/v1/predictions" for 127.0.0.1 at 2017-02-10 09:06:00 -0500
+  
+SyntaxError (/Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/controllers/api/v1/predictions_controller.rb:84: syntax error, unexpected end-of-input, expecting keyword_end):
+  
+app/controllers/api/v1/predictions_controller.rb:84: syntax error, unexpected end-of-input, expecting keyword_end
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (3.4ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.5ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (0.9ms)
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (72.5ms)
+Started GET "/api/v1/predictions" for 127.0.0.1 at 2017-02-10 09:06:07 -0500
+DEPRECATION WARNING: before_filter is deprecated and will be removed in Rails 5.1. Use before_action instead. (called from <class:ApiController> at /Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/controllers/api/v1/api_controller.rb:3)
+Processing by Api::V1::PredictionsController#index as */*
+  Rendering api/v1/predictions/index.json.jbuilder
+  [1m[36mPrediction Load (3.2ms)[0m  [1m[34mSELECT "predictions".* FROM "predictions"[0m
+  Rendered api/v1/predictions/index.json.jbuilder (25.0ms)
+Completed 200 OK in 65ms (Views: 37.4ms | ActiveRecord: 4.1ms)
+
+
+Started GET "/api/v1/predictions" for 127.0.0.1 at 2017-02-10 09:06:08 -0500
+Processing by Api::V1::PredictionsController#index as */*
+  Rendering api/v1/predictions/index.json.jbuilder
+  [1m[36mPrediction Load (0.1ms)[0m  [1m[34mSELECT "predictions".* FROM "predictions"[0m
+  Rendered api/v1/predictions/index.json.jbuilder (1.6ms)
+Completed 200 OK in 13ms (Views: 10.6ms | ActiveRecord: 0.1ms)
+
+

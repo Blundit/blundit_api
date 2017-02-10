@@ -20,6 +20,6 @@ class Contribution < ApplicationRecord
 
   def set_object(object)
     self["#{object.class.name.downcase}_id"] = object.id
-    self.payload = object.as_json
+    self.payload = object.as_json.to_s
   end
 end

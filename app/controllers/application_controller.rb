@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
     end
 
     user.contributions << @contribution = Contribution.create({ user_id: user.id })
-    @contribution.description = object.contributions[type].to_s
+    @contribution.description = object.contributions_list[type].to_s
     @contribution.set_object(object)
     @contribution.save
 

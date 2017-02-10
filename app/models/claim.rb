@@ -19,8 +19,18 @@ class Claim < ApplicationRecord
     has_many :claim_comments, dependent: :destroy
     has_many :comments, :through => :claim_comments
 
-    before_save :generate_alias
 
+    attr_reader :contributions_list
+    def contributions_list
+        {
+                created_claim: "Created Claim",
+                edited_claim: "Edited Claim",
+                destroyed_claim: "Destroyed Claim"
+        }
+    end
+
+
+    before_save :generate_alias
     def generate_alias
         if self.alias.nil?
             self.alias = self.title.parameterize
@@ -35,6 +45,7 @@ class Claim < ApplicationRecord
             end
         end
     end
+    
 
     scope :search, -> (q) do
         qstr = "%#{q.downcase}%"

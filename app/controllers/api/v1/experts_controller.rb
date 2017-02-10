@@ -10,14 +10,12 @@ module Api::V1
 
     def show
       # GET /CONTROLLER/:id
-      p params[:id], params[:term].nil?
       if params[:id] == 'search' && !params[:term].nil?
         return self.search
       end
       
       if params[:id].to_i != 0
         @expert = Expert.find_by_id(params[:id])
-        # render json: { errors: "Expert Not Founkjd" }, status: 422
       else
         @expert = Expert.where(alias: params[:id]).first
 
@@ -80,13 +78,10 @@ module Api::V1
     end
 
 
-    
-
-
     private
 
     def set_expert
-      @expert = Expert.find params[:id]
+      @expert = Expert.find(params[:id])
     end
 
 

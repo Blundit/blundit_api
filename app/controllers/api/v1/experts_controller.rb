@@ -1,21 +1,38 @@
 module Api::V1
   class ExpertsController < ApiController
-    before_action :set_expert, only: [:show, :edit, :update, :destroy]
+    before_action :set_expert, only: [:edit, :update, :destroy]
 
     def index
       # GET /CONTROLLER
       @experts = Expert.all
     end
 
+
     def show
       # GET /CONTROLLER/:id
-      @id = Expert.find(params[:id])
+      p params[:id], params[:term].nil?
+      if params[:id] == 'search' && !params[:term].nil?
+        return self.search
+      end
+      
+      if params[:id].to_i != 0
+        @expert = Expert.find_by_id(params[:id])
+        # render json: { errors: "Expert Not Founkjd" }, status: 422
+      else
+        @expert = Expert.where(alias: params[:id]).first
+
+        if @expert.nil?
+          render json: { errors: "Expert Not Found" }, status: 422
+        end
+      end
     end
+
 
     def new
       # GET /pundits/new
       @expert = Expert.new
     end
+
 
     def create
       # POST /pundits
@@ -27,8 +44,8 @@ module Api::V1
       else
         render json: { result: "error" }
       end
-
     end
+
 
     def edit
       # PUT /pundits/:id
@@ -41,8 +58,10 @@ module Api::V1
 
     end
 
+
     def destroy
       # DELETE /pundits/:id
+
       if params[:id]
         if @expert.destroy
           add_contribution(@expert, :destroyed_expert)
@@ -55,11 +74,21 @@ module Api::V1
       end
     end
 
+
+    def search
+      @expert = Expert.search(params[:term])
+    end
+
+
+    
+
+
     private
 
     def set_expert
       @expert = Expert.find params[:id]
     end
+
 
     def expert_params
         params.permit(

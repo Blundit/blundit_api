@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   
   get 'home' => 'home#index'
 
+  # react paths here
+
 
   post 'auth_user' => 'authentication#authenticate_user'
 

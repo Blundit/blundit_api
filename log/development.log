@@ -4916,3 +4916,1001 @@ Completed 200 OK in 132ms (Views: 0.2ms | ActiveRecord: 10.3ms)
 
 
   [1m[36mContribution Load (0.2ms)[0m  [1m[34mSELECT  "contributions".* FROM "contributions" ORDER BY "contributions"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to AddAliasToExperts (20170210004824)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.1ms)[0m  [1m[35mALTER TABLE "experts" ADD "alias" varchar[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170210004824"]]
+  [1m[35m (1.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", :environment], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_email' AND type='index'
+[0m
+  [1m[36mExpert Load (0.3ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" ORDER BY "experts"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "experts" WHERE "experts"."alias" = ?[0m  [["alias", "bob-man"]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "experts" WHERE "experts"."alias" = ?[0m  [["alias", "bob-man"]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[33mUPDATE "experts" SET "updated_at" = ?, "name" = ?, "alias" = ? WHERE "experts"."id" = ?[0m  [["updated_at", 2017-02-10 00:52:09 UTC], ["name", "Bob Man"], ["alias", "bob-man"], ["id", 2]]
+  [1m[35m (2.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "experts" WHERE "experts"."alias" = ?[0m  [["alias", "bob-man"]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.5ms)[0m  [1m[32mINSERT INTO "experts" ("created_at", "updated_at", "name") VALUES (?, ?, ?)[0m  [["created_at", 2017-02-10 00:56:15 UTC], ["updated_at", 2017-02-10 00:56:15 UTC], ["name", "My man"]]
+  [1m[35m (2.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mExpert Load (0.4ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "experts" ("created_at", "updated_at", "name") VALUES (?, ?, ?)[0m  [["created_at", 2017-02-10 00:56:44 UTC], ["updated_at", 2017-02-10 00:56:44 UTC], ["name", "The Clown"]]
+  [1m[35m (2.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mExpert Load (0.2ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."id" = ? LIMIT ?[0m  [["id", 15], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "experts" ("created_at", "updated_at", "name") VALUES (?, ?, ?)[0m  [["created_at", 2017-02-10 00:57:12 UTC], ["updated_at", 2017-02-10 00:57:12 UTC], ["name", "Joe Bob"]]
+  [1m[35m (2.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mExpert Load (0.2ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  [1m[36mExpert Load (0.1ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" ORDER BY "experts"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "experts" WHERE "experts"."alias" = ?[0m  [["alias", "joe-bob"]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[33mUPDATE "experts" SET "updated_at" = ?, "alias" = ? WHERE "experts"."id" = ?[0m  [["updated_at", 2017-02-10 00:58:40 UTC], ["alias", "joe-bob"], ["id", 16]]
+  [1m[35m (2.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mExpert Load (0.2ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "experts" ("created_at", "updated_at", "name") VALUES (?, ?, ?)[0m  [["created_at", 2017-02-10 01:00:09 UTC], ["updated_at", 2017-02-10 01:00:09 UTC], ["name", "Billy Jean"]]
+  [1m[35m (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mExpert Load (0.2ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."id" = ? LIMIT ?[0m  [["id", 17], ["LIMIT", 1]]
+  [1m[36mExpert Load (0.2ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" ORDER BY "experts"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mExpert Load (0.2ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" ORDER BY "experts"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mExpert Load (0.2ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."id" = ? LIMIT ?[0m  [["id", 17], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "experts" WHERE "experts"."alias" = ?[0m  [["alias", "billy-jean"]]
+  [1m[36mExpert Load (0.1ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."id" = ? LIMIT ?[0m  [["id", 17], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "experts" WHERE "experts"."alias" = ?[0m  [["alias", "might-joe-young"]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "experts" ("created_at", "updated_at", "name", "alias") VALUES (?, ?, ?, ?)[0m  [["created_at", 2017-02-10 01:02:03 UTC], ["updated_at", 2017-02-10 01:02:03 UTC], ["name", "Might Joe Young"], ["alias", "might-joe-young"]]
+  [1m[35m (2.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mExpert Load (0.2ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."id" = ? LIMIT ?[0m  [["id", 18], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "experts" WHERE "experts"."alias" = ?[0m  [["alias", "mighty-joe-young"]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "experts" ("created_at", "updated_at", "name", "alias") VALUES (?, ?, ?, ?)[0m  [["created_at", 2017-02-10 01:02:26 UTC], ["updated_at", 2017-02-10 01:02:26 UTC], ["name", "Mighty Joe Young"], ["alias", "mighty-joe-young"]]
+  [1m[35m (2.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mExpert Load (0.2ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."id" = ? LIMIT ?[0m  [["id", 19], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "experts" WHERE "experts"."alias" = ?[0m  [["alias", "mighty-joe-young"]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mExpert Load (0.1ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" ORDER BY "experts"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "experts" WHERE "experts"."alias" = ?[0m  [["alias", "mighty-joe-young"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "experts" WHERE "experts"."alias" = ?[0m  [["alias", "mighty-joe-young-2"]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "experts" ("created_at", "updated_at", "name", "alias") VALUES (?, ?, ?, ?)[0m  [["created_at", 2017-02-10 01:03:19 UTC], ["updated_at", 2017-02-10 01:03:19 UTC], ["name", "Mighty Joe Young"], ["alias", "mighty-joe-young-2"]]
+  [1m[35m (2.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "experts" WHERE "experts"."alias" = ?[0m  [["alias", "mighty-joe-young"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "experts" WHERE "experts"."alias" = ?[0m  [["alias", "mighty-joe-young-2"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "experts" WHERE "experts"."alias" = ?[0m  [["alias", "mighty-joe-young-3"]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "experts" ("created_at", "updated_at", "name", "alias") VALUES (?, ?, ?, ?)[0m  [["created_at", 2017-02-10 01:03:28 UTC], ["updated_at", 2017-02-10 01:03:28 UTC], ["name", "Mighty Joe Young"], ["alias", "mighty-joe-young-3"]]
+  [1m[35m (2.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mExpert Load (0.2ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."alias" = ? ORDER BY "experts"."id" ASC LIMIT ?[0m  [["alias", "mighty-joe-young"], ["LIMIT", 1]]
+Started DELETE "/api/v1/experts/13" for 127.0.0.1 at 2017-02-09 20:07:25 -0500
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+DEPRECATION WARNING: before_filter is deprecated and will be removed in Rails 5.1. Use before_action instead. (called from <class:ApiController> at /Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/controllers/api/v1/api_controller.rb:3)
+Processing by Api::V1::ExpertsController#destroy as */*
+  Parameters: {"name"=>"Bob", "id"=>"13"}
+  [1m[36mExpert Load (0.5ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+Completed 404 Not Found in 35ms (ActiveRecord: 1.2ms)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Expert with 'id'=13):
+  
+app/controllers/api/v1/experts_controller.rb:74:in `set_expert'
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (10.7ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.9ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.7ms)
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (101.0ms)
+Started GET "/api/v1/experts/13" for 127.0.0.1 at 2017-02-09 20:07:28 -0500
+Processing by Api::V1::ExpertsController#show as */*
+  Parameters: {"id"=>"13"}
+  [1m[36mExpert Load (0.1ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+Completed 404 Not Found in 1ms (ActiveRecord: 0.1ms)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Expert with 'id'=13):
+  
+app/controllers/api/v1/experts_controller.rb:74:in `set_expert'
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (3.3ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.2ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (0.8ms)
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (61.0ms)
+Started GET "/api/v1/experts/might" for 127.0.0.1 at 2017-02-09 20:07:39 -0500
+Processing by Api::V1::ExpertsController#show as */*
+  Parameters: {"id"=>"might"}
+  [1m[36mExpert Load (0.1ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."id" = ? LIMIT ?[0m  [["id", 0], ["LIMIT", 1]]
+Completed 404 Not Found in 2ms (ActiveRecord: 0.1ms)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Expert with 'id'=might):
+  
+app/controllers/api/v1/experts_controller.rb:74:in `set_expert'
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (9.0ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.5ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (0.8ms)
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (71.2ms)
+Started GET "/api/v1/experts/might" for 127.0.0.1 at 2017-02-09 20:08:16 -0500
+DEPRECATION WARNING: before_filter is deprecated and will be removed in Rails 5.1. Use before_action instead. (called from <class:ApiController> at /Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/controllers/api/v1/api_controller.rb:3)
+Processing by Api::V1::ExpertsController#show as */*
+  Parameters: {"id"=>"might"}
+  Rendering api/v1/experts/show.json.jbuilder
+  [1m[36mExpert Load (0.2ms)[0m  [1m[34mSELECT "experts".* FROM "experts" WHERE "experts"."alias" = ?[0m  [["alias", "might"]]
+  Rendered api/v1/experts/show.json.jbuilder (4.6ms)
+Completed 200 OK in 34ms (Views: 15.9ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/api/v1/experts/might" for 127.0.0.1 at 2017-02-09 20:08:43 -0500
+DEPRECATION WARNING: before_filter is deprecated and will be removed in Rails 5.1. Use before_action instead. (called from <class:ApiController> at /Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/controllers/api/v1/api_controller.rb:3)
+Processing by Api::V1::ExpertsController#show as */*
+  Parameters: {"id"=>"might"}
+  [1m[36mExpert Load (0.1ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."alias" = ? ORDER BY "experts"."id" ASC LIMIT ?[0m  [["alias", "might"], ["LIMIT", 1]]
+  Rendering api/v1/experts/show.json.jbuilder
+  Rendered api/v1/experts/show.json.jbuilder (0.4ms)
+Completed 200 OK in 24ms (Views: 10.0ms | ActiveRecord: 1.1ms)
+
+
+Started GET "/api/v1/experts/might" for 127.0.0.1 at 2017-02-09 20:10:19 -0500
+DEPRECATION WARNING: before_filter is deprecated and will be removed in Rails 5.1. Use before_action instead. (called from <class:ApiController> at /Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/controllers/api/v1/api_controller.rb:3)
+Processing by Api::V1::ExpertsController#show as */*
+  Parameters: {"id"=>"might"}
+  [1m[36mExpert Load (0.1ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."alias" = ? ORDER BY "experts"."id" ASC LIMIT ?[0m  [["alias", "might"], ["LIMIT", 1]]
+Completed 422 Unprocessable Entity in 14ms (Views: 0.3ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/api/v1/experts/88" for 127.0.0.1 at 2017-02-09 20:11:17 -0500
+  
+SyntaxError (/Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/controllers/api/v1/experts_controller.rb:16: syntax error, unexpected keyword_rescue, expecting keyword_end
+      rescue ActiveRecord::RecordNotFound
+            ^):
+  
+app/controllers/api/v1/experts_controller.rb:16: syntax error, unexpected keyword_rescue, expecting keyword_end
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (3.5ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.3ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.0ms)
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (61.0ms)
+Started GET "/api/v1/experts/88" for 127.0.0.1 at 2017-02-09 20:11:32 -0500
+  
+SyntaxError (/Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/controllers/api/v1/experts_controller.rb:16: syntax error, unexpected keyword_rescue, expecting keyword_end
+      rescue ActiveRecord::RecordNotFound
+            ^
+/Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/controllers/api/v1/experts_controller.rb:98: syntax error, unexpected keyword_end, expecting end-of-input):
+  
+app/controllers/api/v1/experts_controller.rb:16: syntax error, unexpected keyword_rescue, expecting keyword_end
+app/controllers/api/v1/experts_controller.rb:98: syntax error, unexpected keyword_end, expecting end-of-input
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (4.9ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.6ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.3ms)
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (81.2ms)
+Started GET "/api/v1/experts/88" for 127.0.0.1 at 2017-02-09 20:12:00 -0500
+DEPRECATION WARNING: before_filter is deprecated and will be removed in Rails 5.1. Use before_action instead. (called from <class:ApiController> at /Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/controllers/api/v1/api_controller.rb:3)
+Processing by Api::V1::ExpertsController#show as */*
+  Parameters: {"id"=>"88"}
+  [1m[36mExpert Load (0.1ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."alias" = ? ORDER BY "experts"."id" ASC LIMIT ?[0m  [["alias", "88"], ["LIMIT", 1]]
+Completed 422 Unprocessable Entity in 19ms (Views: 0.2ms | ActiveRecord: 1.1ms)
+
+
+Started GET "/api/v1/experts/88" for 127.0.0.1 at 2017-02-09 20:12:02 -0500
+Processing by Api::V1::ExpertsController#show as */*
+  Parameters: {"id"=>"88"}
+  [1m[36mExpert Load (0.2ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."alias" = ? ORDER BY "experts"."id" ASC LIMIT ?[0m  [["alias", "88"], ["LIMIT", 1]]
+Completed 422 Unprocessable Entity in 2ms (Views: 0.2ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/api/v1/experts/88" for 127.0.0.1 at 2017-02-09 20:12:19 -0500
+DEPRECATION WARNING: before_filter is deprecated and will be removed in Rails 5.1. Use before_action instead. (called from <class:ApiController> at /Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/controllers/api/v1/api_controller.rb:3)
+Processing by Api::V1::ExpertsController#show as */*
+  Parameters: {"id"=>"88"}
+  [1m[36mExpert Load (0.1ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."alias" = ? ORDER BY "experts"."id" ASC LIMIT ?[0m  [["alias", "88"], ["LIMIT", 1]]
+Completed 422 Unprocessable Entity in 15ms (Views: 0.2ms | ActiveRecord: 1.0ms)
+
+
+  [1m[36mExpert Load (1.2ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" ORDER BY "experts"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+Started GET "/api/v1/experts/21" for 127.0.0.1 at 2017-02-09 20:12:34 -0500
+Processing by Api::V1::ExpertsController#show as */*
+  Parameters: {"id"=>"21"}
+  [1m[36mExpert Load (0.2ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."alias" = ? ORDER BY "experts"."id" ASC LIMIT ?[0m  [["alias", "21"], ["LIMIT", 1]]
+Completed 422 Unprocessable Entity in 1ms (Views: 0.2ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/api/v1/experts/21" for 127.0.0.1 at 2017-02-09 20:12:55 -0500
+DEPRECATION WARNING: before_filter is deprecated and will be removed in Rails 5.1. Use before_action instead. (called from <class:ApiController> at /Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/controllers/api/v1/api_controller.rb:3)
+Processing by Api::V1::ExpertsController#show as */*
+  Parameters: {"id"=>"21"}
+  [1m[36mExpert Load (0.1ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."id" = ? LIMIT ?[0m  [["id", 21], ["LIMIT", 1]]
+Completed 422 Unprocessable Entity in 23ms (Views: 0.2ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/api/v1/experts/20" for 127.0.0.1 at 2017-02-09 20:12:59 -0500
+Processing by Api::V1::ExpertsController#show as */*
+  Parameters: {"id"=>"20"}
+  [1m[36mExpert Load (0.1ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."id" = ? LIMIT ?[0m  [["id", 20], ["LIMIT", 1]]
+Completed 422 Unprocessable Entity in 2ms (Views: 0.6ms | ActiveRecord: 0.1ms)
+
+
+Started GET "/api/v1/experts/20" for 127.0.0.1 at 2017-02-09 20:13:14 -0500
+DEPRECATION WARNING: before_filter is deprecated and will be removed in Rails 5.1. Use before_action instead. (called from <class:ApiController> at /Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/controllers/api/v1/api_controller.rb:3)
+Processing by Api::V1::ExpertsController#show as */*
+  Parameters: {"id"=>"20"}
+  [1m[36mExpert Load (0.2ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."id" = ? LIMIT ?[0m  [["id", 20], ["LIMIT", 1]]
+Completed 422 Unprocessable Entity in 24ms (Views: 0.2ms | ActiveRecord: 1.2ms)
+
+
+Started GET "/api/v1/experts/20" for 127.0.0.1 at 2017-02-09 20:13:34 -0500
+DEPRECATION WARNING: before_filter is deprecated and will be removed in Rails 5.1. Use before_action instead. (called from <class:ApiController> at /Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/controllers/api/v1/api_controller.rb:3)
+Processing by Api::V1::ExpertsController#show as */*
+  Parameters: {"id"=>"20"}
+  [1m[36mExpert Load (0.1ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."id" = ? LIMIT ?[0m  [["id", 20], ["LIMIT", 1]]
+Completed 422 Unprocessable Entity in 23ms (Views: 0.2ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/api/v1/experts/21" for 127.0.0.1 at 2017-02-09 20:13:46 -0500
+DEPRECATION WARNING: before_filter is deprecated and will be removed in Rails 5.1. Use before_action instead. (called from <class:ApiController> at /Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/controllers/api/v1/api_controller.rb:3)
+Processing by Api::V1::ExpertsController#show as */*
+  Parameters: {"id"=>"21"}
+  [1m[36mExpert Load (0.1ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."id" = ? LIMIT ?[0m  [["id", 21], ["LIMIT", 1]]
+  Rendering api/v1/experts/show.json.jbuilder
+  Rendered api/v1/experts/show.json.jbuilder (3.4ms)
+Completed 200 OK in 52ms (Views: 17.8ms | ActiveRecord: 1.1ms)
+
+
+Started GET "/api/v1/experts/299" for 127.0.0.1 at 2017-02-09 20:13:49 -0500
+Processing by Api::V1::ExpertsController#show as */*
+  Parameters: {"id"=>"299"}
+  [1m[36mExpert Load (0.1ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."id" = ? LIMIT ?[0m  [["id", 299], ["LIMIT", 1]]
+  Rendering api/v1/experts/show.json.jbuilder
+  Rendered api/v1/experts/show.json.jbuilder (0.4ms)
+Completed 200 OK in 14ms (Views: 11.5ms | ActiveRecord: 0.1ms)
+
+
+Started GET "/api/v1/experts/mighty-joe-young" for 127.0.0.1 at 2017-02-09 20:14:01 -0500
+Processing by Api::V1::ExpertsController#show as */*
+  Parameters: {"id"=>"mighty-joe-young"}
+  [1m[36mExpert Load (0.1ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."id" = ? LIMIT ?[0m  [["id", 0], ["LIMIT", 1]]
+  Rendering api/v1/experts/show.json.jbuilder
+  Rendered api/v1/experts/show.json.jbuilder (0.9ms)
+Completed 200 OK in 14ms (Views: 10.9ms | ActiveRecord: 0.1ms)
+
+
+Started GET "/api/v1/experts/mighty-joe-young" for 127.0.0.1 at 2017-02-09 20:14:25 -0500
+DEPRECATION WARNING: before_filter is deprecated and will be removed in Rails 5.1. Use before_action instead. (called from <class:ApiController> at /Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/controllers/api/v1/api_controller.rb:3)
+Processing by Api::V1::ExpertsController#show as */*
+  Parameters: {"id"=>"mighty-joe-young"}
+Completed 500 Internal Server Error in 2ms (ActiveRecord: 0.0ms)
+
+
+  
+NoMethodError (undefined method `is_a' for 0:Integer
+Did you mean?  is_a?):
+  
+app/controllers/api/v1/experts_controller.rb:15:in `show'
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (3.5ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.5ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (0.9ms)
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (59.9ms)
+Started GET "/api/v1/experts/mighty-joe-young" for 127.0.0.1 at 2017-02-09 20:14:35 -0500
+DEPRECATION WARNING: before_filter is deprecated and will be removed in Rails 5.1. Use before_action instead. (called from <class:ApiController> at /Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/controllers/api/v1/api_controller.rb:3)
+Processing by Api::V1::ExpertsController#show as */*
+  Parameters: {"id"=>"mighty-joe-young"}
+  [1m[36mExpert Load (0.1ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."alias" = ? ORDER BY "experts"."id" ASC LIMIT ?[0m  [["alias", "mighty-joe-young"], ["LIMIT", 1]]
+  Rendering api/v1/experts/show.json.jbuilder
+  Rendered api/v1/experts/show.json.jbuilder (0.9ms)
+Completed 200 OK in 38ms (Views: 11.1ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/api/v1/experts/21" for 127.0.0.1 at 2017-02-09 20:14:41 -0500
+Processing by Api::V1::ExpertsController#show as */*
+  Parameters: {"id"=>"21"}
+  [1m[36mExpert Load (0.3ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."id" = ? LIMIT ?[0m  [["id", 21], ["LIMIT", 1]]
+  Rendering api/v1/experts/show.json.jbuilder
+  Rendered api/v1/experts/show.json.jbuilder (0.8ms)
+Completed 200 OK in 15ms (Views: 10.5ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/api/v1/experts/20" for 127.0.0.1 at 2017-02-09 20:14:47 -0500
+Processing by Api::V1::ExpertsController#show as */*
+  Parameters: {"id"=>"20"}
+  [1m[36mExpert Load (0.1ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."id" = ? LIMIT ?[0m  [["id", 20], ["LIMIT", 1]]
+  Rendering api/v1/experts/show.json.jbuilder
+  Rendered api/v1/experts/show.json.jbuilder (0.9ms)
+Completed 200 OK in 13ms (Views: 10.9ms | ActiveRecord: 0.1ms)
+
+
+Started GET "/api/v1/experts/mighty-joe-young" for 127.0.0.1 at 2017-02-09 20:14:54 -0500
+Processing by Api::V1::ExpertsController#show as */*
+  Parameters: {"id"=>"mighty-joe-young"}
+  [1m[36mExpert Load (0.2ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."alias" = ? ORDER BY "experts"."id" ASC LIMIT ?[0m  [["alias", "mighty-joe-young"], ["LIMIT", 1]]
+  Rendering api/v1/experts/show.json.jbuilder
+  Rendered api/v1/experts/show.json.jbuilder (0.8ms)
+Completed 200 OK in 14ms (Views: 11.0ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/api/v1/search" for 127.0.0.1 at 2017-02-09 20:17:58 -0500
+DEPRECATION WARNING: Omitting the route path is deprecated. Specify the path with a String or a Symbol instead. (called from block (4 levels) in <top (required)> at /Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/config/routes.rb:39)
+  
+ArgumentError (Missing :action key on routes definition, please check your routes.):
+  
+config/routes.rb:39:in `block (4 levels) in <top (required)>'
+config/routes.rb:33:in `block (3 levels) in <top (required)>'
+config/routes.rb:12:in `block (2 levels) in <top (required)>'
+config/routes.rb:11:in `block in <top (required)>'
+config/routes.rb:1:in `<top (required)>'
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (7.9ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.1ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (0.7ms)
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (73.2ms)
+Started GET "/api/v1/search" for 127.0.0.1 at 2017-02-09 20:18:15 -0500
+  
+ActionController::RoutingError (No route matches [GET] "/api/v1/search"):
+  
+actionpack (5.0.1) lib/action_dispatch/middleware/debug_exceptions.rb:53:in `call'
+web-console (3.4.0) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.4.0) lib/web_console/middleware.rb:28:in `block in call'
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `catch'
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.0.1) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.0.1) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.0.1) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.0.1) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.0.1) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.0.1) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.0) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/request_id.rb:24:in `call'
+rack (2.0.1) lib/rack/method_override.rb:22:in `call'
+rack (2.0.1) lib/rack/runtime.rb:22:in `call'
+activesupport (5.0.1) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/static.rb:136:in `call'
+rack (2.0.1) lib/rack/sendfile.rb:111:in `call'
+railties (5.0.1) lib/rails/engine.rb:522:in `call'
+puma (3.7.0) lib/puma/configuration.rb:226:in `call'
+puma (3.7.0) lib/puma/server.rb:578:in `handle_request'
+puma (3.7.0) lib/puma/server.rb:415:in `process_client'
+puma (3.7.0) lib/puma/server.rb:275:in `block in run'
+puma (3.7.0) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.3ms)
+  Rendered collection of /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/routes/_route.html.erb [202 times] (61.6ms)
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/routes/_table.html.erb (15.9ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.1ms)
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout (177.1ms)
+Started GET "/api/v1/search" for 127.0.0.1 at 2017-02-09 20:18:47 -0500
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  
+ActionController::RoutingError (No route matches [GET] "/api/v1/search"):
+  
+actionpack (5.0.1) lib/action_dispatch/middleware/debug_exceptions.rb:53:in `call'
+web-console (3.4.0) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.4.0) lib/web_console/middleware.rb:28:in `block in call'
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `catch'
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.0.1) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.0.1) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.0.1) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.0.1) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.0.1) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.0.1) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.0) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/request_id.rb:24:in `call'
+rack (2.0.1) lib/rack/method_override.rb:22:in `call'
+rack (2.0.1) lib/rack/runtime.rb:22:in `call'
+activesupport (5.0.1) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/static.rb:136:in `call'
+rack (2.0.1) lib/rack/sendfile.rb:111:in `call'
+railties (5.0.1) lib/rails/engine.rb:522:in `call'
+puma (3.7.0) lib/puma/configuration.rb:226:in `call'
+puma (3.7.0) lib/puma/server.rb:578:in `handle_request'
+puma (3.7.0) lib/puma/server.rb:415:in `process_client'
+puma (3.7.0) lib/puma/server.rb:275:in `block in run'
+puma (3.7.0) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.1ms)
+  Rendered collection of /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/routes/_route.html.erb [202 times] (55.8ms)
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/routes/_table.html.erb (8.8ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (18.9ms)
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout (194.1ms)
+Started GET "/api/v1/search/thing" for 127.0.0.1 at 2017-02-09 20:18:52 -0500
+  
+ActionController::RoutingError (No route matches [GET] "/api/v1/search/thing"):
+  
+actionpack (5.0.1) lib/action_dispatch/middleware/debug_exceptions.rb:53:in `call'
+web-console (3.4.0) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.4.0) lib/web_console/middleware.rb:28:in `block in call'
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `catch'
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.0.1) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.0.1) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.0.1) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.0.1) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.0.1) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.0.1) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.0) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/request_id.rb:24:in `call'
+rack (2.0.1) lib/rack/method_override.rb:22:in `call'
+rack (2.0.1) lib/rack/runtime.rb:22:in `call'
+activesupport (5.0.1) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/static.rb:136:in `call'
+rack (2.0.1) lib/rack/sendfile.rb:111:in `call'
+railties (5.0.1) lib/rails/engine.rb:522:in `call'
+puma (3.7.0) lib/puma/configuration.rb:226:in `call'
+puma (3.7.0) lib/puma/server.rb:578:in `handle_request'
+puma (3.7.0) lib/puma/server.rb:415:in `process_client'
+puma (3.7.0) lib/puma/server.rb:275:in `block in run'
+puma (3.7.0) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.7ms)
+  Rendered collection of /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/routes/_route.html.erb [202 times] (51.6ms)
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/routes/_table.html.erb (1.5ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.3ms)
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout (157.4ms)
+Started GET "/api/v1/experts/search" for 127.0.0.1 at 2017-02-09 20:19:09 -0500
+DEPRECATION WARNING: before_filter is deprecated and will be removed in Rails 5.1. Use before_action instead. (called from <class:ApiController> at /Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/controllers/api/v1/api_controller.rb:3)
+Processing by Api::V1::ExpertsController#show as */*
+  Parameters: {"id"=>"search"}
+  [1m[36mExpert Load (0.2ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."alias" = ? ORDER BY "experts"."id" ASC LIMIT ?[0m  [["alias", "search"], ["LIMIT", 1]]
+Completed 422 Unprocessable Entity in 20ms (Views: 0.3ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/api/v1/experts/search/thing" for 127.0.0.1 at 2017-02-09 20:19:14 -0500
+  
+ActionController::RoutingError (No route matches [GET] "/api/v1/experts/search/thing"):
+  
+actionpack (5.0.1) lib/action_dispatch/middleware/debug_exceptions.rb:53:in `call'
+web-console (3.4.0) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.4.0) lib/web_console/middleware.rb:28:in `block in call'
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `catch'
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.0.1) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.0.1) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.0.1) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.0.1) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.0.1) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.0.1) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.0) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/request_id.rb:24:in `call'
+rack (2.0.1) lib/rack/method_override.rb:22:in `call'
+rack (2.0.1) lib/rack/runtime.rb:22:in `call'
+activesupport (5.0.1) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/static.rb:136:in `call'
+rack (2.0.1) lib/rack/sendfile.rb:111:in `call'
+railties (5.0.1) lib/rails/engine.rb:522:in `call'
+puma (3.7.0) lib/puma/configuration.rb:226:in `call'
+puma (3.7.0) lib/puma/server.rb:578:in `handle_request'
+puma (3.7.0) lib/puma/server.rb:415:in `process_client'
+puma (3.7.0) lib/puma/server.rb:275:in `block in run'
+puma (3.7.0) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.9ms)
+  Rendered collection of /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/routes/_route.html.erb [202 times] (60.6ms)
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/routes/_table.html.erb (1.2ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.2ms)
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout (164.3ms)
+Started GET "/api/v1/experts/search/thing" for 127.0.0.1 at 2017-02-09 20:20:39 -0500
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  
+ActionController::RoutingError (No route matches [GET] "/api/v1/experts/search/thing"):
+  
+actionpack (5.0.1) lib/action_dispatch/middleware/debug_exceptions.rb:53:in `call'
+web-console (3.4.0) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.4.0) lib/web_console/middleware.rb:28:in `block in call'
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `catch'
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.0.1) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.0.1) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.0.1) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.0.1) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.0.1) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.0.1) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.0) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/request_id.rb:24:in `call'
+rack (2.0.1) lib/rack/method_override.rb:22:in `call'
+rack (2.0.1) lib/rack/runtime.rb:22:in `call'
+activesupport (5.0.1) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/static.rb:136:in `call'
+rack (2.0.1) lib/rack/sendfile.rb:111:in `call'
+railties (5.0.1) lib/rails/engine.rb:522:in `call'
+puma (3.7.0) lib/puma/configuration.rb:226:in `call'
+puma (3.7.0) lib/puma/server.rb:578:in `handle_request'
+puma (3.7.0) lib/puma/server.rb:415:in `process_client'
+puma (3.7.0) lib/puma/server.rb:275:in `block in run'
+puma (3.7.0) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.6ms)
+  Rendered collection of /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/routes/_route.html.erb [202 times] (49.7ms)
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/routes/_table.html.erb (8.3ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (16.9ms)
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout (173.7ms)
+Started GET "/api/v1/experts/search" for 127.0.0.1 at 2017-02-09 20:20:44 -0500
+DEPRECATION WARNING: before_filter is deprecated and will be removed in Rails 5.1. Use before_action instead. (called from <class:ApiController> at /Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/controllers/api/v1/api_controller.rb:3)
+Processing by Api::V1::ExpertsController#show as */*
+  Parameters: {"id"=>"search"}
+  [1m[36mExpert Load (0.2ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."alias" = ? ORDER BY "experts"."id" ASC LIMIT ?[0m  [["alias", "search"], ["LIMIT", 1]]
+Completed 422 Unprocessable Entity in 22ms (Views: 0.4ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/api/v1/experts/search?thing=thing" for 127.0.0.1 at 2017-02-09 20:20:53 -0500
+Processing by Api::V1::ExpertsController#show as */*
+  Parameters: {"thing"=>"thing", "id"=>"search"}
+  [1m[36mExpert Load (0.2ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."alias" = ? ORDER BY "experts"."id" ASC LIMIT ?[0m  [["alias", "search"], ["LIMIT", 1]]
+Completed 422 Unprocessable Entity in 2ms (Views: 0.2ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/api/v1/experts/search" for 127.0.0.1 at 2017-02-09 20:22:31 -0500
+  
+ArgumentError (Missing :action key on routes definition, please check your routes.):
+  
+config/routes.rb:41:in `block (4 levels) in <top (required)>'
+config/routes.rb:35:in `block (3 levels) in <top (required)>'
+config/routes.rb:14:in `block (2 levels) in <top (required)>'
+config/routes.rb:13:in `block in <top (required)>'
+config/routes.rb:1:in `<top (required)>'
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (4.9ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.6ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (0.8ms)
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (68.7ms)
+Started GET "/api/v1/experts/search/hh" for 127.0.0.1 at 2017-02-09 20:22:36 -0500
+  
+ActionController::RoutingError (No route matches [GET] "/api/v1/experts/search/hh"):
+  
+actionpack (5.0.1) lib/action_dispatch/middleware/debug_exceptions.rb:53:in `call'
+web-console (3.4.0) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.4.0) lib/web_console/middleware.rb:28:in `block in call'
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `catch'
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.0.1) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.0.1) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.0.1) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.0.1) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.0.1) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.0.1) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.0) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/request_id.rb:24:in `call'
+rack (2.0.1) lib/rack/method_override.rb:22:in `call'
+rack (2.0.1) lib/rack/runtime.rb:22:in `call'
+activesupport (5.0.1) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/static.rb:136:in `call'
+rack (2.0.1) lib/rack/sendfile.rb:111:in `call'
+railties (5.0.1) lib/rails/engine.rb:522:in `call'
+puma (3.7.0) lib/puma/configuration.rb:226:in `call'
+puma (3.7.0) lib/puma/server.rb:578:in `handle_request'
+puma (3.7.0) lib/puma/server.rb:415:in `process_client'
+puma (3.7.0) lib/puma/server.rb:275:in `block in run'
+puma (3.7.0) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.1ms)
+  Rendered collection of /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/routes/_route.html.erb [169 times] (41.4ms)
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/routes/_table.html.erb (1.2ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.0ms)
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout (131.3ms)
+Started GET "/api/v1/experts/search?term=thing" for 127.0.0.1 at 2017-02-09 20:22:43 -0500
+  
+ActionController::RoutingError (No route matches [GET] "/api/v1/experts/search"):
+  
+actionpack (5.0.1) lib/action_dispatch/middleware/debug_exceptions.rb:53:in `call'
+web-console (3.4.0) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.4.0) lib/web_console/middleware.rb:28:in `block in call'
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `catch'
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.0.1) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.0.1) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.0.1) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.0.1) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.0.1) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.0.1) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.0) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/request_id.rb:24:in `call'
+rack (2.0.1) lib/rack/method_override.rb:22:in `call'
+rack (2.0.1) lib/rack/runtime.rb:22:in `call'
+activesupport (5.0.1) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/static.rb:136:in `call'
+rack (2.0.1) lib/rack/sendfile.rb:111:in `call'
+railties (5.0.1) lib/rails/engine.rb:522:in `call'
+puma (3.7.0) lib/puma/configuration.rb:226:in `call'
+puma (3.7.0) lib/puma/server.rb:578:in `handle_request'
+puma (3.7.0) lib/puma/server.rb:415:in `process_client'
+puma (3.7.0) lib/puma/server.rb:275:in `block in run'
+puma (3.7.0) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.0ms)
+  Rendered collection of /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/routes/_route.html.erb [169 times] (37.0ms)
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/routes/_table.html.erb (1.1ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.2ms)
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout (125.8ms)
+Started GET "/api/v1/experts/search?term=thing" for 127.0.0.1 at 2017-02-09 20:23:03 -0500
+  
+ArgumentError (Missing :action key on routes definition, please check your routes.):
+  
+config/routes.rb:41:in `block (4 levels) in <top (required)>'
+config/routes.rb:35:in `block (3 levels) in <top (required)>'
+config/routes.rb:14:in `block (2 levels) in <top (required)>'
+config/routes.rb:13:in `block in <top (required)>'
+config/routes.rb:1:in `<top (required)>'
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (6.9ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.1ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.6ms)
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (65.4ms)
+Started GET "/api/v1/experts/search?term=thing" for 127.0.0.1 at 2017-02-09 20:24:02 -0500
+DEPRECATION WARNING: before_filter is deprecated and will be removed in Rails 5.1. Use before_action instead. (called from <class:ApiController> at /Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/controllers/api/v1/api_controller.rb:3)
+Processing by Api::V1::ExpertsController#show as */*
+  Parameters: {"term"=>"thing", "id"=>"search"}
+  [1m[36mExpert Load (0.1ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."alias" = ? ORDER BY "experts"."id" ASC LIMIT ?[0m  [["alias", "search"], ["LIMIT", 1]]
+Completed 422 Unprocessable Entity in 15ms (Views: 0.2ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/api/v1/experts/search/thing" for 127.0.0.1 at 2017-02-09 20:24:09 -0500
+  
+ActionController::RoutingError (No route matches [GET] "/api/v1/experts/search/thing"):
+  
+actionpack (5.0.1) lib/action_dispatch/middleware/debug_exceptions.rb:53:in `call'
+web-console (3.4.0) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.4.0) lib/web_console/middleware.rb:28:in `block in call'
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `catch'
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.0.1) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.0.1) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.0.1) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.0.1) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.0.1) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.0.1) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.0) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/request_id.rb:24:in `call'
+rack (2.0.1) lib/rack/method_override.rb:22:in `call'
+rack (2.0.1) lib/rack/runtime.rb:22:in `call'
+activesupport (5.0.1) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/static.rb:136:in `call'
+rack (2.0.1) lib/rack/sendfile.rb:111:in `call'
+railties (5.0.1) lib/rails/engine.rb:522:in `call'
+puma (3.7.0) lib/puma/configuration.rb:226:in `call'
+puma (3.7.0) lib/puma/server.rb:578:in `handle_request'
+puma (3.7.0) lib/puma/server.rb:415:in `process_client'
+puma (3.7.0) lib/puma/server.rb:275:in `block in run'
+puma (3.7.0) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.4ms)
+  Rendered collection of /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/routes/_route.html.erb [202 times] (50.5ms)
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/routes/_table.html.erb (1.6ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.2ms)
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout (148.4ms)
+Started GET "/api/v1/experts/search?term=thing" for 127.0.0.1 at 2017-02-09 20:24:50 -0500
+Processing by Api::V1::ExpertsController#show as */*
+  Parameters: {"term"=>"thing", "id"=>"search"}
+  [1m[36mExpert Load (0.2ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."alias" = ? ORDER BY "experts"."id" ASC LIMIT ?[0m  [["alias", "search"], ["LIMIT", 1]]
+Completed 422 Unprocessable Entity in 2ms (Views: 0.2ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/api/v1/experts/search?term=thing" for 127.0.0.1 at 2017-02-09 20:25:17 -0500
+DEPRECATION WARNING: before_filter is deprecated and will be removed in Rails 5.1. Use before_action instead. (called from <class:ApiController> at /Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/controllers/api/v1/api_controller.rb:3)
+Processing by Api::V1::ExpertsController#show as */*
+  Parameters: {"term"=>"thing", "id"=>"search"}
+  [1m[36mExpert Load (0.1ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."alias" = ? ORDER BY "experts"."id" ASC LIMIT ?[0m  [["alias", "search"], ["LIMIT", 1]]
+Completed 422 Unprocessable Entity in 18ms (Views: 0.2ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/api/v1/experts/search?term=thing" for 127.0.0.1 at 2017-02-09 20:26:00 -0500
+DEPRECATION WARNING: before_filter is deprecated and will be removed in Rails 5.1. Use before_action instead. (called from <class:ApiController> at /Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/controllers/api/v1/api_controller.rb:3)
+Processing by Api::V1::ExpertsController#show as */*
+  Parameters: {"term"=>"thing", "id"=>"search"}
+  [1m[36mExpert Load (0.4ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."alias" = ? ORDER BY "experts"."id" ASC LIMIT ?[0m  [["alias", "search"], ["LIMIT", 1]]
+Completed 422 Unprocessable Entity in 26ms (Views: 0.3ms | ActiveRecord: 2.3ms)
+
+
+Started GET "/api/v1/experts/search?term=thing" for 127.0.0.1 at 2017-02-09 20:26:03 -0500
+Processing by Api::V1::ExpertsController#show as */*
+  Parameters: {"term"=>"thing", "id"=>"search"}
+  [1m[36mExpert Load (0.2ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."alias" = ? ORDER BY "experts"."id" ASC LIMIT ?[0m  [["alias", "search"], ["LIMIT", 1]]
+Completed 422 Unprocessable Entity in 2ms (Views: 0.1ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/api/v1/experts/search?term=thing" for 127.0.0.1 at 2017-02-09 20:26:26 -0500
+DEPRECATION WARNING: before_filter is deprecated and will be removed in Rails 5.1. Use before_action instead. (called from <class:ApiController> at /Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/controllers/api/v1/api_controller.rb:3)
+Processing by Api::V1::ExpertsController#show as */*
+  Parameters: {"term"=>"thing", "id"=>"search"}
+  [1m[36mExpert Load (0.1ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."alias" = ? ORDER BY "experts"."id" ASC LIMIT ?[0m  [["alias", "search"], ["LIMIT", 1]]
+Completed 422 Unprocessable Entity in 14ms (Views: 0.3ms | ActiveRecord: 1.1ms)
+
+
+Started GET "/api/v1/experts/search?term=thing" for 127.0.0.1 at 2017-02-09 20:27:18 -0500
+DEPRECATION WARNING: before_filter is deprecated and will be removed in Rails 5.1. Use before_action instead. (called from <class:ApiController> at /Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/controllers/api/v1/api_controller.rb:3)
+Processing by Api::V1::ExpertsController#show as */*
+  Parameters: {"term"=>"thing", "id"=>"search"}
+  [1m[36mExpert Load (0.1ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."alias" = ? ORDER BY "experts"."id" ASC LIMIT ?[0m  [["alias", "search"], ["LIMIT", 1]]
+Completed 422 Unprocessable Entity in 16ms (Views: 0.2ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/api/v1/experts/search?term=thing" for 127.0.0.1 at 2017-02-09 20:27:19 -0500
+Processing by Api::V1::ExpertsController#show as */*
+  Parameters: {"term"=>"thing", "id"=>"search"}
+  [1m[36mExpert Load (0.2ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."alias" = ? ORDER BY "experts"."id" ASC LIMIT ?[0m  [["alias", "search"], ["LIMIT", 1]]
+Completed 422 Unprocessable Entity in 2ms (Views: 0.2ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/api/v1/experts/search?term=thing" for 127.0.0.1 at 2017-02-09 20:27:53 -0500
+DEPRECATION WARNING: before_filter is deprecated and will be removed in Rails 5.1. Use before_action instead. (called from <class:ApiController> at /Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/controllers/api/v1/api_controller.rb:3)
+Processing by Api::V1::ExpertsController#show as */*
+  Parameters: {"term"=>"thing", "id"=>"search"}
+  [1m[36mExpert Load (0.2ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."alias" = ? ORDER BY "experts"."id" ASC LIMIT ?[0m  [["alias", "search"], ["LIMIT", 1]]
+Completed 422 Unprocessable Entity in 16ms (Views: 0.2ms | ActiveRecord: 1.3ms)
+
+
+Started GET "/api/v1/experts/search" for 127.0.0.1 at 2017-02-09 20:28:12 -0500
+DEPRECATION WARNING: before_filter is deprecated and will be removed in Rails 5.1. Use before_action instead. (called from <class:ApiController> at /Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/controllers/api/v1/api_controller.rb:3)
+Processing by Api::V1::ExpertsController#show as */*
+  Parameters: {"id"=>"search"}
+  [1m[36mExpert Load (0.1ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."alias" = ? ORDER BY "experts"."id" ASC LIMIT ?[0m  [["alias", "search"], ["LIMIT", 1]]
+Completed 422 Unprocessable Entity in 16ms (Views: 0.2ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/api/v1/experts/search?term=asd" for 127.0.0.1 at 2017-02-09 20:28:20 -0500
+Processing by Api::V1::ExpertsController#show as */*
+  Parameters: {"term"=>"asd", "id"=>"search"}
+Completed 500 Internal Server Error in 11ms (ActiveRecord: 0.0ms)
+
+
+  
+NoMethodError (undefined method `search' for #<Class:0x007fbd7c936430>):
+  
+app/controllers/api/v1/experts_controller.rb:79:in `search'
+app/controllers/api/v1/experts_controller.rb:15:in `show'
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (4.2ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (3.3ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.0ms)
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (66.1ms)
+Started GET "/api/v1/experts/search?term=asd" for 127.0.0.1 at 2017-02-09 20:29:03 -0500
+DEPRECATION WARNING: before_filter is deprecated and will be removed in Rails 5.1. Use before_action instead. (called from <class:ApiController> at /Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/controllers/api/v1/api_controller.rb:3)
+Processing by Api::V1::ExpertsController#show as */*
+  Parameters: {"term"=>"asd", "id"=>"search"}
+Completed 500 Internal Server Error in 28ms (ActiveRecord: 0.0ms)
+
+
+  
+NoMethodError (undefined method `search' for #<Class:0x007fbd7e608568>):
+  
+app/controllers/api/v1/experts_controller.rb:79:in `search'
+app/controllers/api/v1/experts_controller.rb:15:in `show'
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (2.8ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.4ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (0.8ms)
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (56.2ms)
+Started GET "/api/v1/experts/search?term=asd" for 127.0.0.1 at 2017-02-09 20:29:17 -0500
+DEPRECATION WARNING: before_filter is deprecated and will be removed in Rails 5.1. Use before_action instead. (called from <class:ApiController> at /Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/controllers/api/v1/api_controller.rb:3)
+Processing by Api::V1::ExpertsController#show as */*
+  Parameters: {"term"=>"asd", "id"=>"search"}
+Completed 500 Internal Server Error in 14ms (ActiveRecord: 0.0ms)
+
+
+  
+ArgumentError (wrong number of arguments (given 1, expected 0)):
+  
+app/models/expert.rb:49:in `search'
+app/controllers/api/v1/experts_controller.rb:79:in `search'
+app/controllers/api/v1/experts_controller.rb:15:in `show'
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (3.6ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.5ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (0.8ms)
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (64.2ms)
+Started GET "/api/v1/experts/search?term=asd" for 127.0.0.1 at 2017-02-09 20:29:51 -0500
+DEPRECATION WARNING: before_filter is deprecated and will be removed in Rails 5.1. Use before_action instead. (called from <class:ApiController> at /Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/controllers/api/v1/api_controller.rb:3)
+Processing by Api::V1::ExpertsController#show as */*
+  Parameters: {"term"=>"asd", "id"=>"search"}
+  Rendering api/v1/experts/show.json.jbuilder
+  [1m[36mExpert Load (0.2ms)[0m  [1m[34mSELECT "experts".* FROM "experts" WHERE "experts"."name" = ?[0m  [["name", "asd"]]
+  Rendered api/v1/experts/show.json.jbuilder (10.8ms)
+Completed 200 OK in 50ms (Views: 24.9ms | ActiveRecord: 1.7ms)
+
+
+Started GET "/api/v1/experts/search?term=Bob" for 127.0.0.1 at 2017-02-09 20:29:56 -0500
+Processing by Api::V1::ExpertsController#show as */*
+  Parameters: {"term"=>"Bob", "id"=>"search"}
+  Rendering api/v1/experts/show.json.jbuilder
+  [1m[36mExpert Load (0.2ms)[0m  [1m[34mSELECT "experts".* FROM "experts" WHERE "experts"."name" = ?[0m  [["name", "Bob"]]
+  Rendered api/v1/experts/show.json.jbuilder (1.4ms)
+Completed 200 OK in 14ms (Views: 11.9ms | ActiveRecord: 0.2ms)
+
+
+  [1m[36mExpert Load (0.2ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" ORDER BY "experts"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+Started GET "/api/v1/experts/search?term=mighty" for 127.0.0.1 at 2017-02-09 20:30:51 -0500
+DEPRECATION WARNING: before_filter is deprecated and will be removed in Rails 5.1. Use before_action instead. (called from <class:ApiController> at /Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/controllers/api/v1/api_controller.rb:3)
+Processing by Api::V1::ExpertsController#show as */*
+  Parameters: {"term"=>"mighty", "id"=>"search"}
+  Rendering api/v1/experts/show.json.jbuilder
+  [1m[36mExpert Load (0.8ms)[0m  [1m[34mSELECT "experts".* FROM "experts" WHERE (LOWER(email) LIKE '%mighty%' OR LOWER(username) LIKE '%mighty%' OR LOWER(first_name) LIKE '%mighty%' OR LOWER(last_name) LIKE '%mighty%' OR LOWER(sign_up_user_agent_browser) LIKE '%mighty%' OR LOWER(sign_up_user_agent_platform) LIKE '%mighty%' OR LOWER(sign_up_method) LIKE '%mighty%')[0m
+  Rendered api/v1/experts/show.json.jbuilder (3.6ms)
+Completed 500 Internal Server Error in 27ms (ActiveRecord: 0.8ms)
+
+
+  
+ActionView::Template::Error (SQLite3::SQLException: no such column: username: SELECT "experts".* FROM "experts" WHERE (LOWER(email) LIKE '%mighty%' OR LOWER(username) LIKE '%mighty%' OR LOWER(first_name) LIKE '%mighty%' OR LOWER(last_name) LIKE '%mighty%' OR LOWER(sign_up_user_agent_browser) LIKE '%mighty%' OR LOWER(sign_up_user_agent_platform) LIKE '%mighty%' OR LOWER(sign_up_method) LIKE '%mighty%')):
+    1: json.expert @expert
+  
+app/views/api/v1/experts/show.json.jbuilder:2:in `_app_views_api_v__experts_show_json_jbuilder___2959160194134568504_70225939028280'
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/template_error.html.erb within rescues/layout
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (5.8ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.2ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.3ms)
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/template_error.html.erb within rescues/layout (63.2ms)
+Started GET "/api/v1/experts/search?term=mighty" for 127.0.0.1 at 2017-02-09 20:31:16 -0500
+DEPRECATION WARNING: before_filter is deprecated and will be removed in Rails 5.1. Use before_action instead. (called from <class:ApiController> at /Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/controllers/api/v1/api_controller.rb:3)
+Processing by Api::V1::ExpertsController#show as */*
+  Parameters: {"term"=>"mighty", "id"=>"search"}
+  Rendering api/v1/experts/show.json.jbuilder
+  [1m[36mExpert Load (2.3ms)[0m  [1m[34mSELECT "experts".* FROM "experts" WHERE (LOWER(alias) LIKE '%mighty%' OR LOWER(name) LIKE '%mighty%')[0m
+  Rendered api/v1/experts/show.json.jbuilder (20.3ms)
+Completed 200 OK in 44ms (Views: 27.3ms | ActiveRecord: 3.2ms)
+
+
+Started GET "/api/v1/experts/search?term=bob" for 127.0.0.1 at 2017-02-09 20:31:24 -0500
+Processing by Api::V1::ExpertsController#show as */*
+  Parameters: {"term"=>"bob", "id"=>"search"}
+  Rendering api/v1/experts/show.json.jbuilder
+  [1m[36mExpert Load (0.2ms)[0m  [1m[34mSELECT "experts".* FROM "experts" WHERE (LOWER(alias) LIKE '%bob%' OR LOWER(name) LIKE '%bob%')[0m
+  Rendered api/v1/experts/show.json.jbuilder (2.5ms)
+Completed 200 OK in 16ms (Views: 13.6ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/api/v1/experts/search?term=mighty+joe" for 127.0.0.1 at 2017-02-09 20:31:44 -0500
+DEPRECATION WARNING: before_filter is deprecated and will be removed in Rails 5.1. Use before_action instead. (called from <class:ApiController> at /Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/controllers/api/v1/api_controller.rb:3)
+Processing by Api::V1::ExpertsController#show as */*
+  Parameters: {"term"=>"mighty joe", "id"=>"search"}
+  Rendering api/v1/experts/show.json.jbuilder
+  [1m[36mExpert Load (0.6ms)[0m  [1m[34mSELECT "experts".* FROM "experts" WHERE (LOWER(alias) LIKE '%mighty joe%' OR LOWER(name) LIKE '%mighty joe%')[0m
+  Rendered api/v1/experts/show.json.jbuilder (13.2ms)
+Completed 200 OK in 35ms (Views: 21.6ms | ActiveRecord: 1.1ms)
+
+
+Started GET "/api/v1/experts/search?term=mighty+joe+blung" for 127.0.0.1 at 2017-02-09 20:31:50 -0500
+Processing by Api::V1::ExpertsController#show as */*
+  Parameters: {"term"=>"mighty joe blung", "id"=>"search"}
+  Rendering api/v1/experts/show.json.jbuilder
+  [1m[36mExpert Load (0.2ms)[0m  [1m[34mSELECT "experts".* FROM "experts" WHERE (LOWER(alias) LIKE '%mighty joe blung%' OR LOWER(name) LIKE '%mighty joe blung%')[0m
+  Rendered api/v1/experts/show.json.jbuilder (1.0ms)
+Completed 200 OK in 13ms (Views: 11.1ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/api/v1/experts/search?term=mighty+joe+young" for 127.0.0.1 at 2017-02-09 20:31:55 -0500
+Processing by Api::V1::ExpertsController#show as */*
+  Parameters: {"term"=>"mighty joe young", "id"=>"search"}
+  Rendering api/v1/experts/show.json.jbuilder
+  [1m[36mExpert Load (0.2ms)[0m  [1m[34mSELECT "experts".* FROM "experts" WHERE (LOWER(alias) LIKE '%mighty joe young%' OR LOWER(name) LIKE '%mighty joe young%')[0m
+  Rendered api/v1/experts/show.json.jbuilder (2.6ms)
+Completed 200 OK in 15ms (Views: 12.2ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/api/v1/experts/search?term=mighty+joe+young+3" for 127.0.0.1 at 2017-02-09 20:31:58 -0500
+Processing by Api::V1::ExpertsController#show as */*
+  Parameters: {"term"=>"mighty joe young 3", "id"=>"search"}
+  Rendering api/v1/experts/show.json.jbuilder
+  [1m[36mExpert Load (0.2ms)[0m  [1m[34mSELECT "experts".* FROM "experts" WHERE (LOWER(alias) LIKE '%mighty joe young 3%' OR LOWER(name) LIKE '%mighty joe young 3%')[0m
+  Rendered api/v1/experts/show.json.jbuilder (1.1ms)
+Completed 200 OK in 13ms (Views: 10.7ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/api/v1/experts/search?term=mighty+joe+young+2" for 127.0.0.1 at 2017-02-09 20:32:03 -0500
+Processing by Api::V1::ExpertsController#show as */*
+  Parameters: {"term"=>"mighty joe young 2", "id"=>"search"}
+  Rendering api/v1/experts/show.json.jbuilder
+  [1m[36mExpert Load (0.2ms)[0m  [1m[34mSELECT "experts".* FROM "experts" WHERE (LOWER(alias) LIKE '%mighty joe young 2%' OR LOWER(name) LIKE '%mighty joe young 2%')[0m
+  Rendered api/v1/experts/show.json.jbuilder (1.0ms)
+Completed 200 OK in 13ms (Views: 10.6ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/api/v1/experts/search?term=mighty-joe-young-2" for 127.0.0.1 at 2017-02-09 20:32:10 -0500
+Processing by Api::V1::ExpertsController#show as */*
+  Parameters: {"term"=>"mighty-joe-young-2", "id"=>"search"}
+  Rendering api/v1/experts/show.json.jbuilder
+  [1m[36mExpert Load (0.3ms)[0m  [1m[34mSELECT "experts".* FROM "experts" WHERE (LOWER(alias) LIKE '%mighty-joe-young-2%' OR LOWER(name) LIKE '%mighty-joe-young-2%')[0m
+  Rendered api/v1/experts/show.json.jbuilder (2.1ms)
+Completed 200 OK in 15ms (Views: 12.6ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/api/v1/experts/search?term=mighty-joe-young" for 127.0.0.1 at 2017-02-09 20:32:14 -0500
+Processing by Api::V1::ExpertsController#show as */*
+  Parameters: {"term"=>"mighty-joe-young", "id"=>"search"}
+  Rendering api/v1/experts/show.json.jbuilder
+  [1m[36mExpert Load (0.2ms)[0m  [1m[34mSELECT "experts".* FROM "experts" WHERE (LOWER(alias) LIKE '%mighty-joe-young%' OR LOWER(name) LIKE '%mighty-joe-young%')[0m
+  Rendered api/v1/experts/show.json.jbuilder (2.0ms)
+Completed 200 OK in 14ms (Views: 11.9ms | ActiveRecord: 0.2ms)
+
+

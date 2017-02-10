@@ -18,4 +18,28 @@ class Claim < ApplicationRecord
 
     has_many :claim_comments, dependent: :destroy
     has_many :comments, :through => :claim_comments
+
+    before_save :generate_alias
+
+    def generate_alias
+        if self.alias.nil?
+            self.alias = self.title.parameterize
+            if Expert.where(alias: self.alias).count > 0
+                increment = 2
+                self.alias = self.title.parameterize + "-" + increment.to_s
+
+                while Expert.where(alias: self.alias).count > 0 do
+                    increment = increment + 1
+                    self.alias = self.title.parameterize + "-" + increment.to_s
+                end
+            end
+        end
+    end
+
+    scope :search, -> (q) do
+        qstr = "%#{q.downcase}%"
+        fields = %w(alias name)
+        clause = fields.map{|f| "LOWER(#{f}) LIKE ?"}.join(" OR ")
+        where(clause, *fields.map{ qstr })
+    end
 end

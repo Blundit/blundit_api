@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170210004824) do
+ActiveRecord::Schema.define(version: 20170210013420) do
 
   create_table "categories", force: :cascade do |t|
     t.datetime "created_at",    null: false
@@ -76,6 +76,7 @@ ActiveRecord::Schema.define(version: 20170210004824) do
     t.string   "url"
     t.datetime "added"
     t.float    "accuracy"
+    t.string   "alias"
   end
 
   create_table "comments", force: :cascade do |t|
@@ -229,6 +230,7 @@ ActiveRecord::Schema.define(version: 20170210004824) do
     t.integer  "status"
     t.integer  "vote_count"
     t.integer  "vote_value"
+    t.string   "alias"
   end
 
   create_table "publications", force: :cascade do |t|

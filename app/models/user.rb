@@ -25,4 +25,47 @@ class User < ApplicationRecord
   has_many :votes
   has_many :bookmarks, dependent: :destroy
 
+
+  VOTING_RANK_OPTIONS = [
+    { min: 0, max: 25, rank: "newbie", badge: "" },
+    { min: 26, max: 50, rank: "average", badge: "" },
+    { min: 51, max: 75, rank: "pro", badge: "" },
+  ]
+
+
+  def voting_rank
+    @votes = self.votes_count
+    @votes = 0 if self.votes_count.nil?
+
+    @rank = false
+
+    VOTING_RANK_OPTIONS.each do |r| 
+      if @votes >= r[:min] and @votes <= r[:max]
+        @rank = r
+      end
+    end
+
+    return @rank
+  end
+
+
+  def comments_rank
+
+  end
+
+
+  def claims_rank
+
+  end
+
+
+  def experts_rank
+
+  end
+
+
+  def predictions_rank
+
+  end
+
 end

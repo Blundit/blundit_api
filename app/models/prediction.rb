@@ -21,6 +21,7 @@ class Prediction < ApplicationRecord
 
     ## Variables
     VOTES_REQUIRED_TO_CLOSE_PREDICTION = 5
+    VOTING_WINDOW = 1.day
 
 
     attr_reader :contributions_list
@@ -161,9 +162,10 @@ class Prediction < ApplicationRecord
     def calc_vote_status
         num_votes = self.votes.length
         status = 0
-        if num_votes >= VOTES_REQUIRED_TO_CLOSE_PREDICTION
+        if num_votes >= VOTES_REQUIRED_TO_CLOSE_PREDICTION and self.can_close
             status = 1
         end
+
 
         self.status = status
         self.save
@@ -174,13 +176,15 @@ class Prediction < ApplicationRecord
     end
 
 
-    def self.votes_required_to_close
-        # TODO: Make this number variable, based on user count and interaction
-        # The quicker the votes, the higher the number of votes required.
-        # Or time-based? Who knows. 
-        # Open forever until minimal number of votes, but fewer votes affects
-        # the duration?
-        VOTES_REQUIRED_TO_CLOSE_PREDICTION
+    def can_close
+        return false if self.prediction_date.nil?
+
+        @can_close = true
+        if (Time.now - self.prediction_date) > VOTING_WINDOW and self.votes.length >= VOTES_REQUIRED_TO_CLOSE_PREDICTION
+            return true
+        end
+
+        return false
     end
 
 end

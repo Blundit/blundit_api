@@ -34,11 +34,11 @@ class Claim < ApplicationRecord
     def generate_alias
         if self.alias.nil?
             self.alias = self.title.parameterize
-            if Expert.where(alias: self.alias).count > 0
+            if Claim.where(alias: self.alias).count > 0
                 increment = 2
                 self.alias = self.title.parameterize + "-" + increment.to_s
 
-                while Expert.where(alias: self.alias).count > 0 do
+                while Claim.where(alias: self.alias).count > 0 do
                     increment = increment + 1
                     self.alias = self.title.parameterize + "-" + increment.to_s
                 end

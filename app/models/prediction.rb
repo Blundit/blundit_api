@@ -23,7 +23,6 @@ class Prediction < ApplicationRecord
     VOTES_REQUIRED_TO_CLOSE_PREDICTION = 5
 
 
-
     attr_reader :contributions_list
     def contributions_list
         {
@@ -154,7 +153,7 @@ class Prediction < ApplicationRecord
 
         if !user_has_already_voted
             self.votes << Vote.create({user_id: user, vote: value})
-            self.calc_votes
+            calc_votes
         end
     end
 

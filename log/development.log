@@ -6680,3 +6680,205 @@ Migrating to AdjustVoteValue (20170211122930)
   [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
   [1m[36mPrediction Load (0.1ms)[0m  [1m[34mSELECT  "predictions".* FROM "predictions" ORDER BY "predictions"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
   [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "votes" INNER JOIN "prediction_votes" ON "votes"."id" = "prediction_votes"."vote_id" WHERE "prediction_votes"."prediction_id" = ?[0m  [["prediction_id", 3]]
+  [1m[36mActiveRecord::SchemaMigration Load (1.9ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to CreateBookmarks (20170211193114)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.6ms)[0m  [1m[35mCREATE TABLE "bookmarks" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "user_id" integer, "expert_id" integer, "claim_id" integer, "prediction_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170211193114"]]
+  [1m[35m (3.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", :environment], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_email' AND type='index'
+[0m
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" ORDER BY "users"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mBookmark Load (0.2ms)[0m  [1m[34mSELECT "bookmarks".* FROM "bookmarks" WHERE "bookmarks"."user_id" = ?[0m  [["user_id", 1]]
+  [1m[36mExpert Load (0.1ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" ORDER BY "experts"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "bookmarks" ("user_id", "expert_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["user_id", 1], ["expert_id", 27], ["created_at", 2017-02-11 19:34:58 UTC], ["updated_at", 2017-02-11 19:34:58 UTC]]
+  [1m[35m (2.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mBookmark Load (0.1ms)[0m  [1m[34mSELECT "bookmarks".* FROM "bookmarks" WHERE "bookmarks"."user_id" = ?[0m  [["user_id", 1]]
+  [1m[36mExpert Load (0.4ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."bookmark_id" = ? LIMIT ?[0m  [["bookmark_id", 1], ["LIMIT", 1]]
+  [1m[36mBookmark Load (0.1ms)[0m  [1m[34mSELECT  "bookmarks".* FROM "bookmarks" ORDER BY "bookmarks"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mBookmark Load (0.1ms)[0m  [1m[34mSELECT  "bookmarks".* FROM "bookmarks" ORDER BY "bookmarks"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mExpert Load (0.3ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."bookmark_id" = ? LIMIT ?[0m  [["bookmark_id", 1], ["LIMIT", 1]]
+  [1m[36mExpert Load (0.4ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."bookmark_id" = ? LIMIT ?[0m  [["bookmark_id", 1], ["LIMIT", 1]]
+  [1m[36mPrediction Load (0.5ms)[0m  [1m[34mSELECT  "predictions".* FROM "predictions" WHERE "predictions"."bookmark_id" = ? LIMIT ?[0m  [["bookmark_id", 1], ["LIMIT", 1]]
+  [1m[36mClaim Load (0.3ms)[0m  [1m[34mSELECT  "claims".* FROM "claims" WHERE "claims"."bookmark_id" = ? LIMIT ?[0m  [["bookmark_id", 1], ["LIMIT", 1]]
+  [1m[36mBookmark Load (0.1ms)[0m  [1m[34mSELECT  "bookmarks".* FROM "bookmarks" ORDER BY "bookmarks"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mClaim Load (0.3ms)[0m  [1m[34mSELECT  "claims".* FROM "claims" WHERE "claims"."bookmark_id" = ? LIMIT ?[0m  [["bookmark_id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."bookmark_id" = ? LIMIT ?[0m  [["bookmark_id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" ORDER BY "users"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mBookmark Load (0.2ms)[0m  [1m[34mSELECT "bookmarks".* FROM "bookmarks" WHERE "bookmarks"."user_id" = ?[0m  [["user_id", 1]]
+  [1m[36mBookmark Load (0.1ms)[0m  [1m[34mSELECT  "bookmarks".* FROM "bookmarks" ORDER BY "bookmarks"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."bookmark_id" = ? LIMIT ?[0m  [["bookmark_id", 1], ["LIMIT", 1]]
+  [1m[36mBookmark Load (0.2ms)[0m  [1m[34mSELECT  "bookmarks".* FROM "bookmarks" ORDER BY "bookmarks"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mBookmark Load (0.1ms)[0m  [1m[34mSELECT  "bookmarks".* FROM "bookmarks" ORDER BY "bookmarks"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."bookmark_id" = ? LIMIT ?[0m  [["bookmark_id", 1], ["LIMIT", 1]]
+  [1m[36mBookmark Load (0.3ms)[0m  [1m[34mSELECT  "bookmarks".* FROM "bookmarks" ORDER BY "bookmarks"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."bookmark_id" = ? LIMIT ?[0m  [["bookmark_id", 1], ["LIMIT", 1]]
+  [1m[36mBookmark Load (0.1ms)[0m  [1m[34mSELECT  "bookmarks".* FROM "bookmarks" ORDER BY "bookmarks"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mExpert Load (0.4ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."bookmark_id" = ? LIMIT ?[0m  [["bookmark_id", 1], ["LIMIT", 1]]
+  [1m[36mBookmark Load (0.1ms)[0m  [1m[34mSELECT  "bookmarks".* FROM "bookmarks" ORDER BY "bookmarks"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mExpert Load (0.5ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."bookmark_id" = ? LIMIT ?[0m  [["bookmark_id", 1], ["LIMIT", 1]]
+  [1m[36mExpert Load (0.4ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."bookmark_id" = ? LIMIT ?[0m  [["bookmark_id", 1], ["LIMIT", 1]]
+  [1m[36mBookmark Load (0.2ms)[0m  [1m[34mSELECT  "bookmarks".* FROM "bookmarks" ORDER BY "bookmarks"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mExpert Load (0.2ms)[0m  [1m[34mSELECT  "experts".* FROM "experts" WHERE "experts"."id" = ? LIMIT ?[0m  [["id", 27], ["LIMIT", 1]]
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" ORDER BY "users"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mBookmark Load (0.2ms)[0m  [1m[34mSELECT "bookmarks".* FROM "bookmarks" WHERE "bookmarks"."user_id" = ?[0m  [["user_id", 1]]
+  [1m[36mPrediction Load (0.2ms)[0m  [1m[34mSELECT  "predictions".* FROM "predictions" ORDER BY "predictions"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mPrediction Load (0.1ms)[0m  [1m[34mSELECT  "predictions".* FROM "predictions" ORDER BY "predictions"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mPrediction Load (0.2ms)[0m  [1m[34mSELECT  "predictions".* FROM "predictions" WHERE "predictions"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to AddVoteFieldsToClaim (20170211200814)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.8ms)[0m  [1m[35mALTER TABLE "claims" ADD "status" integer DEFAULT 0[0m
+  [1m[35m (0.2ms)[0m  [1m[35mALTER TABLE "claims" ADD "vote_count" integer DEFAULT 0[0m
+  [1m[35m (43.7ms)[0m  [1m[35mALTER TABLE "claims" ADD "vote_value" float[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TEMPORARY TABLE "aclaims" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "title" varchar, "description" text, "url" varchar, "added" datetime, "accuracy" float, "alias" varchar, "status" integer DEFAULT 0, "vote_count" integer DEFAULT 0, "vote_value" float)[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "aclaims" ("id","created_at","updated_at","title","description","url","added","accuracy","alias","status","vote_count","vote_value")
+                     SELECT "id","created_at","updated_at","title","description","url","added","accuracy","alias","status","vote_count","vote_value" FROM "claims"[0m
+  [1m[35m (1.6ms)[0m  [1m[35mDROP TABLE "claims"[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "claims" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "title" varchar, "description" text, "url" varchar, "added" datetime, "alias" varchar, "status" integer DEFAULT 0, "vote_count" integer DEFAULT 0, "vote_value" float)[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "claims" ("id","created_at","updated_at","title","description","url","added","alias","status","vote_count","vote_value")
+                     SELECT "id","created_at","updated_at","title","description","url","added","alias","status","vote_count","vote_value" FROM "aclaims"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "aclaims"[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TEMPORARY TABLE "aclaims" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "title" varchar, "description" text, "url" varchar, "added" datetime, "alias" varchar, "status" integer DEFAULT 0, "vote_count" integer DEFAULT 0, "vote_value" float)[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "aclaims" ("id","created_at","updated_at","title","description","url","added","alias","status","vote_count","vote_value")
+                     SELECT "id","created_at","updated_at","title","description","url","added","alias","status","vote_count","vote_value" FROM "claims"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "claims"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "claims" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "title" varchar, "description" text, "url" varchar, "alias" varchar, "status" integer DEFAULT 0, "vote_count" integer DEFAULT 0, "vote_value" float)[0m
+  [1m[35m (22.7ms)[0m  [1m[32mINSERT INTO "claims" ("id","created_at","updated_at","title","description","url","alias","status","vote_count","vote_value")
+                     SELECT "id","created_at","updated_at","title","description","url","alias","status","vote_count","vote_value" FROM "aclaims"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE "aclaims"[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170211200814"]]
+  [1m[35m (2.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", :environment], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_email' AND type='index'
+[0m
+  [1m[36mClaim Load (0.2ms)[0m  [1m[34mSELECT  "claims".* FROM "claims" ORDER BY "claims"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mVote Load (0.2ms)[0m  [1m[34mSELECT "votes".* FROM "votes" INNER JOIN "claim_votes" ON "votes"."id" = "claim_votes"."vote_id" WHERE "claim_votes"."claim_id" = ?[0m  [["claim_id", 2]]
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mClaim Load (0.2ms)[0m  [1m[34mSELECT  "claims".* FROM "claims" WHERE "claims"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mVote Load (0.2ms)[0m  [1m[34mSELECT "votes".* FROM "votes" INNER JOIN "claim_votes" ON "votes"."id" = "claim_votes"."vote_id" WHERE "claim_votes"."claim_id" = ?[0m  [["claim_id", 2]]
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[33mUPDATE "claims" SET "updated_at" = ?, "vote_count" = ?, "vote_value" = ? WHERE "claims"."id" = ?[0m  [["updated_at", 2017-02-11 20:12:22 UTC], ["vote_count", 1], ["vote_value", 0.0], ["id", 2]]
+  [1m[35m (2.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mClaim Load (0.2ms)[0m  [1m[34mSELECT  "claims".* FROM "claims" WHERE "claims"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mVote Load (0.3ms)[0m  [1m[34mSELECT  "votes".* FROM "votes" INNER JOIN "claim_votes" ON "votes"."id" = "claim_votes"."vote_id" WHERE "claim_votes"."claim_id" = ? ORDER BY "votes"."id" DESC LIMIT ?[0m  [["claim_id", 2], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mClaimVote Load (0.2ms)[0m  [1m[34mSELECT  "claim_votes".* FROM "claim_votes" WHERE "claim_votes"."vote_id" = ? LIMIT ?[0m  [["vote_id", 2], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[31mDELETE FROM "claim_votes" WHERE "claim_votes"."id" = ?[0m  [["id", 1]]
+  [1m[36mPredictionVote Load (0.2ms)[0m  [1m[34mSELECT  "prediction_votes".* FROM "prediction_votes" WHERE "prediction_votes"."vote_id" = ? LIMIT ?[0m  [["vote_id", 2], ["LIMIT", 1]]
+  [1m[35mSQL (0.2ms)[0m  [1m[31mDELETE FROM "votes" WHERE "votes"."id" = ?[0m  [["id", 2]]
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mVote Load (0.2ms)[0m  [1m[34mSELECT "votes".* FROM "votes" INNER JOIN "claim_votes" ON "votes"."id" = "claim_votes"."vote_id" WHERE "claim_votes"."claim_id" = ?[0m  [["claim_id", 2]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "votes" ("created_at", "updated_at", "user_id", "vote") VALUES (?, ?, ?, ?)[0m  [["created_at", 2017-02-11 20:13:06 UTC], ["updated_at", 2017-02-11 20:13:06 UTC], ["user_id", 1], ["vote", 1]]
+  [1m[35m (2.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "claim_votes" ("created_at", "updated_at", "claim_id", "vote_id") VALUES (?, ?, ?, ?)[0m  [["created_at", 2017-02-11 20:13:06 UTC], ["updated_at", 2017-02-11 20:13:06 UTC], ["claim_id", 2], ["vote_id", 7]]
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[33mUPDATE "claims" SET "updated_at" = ?, "vote_value" = ? WHERE "claims"."id" = ?[0m  [["updated_at", 2017-02-11 20:13:06 UTC], ["vote_value", 1.0], ["id", 2]]
+  [1m[35m (1.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[31mDELETE FROM "claim_votes" WHERE "claim_votes"."id" = ?[0m  [["id", 2]]
+  [1m[36mPredictionVote Load (0.1ms)[0m  [1m[34mSELECT  "prediction_votes".* FROM "prediction_votes" WHERE "prediction_votes"."vote_id" = ? LIMIT ?[0m  [["vote_id", 7], ["LIMIT", 1]]
+  [1m[35mSQL (0.1ms)[0m  [1m[31mDELETE FROM "votes" WHERE "votes"."id" = ?[0m  [["id", 7]]
+  [1m[35m (3.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mClaim Load (0.1ms)[0m  [1m[34mSELECT  "claims".* FROM "claims" WHERE "claims"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mVote Load (0.1ms)[0m  [1m[34mSELECT "votes".* FROM "votes" INNER JOIN "claim_votes" ON "votes"."id" = "claim_votes"."vote_id" WHERE "claim_votes"."claim_id" = ?[0m  [["claim_id", 2]]
+  [1m[35m (0.4ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "votes" ("created_at", "updated_at", "user_id", "vote") VALUES (?, ?, ?, ?)[0m  [["created_at", 2017-02-11 20:14:21 UTC], ["updated_at", 2017-02-11 20:14:21 UTC], ["user_id", 1], ["vote", 0]]
+  [1m[35m (2.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.7ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "claim_votes" ("created_at", "updated_at", "claim_id", "vote_id") VALUES (?, ?, ?, ?)[0m  [["created_at", 2017-02-11 20:14:21 UTC], ["updated_at", 2017-02-11 20:14:21 UTC], ["claim_id", 2], ["vote_id", 8]]
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[33mUPDATE "claims" SET "updated_at" = ?, "vote_value" = ? WHERE "claims"."id" = ?[0m  [["updated_at", 2017-02-11 20:14:21 UTC], ["vote_value", 0.0], ["id", 2]]
+  [1m[35m (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.7ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mClaim Load (0.1ms)[0m  [1m[34mSELECT  "claims".* FROM "claims" WHERE "claims"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mVote Load (0.1ms)[0m  [1m[34mSELECT "votes".* FROM "votes" INNER JOIN "claim_votes" ON "votes"."id" = "claim_votes"."vote_id" WHERE "claim_votes"."claim_id" = ?[0m  [["claim_id", 2]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mClaimVote Load (0.1ms)[0m  [1m[34mSELECT  "claim_votes".* FROM "claim_votes" WHERE "claim_votes"."vote_id" = ? LIMIT ?[0m  [["vote_id", 8], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[31mDELETE FROM "claim_votes" WHERE "claim_votes"."id" = ?[0m  [["id", 3]]
+  [1m[36mPredictionVote Load (0.1ms)[0m  [1m[34mSELECT  "prediction_votes".* FROM "prediction_votes" WHERE "prediction_votes"."vote_id" = ? LIMIT ?[0m  [["vote_id", 8], ["LIMIT", 1]]
+  [1m[35mSQL (0.1ms)[0m  [1m[31mDELETE FROM "votes" WHERE "votes"."id" = ?[0m  [["id", 8]]
+  [1m[35m (2.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mClaim Load (0.2ms)[0m  [1m[34mSELECT  "claims".* FROM "claims" WHERE "claims"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mVote Load (0.1ms)[0m  [1m[34mSELECT "votes".* FROM "votes" INNER JOIN "claim_votes" ON "votes"."id" = "claim_votes"."vote_id" WHERE "claim_votes"."claim_id" = ?[0m  [["claim_id", 2]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "votes" ("created_at", "updated_at", "user_id", "vote") VALUES (?, ?, ?, ?)[0m  [["created_at", 2017-02-11 20:14:54 UTC], ["updated_at", 2017-02-11 20:14:54 UTC], ["user_id", 1], ["vote", 1]]
+  [1m[35m (3.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "claim_votes" ("created_at", "updated_at", "claim_id", "vote_id") VALUES (?, ?, ?, ?)[0m  [["created_at", 2017-02-11 20:14:54 UTC], ["updated_at", 2017-02-11 20:14:54 UTC], ["claim_id", 2], ["vote_id", 9]]
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[33mUPDATE "claims" SET "updated_at" = ?, "vote_value" = ? WHERE "claims"."id" = ?[0m  [["updated_at", 2017-02-11 20:14:54 UTC], ["vote_value", 1.0], ["id", 2]]
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mClaim Load (0.2ms)[0m  [1m[34mSELECT  "claims".* FROM "claims" WHERE "claims"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]

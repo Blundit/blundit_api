@@ -65,15 +65,18 @@ module Api::V1
       end
     end
 
+
     def search
       @prediction = Prediction.search(params[:term])
     end
+
 
     private
 
     def set_prediction
       @prediction = Prediction.find(params[:id])
     end
+
 
     def prediction_params
       params.permit(

@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170211122930) do
+ActiveRecord::Schema.define(version: 20170211200814) do
+
+  create_table "bookmarks", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "expert_id"
+    t.integer  "claim_id"
+    t.integer  "prediction_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
 
   create_table "categories", force: :cascade do |t|
     t.datetime "created_at",    null: false
@@ -69,14 +78,15 @@ ActiveRecord::Schema.define(version: 20170211122930) do
   end
 
   create_table "claims", force: :cascade do |t|
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
     t.string   "title"
     t.text     "description"
     t.string   "url"
-    t.datetime "added"
-    t.float    "accuracy"
     t.string   "alias"
+    t.integer  "status",      default: 0
+    t.integer  "vote_count",  default: 0
+    t.float    "vote_value"
   end
 
   create_table "comments", force: :cascade do |t|

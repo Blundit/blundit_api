@@ -20,6 +20,10 @@ class Claim < ApplicationRecord
     has_many :comments, :through => :claim_comments
 
 
+    ## Variables
+    VOTES_REQUIRED_TO_CLOSE_PREDICTION = 5
+
+
     attr_reader :contributions_list
     def contributions_list
         {
@@ -52,5 +56,105 @@ class Claim < ApplicationRecord
         fields = %w(alias name)
         clause = fields.map{|f| "LOWER(#{f}) LIKE ?"}.join(" OR ")
         where(clause, *fields.map{ qstr })
+    end
+
+
+    def active?
+        return true if self.status == 0
+        return false
+    end
+
+
+    def closed?
+        return true if self.status == 1
+        return false
+    end
+
+
+    def correct?
+        return false if self.prediction_date.nil?
+        if self.status == 1 and self.vote_value >= 0.5
+            return true
+        end
+    end
+
+
+    def self.active_predictions
+        where("status = 0")
+    end
+
+
+    def self.closed_claims
+        where("status = 1")
+    end
+
+
+    def self.correct_claims
+        where("status = 1 and vote_value >= 0.5")
+    end
+
+
+    def self.incorrect_claims
+        where("status = 1 and vote_value < 0.5")
+    end
+
+
+    def calc_votes
+        self.vote_count = self.votes.length
+        vote_value = 0
+        
+        self.votes.each do |vote|
+            vote_value += vote.vote
+        end
+
+        self.vote_value = vote_value.to_f / self.votes.length
+        self.save
+
+        calc_vote_status
+    end
+
+
+    def vote (value = nil, user = nil)
+        return "not active" if !self.active?
+        return "missing params" if user.nil? or value.nil?
+
+        # check to see if user has already voted
+        user_has_already_voted = false
+        self.votes.each do |vote|
+            if vote.user.id == user
+                user_has_already_voted = true
+            end
+        end
+
+        if !user_has_already_voted
+            self.votes << Vote.create({user_id: user, vote: value})
+            calc_votes
+        end
+    end
+
+
+    def calc_vote_status
+        num_votes = self.votes.length
+        status = 0
+        if num_votes >= VOTES_REQUIRED_TO_CLOSE_PREDICTION
+            status = 1
+        end
+
+        self.status = status
+        self.save
+
+        if status == 1
+            # TODO: Post-save actions, notifications, etc.
+        end
+    end
+
+
+    def self.votes_required_to_close
+        # TODO: Make this number variable, based on user count and interaction
+        # The quicker the votes, the higher the number of votes required.
+        # Or time-based? Who knows. 
+        # Open forever until minimal number of votes, but fewer votes affects
+        # the duration?
+        VOTES_REQUIRED_TO_CLOSE_PREDICTION
     end
 end

@@ -82,6 +82,24 @@ module Api::V1
     end
 
 
+    def add_comment
+      # /claims/:claim_id/add_comment
+      @claim = Claim.find_by_id(params[:claim_id])
+
+      if @claim.nil?
+        render json: { error: 'Claim Not Found' }, status: 422
+        return
+      end
+
+      @comment = Comment.create(comment_params)
+
+      if @claim.comments << @comment
+        current_user.comments << @comment
+        add_contribution(@comment, :created_comment)
+      end
+    end
+
+
     private
 
     def set_claim
@@ -94,6 +112,14 @@ module Api::V1
         :title,
         :description,
         :url,
+      )
+    end
+
+
+    def comment_params
+      params.permit(
+        :title,
+        :content
       )
     end
   end

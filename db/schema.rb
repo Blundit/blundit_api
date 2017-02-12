@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170212022304) do
+ActiveRecord::Schema.define(version: 20170212123723) do
 
   create_table "bookmarks", force: :cascade do |t|
     t.integer  "user_id"
@@ -183,6 +183,8 @@ ActiveRecord::Schema.define(version: 20170212022304) do
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
     t.string   "alias"
+    t.float    "prediction_accuracy"
+    t.float    "claim_accuracy"
   end
 
   create_table "flags", force: :cascade do |t|

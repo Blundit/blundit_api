@@ -19,6 +19,9 @@ Rails.application.routes.draw do
         resources :prediction_evidences
         resources :prediction_votes
         resources :prediction_flags
+
+        post 'predictions/:prediction_id/add_comment' => 'predictions#add_comment'
+        post 'predictions/:prediction_id/add_expert' => 'predictions#add_expert'
       end
 
       resources :claims do
@@ -30,6 +33,9 @@ Rails.application.routes.draw do
         resources :claim_flags
       end
 
+      post 'claims/:claim_id/add_comment' => 'claims#add_comment'
+      post 'claims/:claim_id/add_expert' => 'claims#add_expert'
+      
       resources :categories
 
       resources :experts do
@@ -38,7 +44,11 @@ Rails.application.routes.draw do
         resources :expert_comments
         resources :expert_flags
       end
+
       post 'experts/:expert_id/add_publication' => 'experts#add_publication'
+      post 'experts/:expert_id/add_comment' => 'experts#add_comment'
+      post 'experts/:expert_id/add_claim' => 'experts#add_claim'
+      post 'experts/:expert_id/add_prediction' => 'experts#add_prediction'
 
       resources :publications do
         resources :publication_comments

@@ -56,4 +56,31 @@ class Expert < ApplicationRecord
     clause = fields.map{|f| "LOWER(#{f}) LIKE ?"}.join(" OR ")
     where(clause, *fields.map{ qstr })
   end
+
+
+  def calc_accuracy
+    @number_of_correct_predictions = self.predictions.where(status: 1).where('vote_value >= 0.5').count
+    @number_of_predictions = self.predictions.where(status: 1).count
+
+    @number_of_correct_claims = self.claims.where(status: 1).where('vote_value >= 0.5').count
+    @number_of_claims = self.claims.where(status: 1).count
+
+    if @number_of_predictions > 0
+      self.prediction_accuracy = @number_of_correct_predictions / @number_of_predictions
+    end
+
+    if @number_of_claims > 0
+      self.claim_accuracy = @number_of_correct_claims / @number_of_claims
+    end
+
+    if @number_of_predictions > 0 and @number_of_claims > 0
+      self.accuracy = (@number_of_correct_claims + @number_of_correct_predictions) / (@number_of_predictions + @number_of_claims)
+    elsif @number_of_predictions > 0 and @number_of_claims == 0
+      self.accuracy = self.prediction_accuracy
+    elsif @number_of_predictions == 0 and @number_of_claims > 0
+      self.accuracy = self.claim_accuracy
+    end
+    
+    self.save
+  end
 end

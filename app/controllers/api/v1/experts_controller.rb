@@ -97,11 +97,80 @@ module Api::V1
         render json: { error: 'Expert Not Found' }, status: 422
         return
       end
+      
+      @publication = Publication.create(publication_params)
 
-      if Expert.find(params[:expert_id]).publications << Publication.create(publication_params)
+      if Expert.find(params[:expert_id]).publications << @publication
+        add_contribution(@publication, :created_publication)
         render json: { status: 'success' }
       else
         render json: { error: 'Unable to Add Publication to Expert' }, status: 422
+      end
+    end
+
+
+    def add_comment
+      # /experts/:expert_id/add_comment
+      @expert = Expert.find_by_id(params[:expert_id])
+
+      if @expert.nil?
+        render json: { error: 'Expert Not Found' }, status: 422
+        return
+      end
+
+      @comment = Comment.create(comment_params)
+
+      if @experts.comments << @comment
+        current_user.comments << @comment
+        add_contribution(@comment, :created_comment)
+      end
+    end
+
+
+    def add_claim
+      @expert = Expert.find_by_id(params[:expert_id])
+      @claim = Claim.find_by_id(params[:claim_id])
+
+      if @expert.nil?
+        render json: { error: "Expert Not Found" }, status: 422
+        return
+      end
+
+      if @claim.nil?
+        render json: { error: "Claim Not Found" }, status: 422
+        return
+      end
+      
+      if params.has_key?(:claim_id)
+          @claim.experts << @expert
+          @expert.claims << @claim
+          @expert.calc_accuracy
+      else
+          render json: { error: "Claim ID Not Found" }, status: 422
+      end
+    end
+
+
+    def add_prediction
+      @expert = Expert.find_by_id(params[:expert_id])
+      @prediction = Prediction.find_by_id(params[:prediction_id])
+
+      if @expert.nil?
+        render json: { error: "Expert not found" }, status: 422
+        return
+      end
+
+      if @prediction.nil?
+        render json: { error: "Prediction not found" }, status: 422
+        return
+      end
+      
+      if params.has_key?(:prediction_id)
+        @prediction.experts << @expert
+        @expert.predictions << @prediction
+        @expert.calc_accuracy
+      else
+        render json: { error: "Expert ID Not Found" }, status: 422
       end
     end
 
@@ -126,12 +195,21 @@ module Api::V1
         )
     end
 
+
     def publication_params
       params.permit(
         :title,
         :url,
         :description,
         :expert_id
+      )
+    end
+
+
+    def comment_params
+      params.permit(
+        :title,
+        :content
       )
     end
   end

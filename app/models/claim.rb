@@ -128,7 +128,9 @@ class Claim < ApplicationRecord
         end
 
         if !user_has_already_voted
-            self.votes << Vote.create({user_id: user, vote: value})
+            @vote = Vote.create({user_id: user, vote: value})
+            self.votes << @vote
+            add_contribution(:voted)
             calc_votes
         end
     end
@@ -146,8 +148,17 @@ class Claim < ApplicationRecord
 
         if status == 1
             # TODO: Post-save actions, notifications, etc.
+            calc_expert_accuracy
         end
     end
+
+
+    def calc_expert_accuracy
+        self.experts.each do | expert |
+            expert.calc_accuracy
+        end
+    end
+
 
 
     def can_close

@@ -82,6 +82,24 @@ module Api::V1
     end
 
 
+    def add_comment
+      # /predictions/:prediction_id/add_comment
+      @prediction = Prediction.find_by_id(params[:prediction_id])
+
+      if @prediction.nil?
+        render json: { error: 'Prediction Not Found' }, status: 422
+        return
+      end
+
+      @comment = Comment.create(comment_params)
+
+      if @predictions.comments << @comment
+        current_user.comments << @comment
+        add_contribution(@comment, :created_comment)
+      end
+    end
+
+
     private
 
     def set_prediction
@@ -93,6 +111,14 @@ module Api::V1
       params.permit(
         :title,
         :description
+      )
+    end
+
+
+    def comment_params
+      params.permit(
+        :title,
+        :content
       )
     end
   end

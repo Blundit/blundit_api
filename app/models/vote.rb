@@ -10,6 +10,13 @@ class Vote < ApplicationRecord
     has_one :prediction_vote, dependent: :destroy
     has_one :prediction, :through => :prediction_vote
 
+    attr_reader :contributions_list
+    def contributions_list
+        {
+                voted: "Voted",
+        }
+    end    
+
     def type?
         return "claim" if !self.claim.nil?
         return "prediction" if !self.prediction.nil?

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170211215513) do
+ActiveRecord::Schema.define(version: 20170212012636) do
 
   create_table "bookmarks", force: :cascade do |t|
     t.integer  "user_id"
@@ -118,7 +118,8 @@ ActiveRecord::Schema.define(version: 20170211215513) do
     t.string   "url"
     t.text     "description"
     t.string   "image"
-    t.text     "hash"
+    t.text     "url_content"
+    t.string   "domain"
   end
 
   create_table "expert_categories", force: :cascade do |t|

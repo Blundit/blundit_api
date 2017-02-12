@@ -49,6 +49,10 @@ Rails.application.routes.draw do
         post 'add_bookmark' => 'user#add_bookmark'
         post 'remove_bookmark' => 'user#remove_bookmark'
       end
+
+      resource :evidences do
+        post 'add_evidence' => 'evidences#add_evidence'
+      end
     end
   end
 end

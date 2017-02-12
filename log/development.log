@@ -7961,3 +7961,319 @@ Migrating to SetCountDefault (20170211215513)
   [1m[35m (2.1ms)[0m  [1m[36mcommit transaction[0m
   [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
   [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" ORDER BY "users"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mPrediction Load (0.7ms)[0m  [1m[34mSELECT  "predictions".* FROM "predictions" ORDER BY "predictions"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mEvidence Load (0.6ms)[0m  [1m[34mSELECT "evidences".* FROM "evidences" INNER JOIN "prediction_evidences" ON "evidences"."id" = "prediction_evidences"."evidence_id" WHERE "prediction_evidences"."prediction_id" = ?[0m  [["prediction_id", 3]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to RenameEvidenceHash (20170212012522)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TEMPORARY TABLE "aevidences" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "title" varchar, "url" varchar, "description" text, "image" varchar, "url_content" text)[0m
+  [1m[35m (0.4ms)[0m  [1m[32mINSERT INTO "aevidences" ("id","created_at","updated_at","title","url","description","image","url_content")
+                     SELECT "id","created_at","updated_at","title","url","description","image","hash" FROM "evidences"[0m
+  [1m[35m (0.5ms)[0m  [1m[35mDROP TABLE "evidences"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "evidences" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "title" varchar, "url" varchar, "description" text, "image" varchar, "url_content" text)[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "evidences" ("id","created_at","updated_at","title","url","description","image","url_content")
+                     SELECT "id","created_at","updated_at","title","url","description","image","url_content" FROM "aevidences"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "aevidences"[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170212012522"]]
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.8ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", :environment], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_email' AND type='index'
+[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to AddDomainToEvidence (20170212012636)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.9ms)[0m  [1m[35mALTER TABLE "evidences" ADD "domain" varchar[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170212012636"]]
+  [1m[35m (2.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", :environment], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_email' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+Started POST "/api/v1/evidences/add_evidence" for 127.0.0.1 at 2017-02-11 20:39:56 -0500
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  
+ActionController::RoutingError (uninitialized constant Api::V1::EvidenceController):
+  
+activesupport (5.0.1) lib/active_support/inflector/methods.rb:270:in `const_get'
+activesupport (5.0.1) lib/active_support/inflector/methods.rb:270:in `block in constantize'
+activesupport (5.0.1) lib/active_support/inflector/methods.rb:266:in `each'
+activesupport (5.0.1) lib/active_support/inflector/methods.rb:266:in `inject'
+activesupport (5.0.1) lib/active_support/inflector/methods.rb:266:in `constantize'
+actionpack (5.0.1) lib/action_dispatch/http/request.rb:81:in `controller_class'
+actionpack (5.0.1) lib/action_dispatch/routing/route_set.rb:44:in `controller'
+actionpack (5.0.1) lib/action_dispatch/routing/route_set.rb:30:in `serve'
+actionpack (5.0.1) lib/action_dispatch/journey/router.rb:39:in `block in serve'
+actionpack (5.0.1) lib/action_dispatch/journey/router.rb:26:in `each'
+actionpack (5.0.1) lib/action_dispatch/journey/router.rb:26:in `serve'
+actionpack (5.0.1) lib/action_dispatch/routing/route_set.rb:725:in `call'
+warden (1.2.7) lib/warden/manager.rb:36:in `block in call'
+warden (1.2.7) lib/warden/manager.rb:35:in `catch'
+warden (1.2.7) lib/warden/manager.rb:35:in `call'
+rack (2.0.1) lib/rack/etag.rb:25:in `call'
+rack (2.0.1) lib/rack/conditional_get.rb:38:in `call'
+rack (2.0.1) lib/rack/head.rb:12:in `call'
+rack (2.0.1) lib/rack/session/abstract/id.rb:222:in `context'
+rack (2.0.1) lib/rack/session/abstract/id.rb:216:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/cookies.rb:613:in `call'
+activerecord (5.0.1) lib/active_record/migration.rb:553:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/callbacks.rb:38:in `block in call'
+activesupport (5.0.1) lib/active_support/callbacks.rb:97:in `__run_callbacks__'
+activesupport (5.0.1) lib/active_support/callbacks.rb:750:in `_run_call_callbacks'
+activesupport (5.0.1) lib/active_support/callbacks.rb:90:in `run_callbacks'
+actionpack (5.0.1) lib/action_dispatch/middleware/callbacks.rb:36:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/debug_exceptions.rb:49:in `call'
+web-console (3.4.0) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.4.0) lib/web_console/middleware.rb:28:in `block in call'
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `catch'
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.0.1) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.0.1) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.0.1) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.0.1) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.0.1) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.0.1) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.0) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/request_id.rb:24:in `call'
+rack (2.0.1) lib/rack/method_override.rb:22:in `call'
+rack (2.0.1) lib/rack/runtime.rb:22:in `call'
+activesupport (5.0.1) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/static.rb:136:in `call'
+rack (2.0.1) lib/rack/sendfile.rb:111:in `call'
+railties (5.0.1) lib/rails/engine.rb:522:in `call'
+puma (3.7.0) lib/puma/configuration.rb:226:in `call'
+puma (3.7.0) lib/puma/server.rb:578:in `handle_request'
+puma (3.7.0) lib/puma/server.rb:415:in `process_client'
+puma (3.7.0) lib/puma/server.rb:275:in `block in run'
+puma (3.7.0) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.5ms)
+  Rendered collection of /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/routes/_route.html.erb [218 times] (63.4ms)
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/routes/_table.html.erb (14.7ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (11.6ms)
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout (207.6ms)
+Started POST "/api/v1/evidences/add_evidence" for 127.0.0.1 at 2017-02-11 20:40:22 -0500
+DEPRECATION WARNING: before_filter is deprecated and will be removed in Rails 5.1. Use before_action instead. (called from <class:ApiController> at /Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/controllers/api/v1/api_controller.rb:3)
+Processing by Api::V1::EvidencesController#add_evidence as */*
+No template found for Api::V1::EvidencesController#add_evidence, rendering head :no_content
+Completed 204 No Content in 175ms (ActiveRecord: 0.0ms)
+
+
+Started POST "/api/v1/evidences/add_evidence" for 127.0.0.1 at 2017-02-11 20:40:38 -0500
+Processing by Api::V1::EvidencesController#add_evidence as */*
+  Parameters: {"url"=>"http://www.sitevalidator.com/"}
+No template found for Api::V1::EvidencesController#add_evidence, rendering head :no_content
+Completed 204 No Content in 2649ms (ActiveRecord: 0.0ms)
+
+
+  [1m[36mPrediction Load (0.2ms)[0m  [1m[34mSELECT  "predictions".* FROM "predictions" ORDER BY "predictions"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+Started POST "/api/v1/predictions/3/evidences/add_evidence" for 127.0.0.1 at 2017-02-11 20:41:42 -0500
+  
+ActionController::RoutingError (No route matches [POST] "/api/v1/predictions/3/evidences/add_evidence"):
+  
+actionpack (5.0.1) lib/action_dispatch/middleware/debug_exceptions.rb:53:in `call'
+web-console (3.4.0) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.4.0) lib/web_console/middleware.rb:28:in `block in call'
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `catch'
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.0.1) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.0.1) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.0.1) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.0.1) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.0.1) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.0.1) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.0) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/request_id.rb:24:in `call'
+rack (2.0.1) lib/rack/method_override.rb:22:in `call'
+rack (2.0.1) lib/rack/runtime.rb:22:in `call'
+activesupport (5.0.1) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.0.1) lib/action_dispatch/middleware/static.rb:136:in `call'
+rack (2.0.1) lib/rack/sendfile.rb:111:in `call'
+railties (5.0.1) lib/rails/engine.rb:522:in `call'
+puma (3.7.0) lib/puma/configuration.rb:226:in `call'
+puma (3.7.0) lib/puma/server.rb:578:in `handle_request'
+puma (3.7.0) lib/puma/server.rb:415:in `process_client'
+puma (3.7.0) lib/puma/server.rb:275:in `block in run'
+puma (3.7.0) lib/puma/thread_pool.rb:120:in `block in spawn_thread'
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.3ms)
+  Rendered collection of /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/routes/_route.html.erb [218 times] (45.9ms)
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/routes/_table.html.erb (1.2ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.1ms)
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/routing_error.html.erb within rescues/layout (130.0ms)
+Started POST "/api/v1/evidences/add_evidence" for 127.0.0.1 at 2017-02-11 20:42:17 -0500
+DEPRECATION WARNING: before_filter is deprecated and will be removed in Rails 5.1. Use before_action instead. (called from <class:ApiController> at /Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/controllers/api/v1/api_controller.rb:3)
+Processing by Api::V1::EvidencesController#add_evidence as */*
+  Parameters: {"url"=>"http://www.sitevalidator.com/"}
+Completed 500 Internal Server Error in 83ms (ActiveRecord: 0.0ms)
+
+
+  
+NameError (undefined local variable or method `paras' for #<Api::V1::EvidencesController:0x007f9182fad690>
+Did you mean?  params
+               params=
+               @_params):
+  
+app/controllers/api/v1/evidences_controller.rb:9:in `add_evidence'
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (6.1ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.5ms)
+  Rendering /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.0ms)
+  Rendered /Users/brianhogg/.rvm/gems/ruby-2.4.0/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (97.5ms)
+Started POST "/api/v1/evidences/add_evidence" for 127.0.0.1 at 2017-02-11 20:51:29 -0500
+DEPRECATION WARNING: before_filter is deprecated and will be removed in Rails 5.1. Use before_action instead. (called from <class:ApiController> at /Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/controllers/api/v1/api_controller.rb:3)
+Processing by Api::V1::EvidencesController#add_evidence as */*
+  Parameters: {"url"=>"http://www.sitevalidator.com/", "text/plain"=>[""]}
+No template found for Api::V1::EvidencesController#add_evidence, rendering head :no_content
+Completed 204 No Content in 163ms (ActiveRecord: 0.0ms)
+
+
+Started POST "/api/v1/evidences/add_evidence" for 127.0.0.1 at 2017-02-11 20:51:51 -0500
+DEPRECATION WARNING: before_filter is deprecated and will be removed in Rails 5.1. Use before_action instead. (called from <class:ApiController> at /Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/controllers/api/v1/api_controller.rb:3)
+Processing by Api::V1::EvidencesController#add_evidence as */*
+No template found for Api::V1::EvidencesController#add_evidence, rendering head :no_content
+Completed 204 No Content in 159ms (ActiveRecord: 0.0ms)
+
+
+Started POST "/api/v1/evidences/add_evidence" for 127.0.0.1 at 2017-02-11 20:52:17 -0500
+Processing by Api::V1::EvidencesController#add_evidence as */*
+  Parameters: {"url"=>"http://www.sitevalidator.com/", "prediction_id"=>"3"}
+  [1m[36mPrediction Load (0.1ms)[0m  [1m[34mSELECT  "predictions".* FROM "predictions" WHERE "predictions"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "evidences" ("created_at", "updated_at", "title", "description", "image", "domain") VALUES (?, ?, ?, ?, ?, ?)[0m  [["created_at", 2017-02-12 01:52:19 UTC], ["updated_at", 2017-02-12 01:52:19 UTC], ["title", "✔ Site Validator"], ["description", "Site-wide markup validation tool. Validate the markup of your whole site with just one click."], ["image", "http://sitevalidator.com/images/sitevalidator_home.jpg"], ["domain", "sitevalidator.com"]]
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "prediction_evidences" ("created_at", "updated_at", "prediction_id", "evidence_id") VALUES (?, ?, ?, ?)[0m  [["created_at", 2017-02-12 01:52:19 UTC], ["updated_at", 2017-02-12 01:52:19 UTC], ["prediction_id", 3], ["evidence_id", 1]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "contributions" ("created_at", "updated_at", "user_id") VALUES (?, ?, ?)[0m  [["created_at", 2017-02-12 01:52:19 UTC], ["updated_at", 2017-02-12 01:52:19 UTC], ["user_id", 1]]
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "user_contributions" ("created_at", "updated_at", "user_id", "contribution_id") VALUES (?, ?, ?, ?)[0m  [["created_at", 2017-02-12 01:52:19 UTC], ["updated_at", 2017-02-12 01:52:19 UTC], ["user_id", 1], ["contribution_id", 15]]
+  [1m[35m (1.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[33mUPDATE "contributions" SET "updated_at" = ?, "description" = ?, "evidence_id" = ?, "payload" = ? WHERE "contributions"."id" = ?[0m  [["updated_at", 2017-02-12 01:52:19 UTC], ["description", ""], ["evidence_id", 1], ["payload", "{\"id\"=>1, \"created_at\"=>Sun, 12 Feb 2017 01:52:19 UTC +00:00, \"updated_at\"=>Sun, 12 Feb 2017 01:52:19 UTC +00:00, \"title\"=>\"✔ Site Validator\", \"url\"=>nil, \"description\"=>\"Site-wide markup validation tool. Validate the markup of your whole site with just one click.\", \"image\"=>\"http://sitevalidator.com/images/sitevalidator_home.jpg\", \"url_content\"=>nil, \"domain\"=>\"sitevalidator.com\"}"], ["id", 15]]
+  [1m[35m (1.4ms)[0m  [1m[36mcommit transaction[0m
+Completed 200 OK in 1705ms (Views: 0.3ms | ActiveRecord: 10.4ms)
+
+
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "evidences"[0m
+  [1m[36mEvidence Load (0.2ms)[0m  [1m[34mSELECT  "evidences".* FROM "evidences" ORDER BY "evidences"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mPrediction Load (0.2ms)[0m  [1m[34mSELECT  "predictions".* FROM "predictions" ORDER BY "predictions"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mEvidence Load (0.2ms)[0m  [1m[34mSELECT "evidences".* FROM "evidences" INNER JOIN "prediction_evidences" ON "evidences"."id" = "prediction_evidences"."evidence_id" WHERE "prediction_evidences"."prediction_id" = ?[0m  [["prediction_id", 3]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "evidences"[0m
+Started POST "/api/v1/evidences/add_evidence" for 127.0.0.1 at 2017-02-11 20:54:36 -0500
+DEPRECATION WARNING: before_filter is deprecated and will be removed in Rails 5.1. Use before_action instead. (called from <class:ApiController> at /Users/brianhogg/Documents/Work/Web/Blundit/blundit_api/app/controllers/api/v1/api_controller.rb:3)
+Processing by Api::V1::EvidencesController#add_evidence as */*
+  Parameters: {"url"=>"http://www.evernote.com/", "prediction_id"=>"3"}
+  [1m[36mPrediction Load (0.2ms)[0m  [1m[34mSELECT  "predictions".* FROM "predictions" WHERE "predictions"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.5ms)[0m  [1m[32mINSERT INTO "evidences" ("created_at", "updated_at", "title", "url", "description", "image", "url_content", "domain") VALUES (?, ?, ?, ?, ?, ?, ?, ?)[0m  [["created_at", 2017-02-12 01:54:38 UTC], ["updated_at", 2017-02-12 01:54:38 UTC], ["title", "Capture what’s on your mind | Evernote"], ["url", "http://www.evernote.com/"], ["description", "Collect, nurture, and share ideas across desktop and mobile platforms with Evernote. Your thoughts are always with you, always accessible, always in sync."], ["image", "https://cdn1.evernote.com/evernote.com/img/social-meta/Homepage.jpg"], ["url_content", "-722648327791937510"], ["domain", "evernote.com"]]
+  [1m[35m (3.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "prediction_evidences" ("created_at", "updated_at", "prediction_id", "evidence_id") VALUES (?, ?, ?, ?)[0m  [["created_at", 2017-02-12 01:54:38 UTC], ["updated_at", 2017-02-12 01:54:38 UTC], ["prediction_id", 3], ["evidence_id", 2]]
+  [1m[35m (3.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "contributions" ("created_at", "updated_at", "user_id") VALUES (?, ?, ?)[0m  [["created_at", 2017-02-12 01:54:38 UTC], ["updated_at", 2017-02-12 01:54:38 UTC], ["user_id", 1]]
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "user_contributions" ("created_at", "updated_at", "user_id", "contribution_id") VALUES (?, ?, ?, ?)[0m  [["created_at", 2017-02-12 01:54:38 UTC], ["updated_at", 2017-02-12 01:54:38 UTC], ["user_id", 1], ["contribution_id", 16]]
+  [1m[35m (1.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[33mUPDATE "contributions" SET "updated_at" = ?, "description" = ?, "evidence_id" = ?, "payload" = ? WHERE "contributions"."id" = ?[0m  [["updated_at", 2017-02-12 01:54:38 UTC], ["description", ""], ["evidence_id", 2], ["payload", "{\"id\"=>2, \"created_at\"=>Sun, 12 Feb 2017 01:54:38 UTC +00:00, \"updated_at\"=>Sun, 12 Feb 2017 01:54:38 UTC +00:00, \"title\"=>\"Capture what’s on your mind | Evernote\", \"url\"=>\"http://www.evernote.com/\", \"description\"=>\"Collect, nurture, and share ideas across desktop and mobile platforms with Evernote. Your thoughts are always with you, always accessible, always in sync.\", \"image\"=>\"https://cdn1.evernote.com/evernote.com/img/social-meta/Homepage.jpg\", \"url_content\"=>\"-722648327791937510\", \"domain\"=>\"evernote.com\"}"], ["id", 16]]
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+Completed 200 OK in 1877ms (Views: 0.2ms | ActiveRecord: 20.6ms)
+
+
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "evidences"[0m
+  [1m[36mEvidence Load (0.1ms)[0m  [1m[34mSELECT  "evidences".* FROM "evidences" ORDER BY "evidences"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mClaim Load (0.1ms)[0m  [1m[34mSELECT  "claims".* FROM "claims" ORDER BY "claims"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mPrediction Load (0.1ms)[0m  [1m[34mSELECT  "predictions".* FROM "predictions" ORDER BY "predictions"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+Started POST "/api/v1/evidences/add_evidence" for 127.0.0.1 at 2017-02-11 20:56:03 -0500
+Processing by Api::V1::EvidencesController#add_evidence as */*
+  Parameters: {"url"=>"http://www.breitbart.com/big-government/2017/02/11/tom-cotton-media-democrats-astonished-federal-government-working/", "claim_id"=>"2"}
+  [1m[36mClaim Load (0.2ms)[0m  [1m[34mSELECT  "claims".* FROM "claims" WHERE "claims"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "evidences" ("created_at", "updated_at", "title", "url", "description", "image", "url_content", "domain") VALUES (?, ?, ?, ?, ?, ?, ?, ?)[0m  [["created_at", 2017-02-12 01:56:03 UTC], ["updated_at", 2017-02-12 01:56:03 UTC], ["title", "Tom Cotton: Media, Democrats ‘Astonished’ Federal Government Still Working"], ["url", "http://www.breitbart.com/big-government/2017/02/11/tom-cotton-media-democrats-astonished-federal-government-working/"], ["description", "Sen. Tom Cotton (R-AR) ripped into President Donald Trump's critics who predicted a world of “chaos” under the new administration."], ["image", "http://media.breitbart.com/media/2016/03/tom-cotton-donald-trump-AP.jpg"], ["url_content", "4364544576024574039"], ["domain", "www.breitbart.com"]]
+  [1m[35m (2.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "claim_evidences" ("created_at", "updated_at", "claim_id", "evidence_id") VALUES (?, ?, ?, ?)[0m  [["created_at", 2017-02-12 01:56:03 UTC], ["updated_at", 2017-02-12 01:56:03 UTC], ["claim_id", 2], ["evidence_id", 3]]
+  [1m[35m (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "contributions" ("created_at", "updated_at", "user_id") VALUES (?, ?, ?)[0m  [["created_at", 2017-02-12 01:56:03 UTC], ["updated_at", 2017-02-12 01:56:03 UTC], ["user_id", 1]]
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "user_contributions" ("created_at", "updated_at", "user_id", "contribution_id") VALUES (?, ?, ?, ?)[0m  [["created_at", 2017-02-12 01:56:03 UTC], ["updated_at", 2017-02-12 01:56:03 UTC], ["user_id", 1], ["contribution_id", 17]]
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[33mUPDATE "contributions" SET "updated_at" = ?, "description" = ?, "evidence_id" = ?, "payload" = ? WHERE "contributions"."id" = ?[0m  [["updated_at", 2017-02-12 01:56:03 UTC], ["description", ""], ["evidence_id", 3], ["payload", "{\"id\"=>3, \"created_at\"=>Sun, 12 Feb 2017 01:56:03 UTC +00:00, \"updated_at\"=>Sun, 12 Feb 2017 01:56:03 UTC +00:00, \"title\"=>\"Tom Cotton: Media, Democrats ‘Astonished’ Federal Government Still Working\", \"url\"=>\"http://www.breitbart.com/big-government/2017/02/11/tom-cotton-media-democrats-astonished-federal-government-working/\", \"description\"=>\"Sen. Tom Cotton (R-AR) ripped into President Donald Trump's critics who predicted a world of “chaos” under the new administration.\", \"image\"=>\"http://media.breitbart.com/media/2016/03/tom-cotton-donald-trump-AP.jpg\", \"url_content\"=>\"4364544576024574039\", \"domain\"=>\"www.breitbart.com\"}"], ["id", 17]]
+  [1m[35m (0.9ms)[0m  [1m[36mcommit transaction[0m
+Completed 200 OK in 415ms (Views: 0.3ms | ActiveRecord: 8.9ms)
+
+
+  [1m[36mClaim Load (0.3ms)[0m  [1m[34mSELECT  "claims".* FROM "claims" WHERE "claims"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mEvidence Load (0.3ms)[0m  [1m[34mSELECT "evidences".* FROM "evidences" INNER JOIN "claim_evidences" ON "evidences"."id" = "claim_evidences"."evidence_id" WHERE "claim_evidences"."claim_id" = ?[0m  [["claim_id", 2]]
+  [1m[36mEvidence Load (0.1ms)[0m  [1m[34mSELECT  "evidences".* FROM "evidences" ORDER BY "evidences"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mEvidence Load (0.1ms)[0m  [1m[34mSELECT  "evidences".* FROM "evidences" ORDER BY "evidences"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mClaim Load (0.7ms)[0m  [1m[34mSELECT  "claims".* FROM "claims" WHERE "claims"."evidence_id" = ? LIMIT ?[0m  [["evidence_id", 3], ["LIMIT", 1]]
+  [1m[36mEvidence Load (0.2ms)[0m  [1m[34mSELECT  "evidences".* FROM "evidences" ORDER BY "evidences"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mEvidence Load (0.1ms)[0m  [1m[34mSELECT  "evidences".* FROM "evidences" ORDER BY "evidences"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]

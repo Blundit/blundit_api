@@ -38,6 +38,17 @@ module Api::V1
 
       if @expert.save
         add_contribution(@expert, :created_expert)
+
+        if params.has_key?(:prediction_id)
+          @prediction = Prediction.find(params[:prediction_id])
+          @prediction.experts << @expert
+          @expert.predictions << @prediction
+        elsif params.has_key?(:claim_id)
+          @claim = Claim.find(params[:claim_id])
+          @claim.experts << @expert
+          @expert.claims << @claim
+        end
+
         render json: { result: "success" }
       else
         render json: { result: "error" }

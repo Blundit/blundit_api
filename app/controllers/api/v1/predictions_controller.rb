@@ -7,6 +7,7 @@ module Api::V1
       @predictions = Prediction.all
     end
 
+
     def show
       # GET /CONTROLLER/:id
       if params[:id] == 'search' && !params[:term].nil?
@@ -29,17 +30,26 @@ module Api::V1
       @prediction = Prediction.new
     end
 
+
     def create
       # POST /pundits
       @prediction = Prediction.new(prediction_params)
 
       if @prediction.save
         add_contribution(@prediction, :created_prediction)
+        
+        if params.has_key?(:expert_id)
+          @expert = Expert.find(params[:expert_id])
+          @expert.predictions << @prediction
+          @prediction.experts << @expert
+        end
+
         render json: { result: "success" }
       else
         render json: { result: "error" }
       end
     end
+
 
     def edit
       # PUT /pundits/:id
@@ -50,6 +60,7 @@ module Api::V1
         render json: { result: "error" }
       end
     end
+
 
     def destroy
       # DELETE /pundits/:id

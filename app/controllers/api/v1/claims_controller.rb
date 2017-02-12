@@ -6,6 +6,7 @@ module Api::V1
       @claims = Claim.all
     end
 
+
     def show
       # GET /CONTROLLER/:id
       if params[:id] == 'search' && !params[:term].nil?
@@ -23,10 +24,12 @@ module Api::V1
       end
     end
 
+
     def new
       # GET /pundits/new
       @claim = Claim.new
     end
+
 
     def create
       # POST /pundits
@@ -34,11 +37,19 @@ module Api::V1
 
       if @claim.save
         add_contribution(@claim, :created_claim)
+
+        if params.has_key?(:expert_id)
+          @expert = Expert.find(params[:expert_id])
+          @expert.claims << @claim
+          @claim.experts << @expert
+        end
+
         render json: { result: "success" }
       else
         render json: { result: "error" }
       end
     end
+
 
     def edit
       # PUT /pundits/:id
@@ -49,6 +60,7 @@ module Api::V1
         render json: { result: "error" }
       end
     end
+
 
     def destroy
       # DELETE /pundits/:id
@@ -64,15 +76,18 @@ module Api::V1
       end
     end
 
+
     def search
       @claim = Claim.search(params[:term])
     end
+
 
     private
 
     def set_claim
       @claim = Claim.find(params[:id])
     end
+    
 
     def claim_params
       params.permit(

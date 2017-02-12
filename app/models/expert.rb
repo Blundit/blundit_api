@@ -20,6 +20,8 @@ class Expert < ApplicationRecord
   has_many :expert_flags, dependent: :destroy
   has_many :flags, :through => :expert_flags
 
+  has_many :publications
+
 
   attr_reader :contributions_list
   def contributions_list

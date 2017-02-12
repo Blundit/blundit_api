@@ -89,6 +89,23 @@ module Api::V1
     end
 
 
+    def add_publication
+      # /experts/:expert_id/add_publication
+      # TODO: Page scrape here to take url and determine title and description, figure out if it's amazon, youtube or whatever?
+      # How complicated should this be?
+      if Expert.find_by_id(params[:expert_id]).nil?
+        render json: { error: 'Expert Not Found' }, status: 422
+        return
+      end
+
+      if Expert.find(params[:expert_id]).publications << Publication.create(publication_params)
+        render json: { status: 'success' }
+      else
+        render json: { error: 'Unable to Add Publication to Expert' }, status: 422
+      end
+    end
+
+
     private
 
     def set_expert
@@ -107,6 +124,15 @@ module Api::V1
           :youtube,
           :avatar_file_name
         )
+    end
+
+    def publication_params
+      params.permit(
+        :title,
+        :url,
+        :description,
+        :expert_id
+      )
     end
   end
 end

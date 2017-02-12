@@ -38,6 +38,7 @@ Rails.application.routes.draw do
         resources :expert_comments
         resources :expert_flags
       end
+      post 'experts/:expert_id/add_publication' => 'experts#add_publication'
 
       resources :publications do
         resources :publication_comments

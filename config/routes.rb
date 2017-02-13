@@ -69,6 +69,15 @@ Rails.application.routes.draw do
       resource :evidences do
         post 'add_evidence' => 'evidences#add_evidence'
       end
+
+      get 'leaderboard/claims' => 'leaderboard#claims'
+      get 'leaderboard/claims/:status' => 'leaderboard#claims'
+      
+      get 'leaderboard/predictions' => 'leaderboard#predictions'
+      get 'leaderboard/predictions/:status' => 'leaderboard#predictions'
+
+      get 'leaderboard/experts' => 'leaderboard#experts'
+      
     end
   end
 end

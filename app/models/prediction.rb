@@ -144,15 +144,7 @@ class Prediction < ApplicationRecord
         return "not active" if !self.active?
         return "missing params" if user.nil? or value.nil?
 
-        # check to see if user has already voted
-        user_has_already_voted = false
-        self.votes.each do |vote|
-            if vote.user.id == user
-                user_has_already_voted = true
-            end
-        end
-
-        if !user_has_already_voted
+        if self.votes.where(user_id: user.id).count == 0
             @vote = Vote.create({user_id: user, vote: value})
             self.votes << @vote
             add_contribution(@vote, :voted)
@@ -196,6 +188,28 @@ class Prediction < ApplicationRecord
         end
 
         return false
+    end
+
+
+    def add_expert_categories(category_id)
+        self.experts.each do |expert|
+            self.categories.each do |category|
+                if expert.categories.where(id: category.id).count == 0
+                    expert.categories << category
+                end
+            end
+        end
+    end
+
+
+    def remove_expert_categories(category_id)
+        self.experts.each do |expert|
+            self.categories.each do |category|
+                if expert.categories.where(id: category.id).count > 0
+                    expert.categories.delete(category)
+                end
+            end
+        end
     end
 
 end

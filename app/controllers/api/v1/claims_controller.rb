@@ -100,6 +100,29 @@ module Api::V1
     end
 
 
+    def add_category
+      @claim = Claim.find_by_id(params[:claim_id])
+      @category = Category.find_by_id(params[:category_id])
+
+      if @claim.nil?
+        render json: { error: "Claim Not Found" }, status: 422
+        return
+      end
+
+      if @category.nil?
+        render json: { error: "Category Not Found" }, status: 422
+        return
+      end
+
+      if @claim.categories << @category
+        @claim.update_expert_categories(params[:category_id])
+        render json: { status: "success" }
+      else
+        render json: { error: "Unable to Add Category" }, status: 422
+      end
+    end
+
+
     private
 
     def set_claim

@@ -100,6 +100,29 @@ module Api::V1
     end
 
 
+    def add_category
+      @prediction = Prediction.find_by_id(params[:prediction_id])
+      @category = Category.find_by_id(params[:category_id])
+
+      if @prediction.nil?
+        render json: { error: "Prediction Not Found" }, status: 422
+        return
+      end
+
+      if @category.nil?
+        render json: { error: "Category Not Found" }, status: 422
+        return
+      end
+
+      if @prediction.categories << @category
+        @prediction.update_expert_categories(params[:category_id])
+        render json: { status: "success" }
+      else
+        render json: { error: "Unable to Add Category" }, status: 422
+      end
+    end
+
+
     private
 
     def set_prediction

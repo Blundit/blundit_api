@@ -38,6 +38,11 @@ Rails.application.routes.draw do
       
       resources :categories
 
+      get 'categories/:category_id/all' => 'categories#show_all'
+      get 'categories/:category_id/predictions' => 'categories#show_predictions'
+      get 'categories/:category_id/claims' => 'categories#show_claims'
+      get 'categories/:category_id/experts' => 'categories#show_experts'
+
       resources :experts do
         resources :expert_categories
         resources :expert_claims

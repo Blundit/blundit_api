@@ -70,13 +70,18 @@ Rails.application.routes.draw do
         post 'add_evidence' => 'evidences#add_evidence'
       end
 
-      get 'leaderboard/claims' => 'leaderboard#claims'
-      get 'leaderboard/claims/:status' => 'leaderboard#claims'
+      post 'leaderboard/claims' => 'leaderboard#claims'
+      post 'leaderboard/claims/newest' => 'leaderboard#newest_claims'
+      post 'leaderboard/claims/recently_updated' => 'leaderboard#recently_updated_claims'
       
-      get 'leaderboard/predictions' => 'leaderboard#predictions'
-      get 'leaderboard/predictions/:status' => 'leaderboard#predictions'
+      post 'leaderboard/predictions' => 'leaderboard#predictions'
+      post 'leaderboard/predictions/newest' => 'leaderboard#newest_predictions'
+      post 'leaderboard/predictions/recently_updated' => 'leaderboard#recently_updated_predictions'
 
-      get 'leaderboard/experts' => 'leaderboard#experts'
+      post 'leaderboard/experts' => 'leaderboard#experts'
+      post 'leaderboard/experts/newest' => 'leaderboard#newest_experts'
+      post 'leaderboard/experts/recently_updated' => 'leaderboard#recently_updated_experts'
+
 
       post 'search' => 'search#index'
       

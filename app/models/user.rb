@@ -5,22 +5,22 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :user_comments, dependent: :destroy
-  has_many :comments, :through => :user_comments
+  has_many :comments, -> { distinct }, :through => :user_comments
 
   has_many :user_contributions, dependent: :destroy
-  has_many :contributions, :through => :user_contributions
+  has_many :contributions, -> { distinct }, :through => :user_contributions
 
   has_many :user_experts, dependent: :destroy
-  has_many :experts, :through => :user_experts
+  has_many :experts, -> { distinct }, :through => :user_experts
 
   has_many :user_flags, dependent: :destroy
-  has_many :flags, :through => :user_flags
+  has_many :flags, -> { distinct }, :through => :user_flags
 
   has_many :user_claims, dependent: :destroy
-  has_many :claims, :through => :user_claims
+  has_many :claims, -> { distinct }, :through => :user_claims
 
   has_many :user_predictions, dependent: :destroy
-  has_many :predictions, :through => :user_predictions
+  has_many :predictions, -> { distinct }, :through => :user_predictions
 
   has_many :votes
   has_many :bookmarks, dependent: :destroy

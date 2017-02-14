@@ -1,4 +1,4 @@
 class PredictionComment < ApplicationRecord
-    belongs_to :prediction
+    belongs_to :prediction, touch: true
     belongs_to :comment
 end

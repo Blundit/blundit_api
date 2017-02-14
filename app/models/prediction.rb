@@ -53,7 +53,7 @@ class Prediction < ApplicationRecord
 
     scope :search, -> (q) do
         qstr = "%#{q.downcase}%"
-        fields = %w(alias name)
+        fields = %w(alias title description)
         clause = fields.map{|f| "LOWER(#{f}) LIKE ?"}.join(" OR ")
         where(clause, *fields.map{ qstr })
     end

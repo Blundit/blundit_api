@@ -77,6 +77,8 @@ Rails.application.routes.draw do
       get 'leaderboard/predictions/:status' => 'leaderboard#predictions'
 
       get 'leaderboard/experts' => 'leaderboard#experts'
+
+      post 'search' => 'search#index'
       
     end
   end

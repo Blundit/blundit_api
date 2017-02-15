@@ -19,6 +19,10 @@ class Prediction < ApplicationRecord
     has_many :prediction_flags, dependent: :destroy
     has_many :flags, :through => :prediction_flags
 
+    validates_presence_of :title
+
+
+
     ## Variables
     VOTES_REQUIRED_TO_CLOSE_PREDICTION = 5
     VOTING_WINDOW = 1.day

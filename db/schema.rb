@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170214140940) do
+ActiveRecord::Schema.define(version: 20170215130701) do
 
   create_table "bookmarks", force: :cascade do |t|
     t.integer  "user_id"
@@ -123,6 +123,20 @@ ActiveRecord::Schema.define(version: 20170214140940) do
     t.datetime "updated_at",  null: false
     t.integer  "expert_id"
     t.integer  "category_id"
+  end
+
+  create_table "expert_category_accuracies", force: :cascade do |t|
+    t.integer  "category_id"
+    t.integer  "expert_id"
+    t.float    "claim_accuracy"
+    t.integer  "correct_claims",        default: 0
+    t.integer  "incorrect_claims",      default: 0
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.float    "prediction_accuracy"
+    t.float    "overall_accuracy"
+    t.integer  "incorrect_predictions"
+    t.integer  "correct_predictions"
   end
 
   create_table "expert_claims", force: :cascade do |t|

@@ -19,6 +19,8 @@ class Claim < ApplicationRecord
     has_many :claim_comments, dependent: :destroy
     has_many :comments, -> { distinct }, :through => :claim_comments
 
+    validates_presence_of :title
+
 
     ## Variables
     VOTES_REQUIRED_TO_CLOSE_PREDICTION = 5

@@ -1,7 +1,7 @@
 
 module Api::V1
     class UserController < ApiController
-        before_action :authenticate_user!, except: [:add_bookmark, :remove_bookmark]
+        before_action :authenticate_user!
 
 
 

@@ -20,6 +20,8 @@ class Expert < ApplicationRecord
   has_many :expert_flags, dependent: :destroy
   has_many :flags, -> { distinct }, :through => :expert_flags
 
+  has_many :expert_category_accuracies
+
   has_many :publications
 
 
@@ -82,5 +84,105 @@ class Expert < ApplicationRecord
     end
     
     self.save
+
+    calc_category_accuracies
   end
+
+
+  def calc_category_accuracies
+    calc_prediction_category_accuracies
+    calc_claim_category_accuracies
+  end
+
+
+  def calc_prediction_category_accuracies
+    @category_accuracies = {}
+
+    self.predictions.where({ status: 1 }).each do |prediction|
+      prediction.categories.each do |category|
+        @key = "_#{category.id}"
+
+        if !@category_accuracies.has_key?(@key)
+          @category_accuracies[@key] = { correct: 0, incorrect: 0, id: category.id  }
+        end
+
+        if prediction.vote_value >= 0.5
+          @category_accuracies[@key][:correct] += 1
+        else
+          @category_accuracies[@key][:incorrect] += 1
+        end
+      end
+    end
+
+    @category_accuracies.each do |key, value|
+      @category_accuracy = self.expert_category_accuracies.where({ category_id: value[:id] })
+
+      if @category_accuracy.length == 0
+        @category_accuracy = ExpertCategoryAccuracy.create({ expert_id: self.id, category_id: value[:id] })
+      else
+        @category_accuracy = @category_accuracy.first
+      end
+
+      @category_accuracy.correct_predictions = value[:correct]
+      @category_accuracy.incorrect_predictions = value[:incorrect]
+
+      if value[:correct] > 0 or value[:incorrect] > 0
+        @category_accuracy.prediction_accuracy = value[:correct].to_f / (value[:correct].to_f + value[:incorrect].to_f)
+      end
+
+      if value[:correct] > 0 or value[:incorrect] > 0 or @category_accuracy.incorrect_claims > 0 or @category_accuracy.correct_claims > 0
+        @category_accuracy.overall_accuracy = (value[:correct].to_f + @category_accuracy.correct_claims.to_f) / (value[:correct].to_f + value[:incorrect].to_f + @category_accuracy.correct_claims.to_f + @category_accuracy.incorrect_claims.to_f)
+      end
+
+      @category_accuracy.save
+    end
+  end
+
+
+  def calc_claim_category_accuracies
+    @category_accuracies = {}
+
+    self.claims.where({ status: 1 }).each do |claim|
+      claim.categories.each do |category|
+        @key = "_#{category.id}"
+
+        if !@category_accuracies.has_key?(@key)
+          @category_accuracies[@key] = { correct: 0, incorrect: 0, id: category.id  }
+        end
+
+        if claim.vote_value >= 0.5
+          @category_accuracies[@key][:correct] += 1
+        else
+          @category_accuracies[@key][:incorrect] += 1
+        end
+      end
+    end
+
+    @category_accuracies.each do |key, value|
+      @category_accuracy = self.expert_category_accuracies.where({ category_id: value[:id] })
+
+      if @category_accuracy.length == 0
+        @category_accuracy = ExpertCategoryAccuracy.create({ expert_id: self.id, category_id: value[:id] })
+      else
+        @category_accuracy = @category_accuracy.first
+      end
+
+      @category_accuracy.correct_claims = value[:correct]
+      @category_accuracy.incorrect_claims = value[:incorrect]
+
+      if value[:correct] + value[:incorrect] > 0
+        @category_accuracy.claim_accuracy = value[:correct].to_f / (value[:correct].to_f + value[:incorrect].to_f)
+      else
+      end
+
+      if (value[:correct] + value[:incorrect] + @category_accuracy.incorrect_predictions + @category_accuracy.correct_predictions) > 0
+        @category_accuracy.overall_accuracy = (value[:correct].to_f + @category_accuracy.correct_predictions.to_f) / (value[:correct].to_f + value[:incorrect].to_f + @category_accuracy.correct_predictions.to_f + @category_accuracy.incorrect_predictions.to_f)
+      end
+
+      p "TRYING TO SAVE"
+      p @category_accuracy
+      @category_accuracy.save
+    end
+  end
+  
 end

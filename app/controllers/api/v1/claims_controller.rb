@@ -95,7 +95,7 @@ module Api::V1
 
       if @claim.comments << @comment
         current_user.comments << @comment
-        add_contribution(@comment, :created_comment)
+        add_contribution(@claim, :added_comment)
       end
     end
 
@@ -116,6 +116,7 @@ module Api::V1
 
       if @claim.categories << @category
         @claim.update_expert_categories(params[:category_id])
+        add_contribution(@claim, :added_category)
         render json: { status: "success" }
       else
         render json: { error: "Unable to Add Category" }, status: 422

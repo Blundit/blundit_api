@@ -54,7 +54,10 @@ class User < ApplicationRecord
     return @rank
   end
 
-
+  def comments_count
+    return self.user_comments_count
+  end
+  
   def comments_rank
 
   end

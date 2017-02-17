@@ -2,7 +2,7 @@ class Vote < ApplicationRecord
     # belongs_to :user_vote, dependent: :destroy
     # has_one :user, :through => :user_vote
 
-    belongs_to :user
+    belongs_to :user, :counter_cache => true
 
     has_one :claim_vote, dependent: :destroy
     has_one :claim, :through => :claim_vote

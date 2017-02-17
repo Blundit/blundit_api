@@ -42,6 +42,12 @@ gem 'jwt'
 
 gem 'enumerize'
 
+gem 'omniauth'
+gem 'omniauth-facebook'
+gem 'omniauth-google'
+
+gem 'figaro'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri

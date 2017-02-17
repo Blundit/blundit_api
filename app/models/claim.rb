@@ -76,7 +76,7 @@ class Claim < ApplicationRecord
 
     def correct?
         return false if self.prediction_date.nil?
-        if self.status == 1 and self.vote_value >= 0.5
+        if self.status == 1 and self.vote_value >= ENV['claim_vote_threshold'].to_f
             return true
         end
     end
@@ -93,12 +93,12 @@ class Claim < ApplicationRecord
 
 
     def self.correct_claims
-        where("status = 1 and vote_value >= 0.5")
+        where("status = 1 and vote_value >= #{ENV['claim_vote_threshold'].to_f}")
     end
 
 
     def self.incorrect_claims
-        where("status = 1 and vote_value < 0.5")
+        where("status = 1 and vote_value < #{ENV['claim_vote_threshold'].to_f}")
     end
 
 

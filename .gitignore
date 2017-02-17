@@ -1,4 +1,7 @@
-tmp/
-db/*.sqlite3
-log
-log/*.*
+/tmp/
+/db/*.sqlite3
+/log
+/log/*.*
+
+# Ignore application configuration
+/config/application.yml

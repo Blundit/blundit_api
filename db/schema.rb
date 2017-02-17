@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170217143937) do
+ActiveRecord::Schema.define(version: 20170217150324) do
 
   create_table "bookmarks", force: :cascade do |t|
     t.integer  "user_id"
@@ -75,15 +75,16 @@ ActiveRecord::Schema.define(version: 20170217143937) do
   end
 
   create_table "claims", force: :cascade do |t|
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
     t.string   "title"
     t.text     "description"
     t.string   "url"
     t.string   "alias"
-    t.integer  "status",      default: 0
-    t.integer  "vote_count",  default: 0
+    t.integer  "status",               default: 0
+    t.integer  "claim_votes_count",    default: 0
     t.float    "vote_value"
+    t.integer  "claim_comments_count", default: 0
   end
 
   create_table "comments", force: :cascade do |t|
@@ -177,8 +178,8 @@ ActiveRecord::Schema.define(version: 20170217143937) do
   end
 
   create_table "experts", force: :cascade do |t|
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
     t.string   "name"
     t.text     "description"
     t.string   "email"
@@ -197,6 +198,7 @@ ActiveRecord::Schema.define(version: 20170217143937) do
     t.string   "alias"
     t.float    "prediction_accuracy"
     t.float    "claim_accuracy"
+    t.integer  "expert_comments_count", default: 0
   end
 
   create_table "flags", force: :cascade do |t|
@@ -250,15 +252,16 @@ ActiveRecord::Schema.define(version: 20170217143937) do
   end
 
   create_table "predictions", force: :cascade do |t|
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
     t.string   "title"
     t.text     "description"
-    t.integer  "status",          default: 0
-    t.integer  "vote_count"
+    t.integer  "status",                    default: 0
+    t.integer  "prediction_votes_count",    default: 0
     t.float    "vote_value"
     t.string   "alias"
     t.datetime "prediction_date"
+    t.integer  "prediction_comments_count", default: 0
   end
 
   create_table "publications", force: :cascade do |t|

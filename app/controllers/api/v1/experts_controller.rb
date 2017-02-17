@@ -89,19 +89,30 @@ module Api::V1
     end
 
 
+    def add_category
+
+    end
+
+    
+    def remove_category
+
+
     def add_publication
       # /experts/:expert_id/add_publication
       # TODO: Page scrape here to take url and determine title and description, figure out if it's amazon, youtube or whatever?
       # How complicated should this be?
-      if Expert.find_by_id(params[:expert_id]).nil?
+      @expert = Expert.find_by_id(params[:expert_id])
+
+      if @expert.nil?
         render json: { error: 'Expert Not Found' }, status: 422
         return
       end
       
       @publication = Publication.create(publication_params)
 
-      if Expert.find(params[:expert_id]).publications << @publication
+      if @expert.publications << @publication
         add_contribution(@publication, :created_publication)
+        add_contribution(@expert, :added_publication)
         render json: { status: 'success' }
       else
         render json: { error: 'Unable to Add Publication to Expert' }, status: 422
@@ -122,7 +133,7 @@ module Api::V1
 
       if @experts.comments << @comment
         current_user.comments << @comment
-        add_contribution(@comment, :created_comment)
+        add_contribution(@expert, :added_comment)
       end
     end
 
@@ -145,6 +156,8 @@ module Api::V1
           @claim.experts << @expert
           @expert.claims << @claim
           @expert.calc_accuracy
+
+          add_contribution(@expert, :added_claim)
       else
           render json: { error: "Claim ID Not Found" }, status: 422
       end
@@ -169,6 +182,7 @@ module Api::V1
         @prediction.experts << @expert
         @expert.predictions << @prediction
         @expert.calc_accuracy
+        add_contribution(@expert, :added_claim)
       else
         render json: { error: "Expert ID Not Found" }, status: 422
       end

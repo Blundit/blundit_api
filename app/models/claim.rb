@@ -32,7 +32,9 @@ class Claim < ApplicationRecord
         {
                 created_claim: "Created Claim",
                 edited_claim: "Edited Claim",
-                destroyed_claim: "Destroyed Claim"
+                destroyed_claim: "Destroyed Claim",
+                added_comment: "Added Comment to Claim",
+                added_category: "Added Category to Claim",
         }
     end
 
@@ -103,7 +105,6 @@ class Claim < ApplicationRecord
 
 
     def calc_votes
-        self.vote_count = self.votes.length
         vote_value = 0
         
         self.votes.each do |vote|
@@ -114,6 +115,14 @@ class Claim < ApplicationRecord
         self.save
 
         calc_vote_status
+    end
+
+    def votes_count
+        return self.claim_votes_count
+    end
+
+    def comments_count
+        return self.claim_comments_count
     end
 
 

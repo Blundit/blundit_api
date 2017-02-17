@@ -31,9 +31,12 @@ class Prediction < ApplicationRecord
     attr_reader :contributions_list
     def contributions_list
         {
-            created_contribution: "Created Contribution",
-            edited_contribution: "Edited Contribution",
-            destroyed_contribution: "Destroyed Contribution"
+            created_prediction: "Created Prediction",
+            edited_prediction: "Edited Prediction",
+            destroyed_prediction: "Destroyed Prediction",
+            added_comment: "Added Comment to Prediction",
+            added_category: "Added Category to Prediction",
+
         }
     end
 
@@ -130,7 +133,6 @@ class Prediction < ApplicationRecord
 
 
     def calc_votes
-        self.vote_count = self.votes.length
         vote_value = 0
         
         self.votes.each do |vote|
@@ -141,6 +143,14 @@ class Prediction < ApplicationRecord
         self.save
 
         calc_vote_status
+    end
+
+    def votes_count
+        return self.prediction_votes_count
+    end
+
+    def comments_count
+        return self.prediction_comments_count
     end
 
 

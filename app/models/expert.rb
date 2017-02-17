@@ -30,7 +30,15 @@ class Expert < ApplicationRecord
     {
       created_expert: "Created Expert",
       edited_expert: "Edited Expert",
-      destroyed_expert: "Destroyed Expert"
+      destroyed_expert: "Destroyed Expert",
+      added_category: "Added Category to Expert",
+      removed_category: "Removed Category from Expert",
+      added_comment: "Added Comment to Expert",
+      added_claim: "Added Claim to Expert",
+      added_prediction: "Added Prediction to Expert",
+      flagged_expert: "Flagged Expert",
+      added_publication: "Added Publication to Expert"
+
     }
   end
 
@@ -58,6 +66,8 @@ class Expert < ApplicationRecord
     clause = fields.map{|f| "LOWER(#{f}) LIKE ?"}.join(" OR ")
     where(clause, *fields.map{ qstr })
   end
+
+
 
 
   def calc_accuracy
@@ -179,10 +189,12 @@ class Expert < ApplicationRecord
         @category_accuracy.overall_accuracy = (value[:correct].to_f + @category_accuracy.correct_predictions.to_f) / (value[:correct].to_f + value[:incorrect].to_f + @category_accuracy.correct_predictions.to_f + @category_accuracy.incorrect_predictions.to_f)
       end
 
-      p "TRYING TO SAVE"
-      p @category_accuracy
       @category_accuracy.save
     end
+  end
+
+  def comments_count
+      return self.expert_comments_count
   end
   
 end

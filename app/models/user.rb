@@ -1,4 +1,7 @@
 class User < ApplicationRecord
+  extend Enumerize
+  extend ActiveModel::Naming
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -25,6 +28,8 @@ class User < ApplicationRecord
 
   has_many :votes
   has_many :bookmarks, dependent: :destroy
+
+  enumerize :notification_frequency, in: {:as_they_happen => 1, :daily => 2, :weekly => 3, :monthly => 4, :none => 0}, default: 1
 
 
   VOTING_RANK_OPTIONS = [

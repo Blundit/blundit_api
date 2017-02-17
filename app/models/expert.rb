@@ -1,5 +1,5 @@
 class Expert < ApplicationRecord
-  # extend Enumerize
+  extend Enumerize
 
   # TODO: Make this destroy? Or should 'destroy' simply hide the expert? 
   # TODO: Decide this app-wide

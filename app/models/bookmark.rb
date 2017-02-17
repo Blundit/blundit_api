@@ -15,4 +15,12 @@ class Bookmark < ApplicationRecord
         return self.claim if !self.claim.nil?
         return self.prediction if !self.prediction.nil?
     end
+
+    def do_notify
+        self.update_attribute('notify', 1)
+    end
+
+    def dont_notify
+        self.update_attribute('notify', 0)
+    end
 end

@@ -10,15 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170215130701) do
+ActiveRecord::Schema.define(version: 20170217143937) do
 
   create_table "bookmarks", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "expert_id"
     t.integer  "claim_id"
     t.integer  "prediction_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.boolean  "notify",        default: true
   end
 
   create_table "categories", force: :cascade do |t|
@@ -119,10 +120,11 @@ ActiveRecord::Schema.define(version: 20170215130701) do
   end
 
   create_table "expert_categories", force: :cascade do |t|
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
     t.integer  "expert_id"
     t.integer  "category_id"
+    t.boolean  "source",      default: false
   end
 
   create_table "expert_category_accuracies", force: :cascade do |t|
@@ -344,6 +346,7 @@ ActiveRecord::Schema.define(version: 20170215130701) do
     t.integer  "predictions_added",      default: 0
     t.integer  "claims_added",           default: 0
     t.integer  "votes_count",            default: 0
+    t.integer  "notification_frequency", default: 1
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

@@ -1,5 +1,6 @@
 class Expert < ApplicationRecord
   extend Enumerize
+  acts_as_taggable
 
   # TODO: Make this destroy? Or should 'destroy' simply hide the expert? 
   # TODO: Decide this app-wide
@@ -66,8 +67,6 @@ class Expert < ApplicationRecord
     clause = fields.map{|f| "LOWER(#{f}) LIKE ?"}.join(" OR ")
     where(clause, *fields.map{ qstr })
   end
-
-
 
 
   def calc_accuracy
@@ -193,8 +192,52 @@ class Expert < ApplicationRecord
     end
   end
 
+
   def comments_count
       return self.expert_comments_count
   end
-  
+
+
+  def add_category_if_necessary (id, source)
+    return false if self.categories.where({ id: id }).count > 0
+
+    self.claims.each do |claim|
+      if claim.categories.where({ id: id }).count > 0
+        return false
+      end
+    end
+
+    self.predictions.each do |prediction|
+      if prediction.categories.where({ id: id}).count > 0
+        return false
+      end
+    end
+
+    @category = Category.find_by_id(id)
+
+    if !@category.nil?
+      self.expert_categories << ExpertCategory.create({category_id: @category.id, source: source})
+    end
+  end
+
+
+  def remove_category_if_possible (id)
+    self.claims.each do |claim|
+      if claim.categories.where({ id: id }).count > 0
+        return false
+      end
+    end
+
+    self.predictions.each do |prediction|
+      if prediction.categories.where({ id: id}).count > 0
+        return false
+      end
+    end
+
+    return false if self.expert_categories.where({ source: 1 }) == 0
+
+    self.expert_categories.where({ category_id: id }).each do |expert_category|
+      expert_category.destroy
+    end
+  end
 end

@@ -136,6 +136,7 @@ module Api::V1
         :title,
         :description,
         :url,
+        :tag_list,
       )
     end
 

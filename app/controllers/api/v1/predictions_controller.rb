@@ -135,7 +135,8 @@ module Api::V1
     def prediction_params
       params.permit(
         :title,
-        :description
+        :description,
+        :tag_list
       )
     end
 

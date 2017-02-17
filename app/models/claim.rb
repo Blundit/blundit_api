@@ -21,6 +21,7 @@ class Claim < ApplicationRecord
 
     validates_presence_of :title
 
+    acts_as_taggable
 
     ## Variables
     VOTES_REQUIRED_TO_CLOSE_PREDICTION = 5

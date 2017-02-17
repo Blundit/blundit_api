@@ -205,7 +205,8 @@ module Api::V1
           :facebook,
           :instagram,
           :youtube,
-          :avatar_file_name
+          :avatar_file_name,
+          :tag_list
         )
     end
 

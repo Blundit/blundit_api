@@ -21,6 +21,8 @@ class Prediction < ApplicationRecord
 
     validates_presence_of :title
 
+    acts_as_taggable
+
 
 
     ## Variables

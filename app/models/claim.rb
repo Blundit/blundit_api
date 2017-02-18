@@ -58,11 +58,21 @@ class Claim < ApplicationRecord
     
 
     scope :search, -> (q) do
-        qstr = "%#{q.downcase}%"
-        fields = %w(alias title description)
-        clause = fields.map{|f| "LOWER(#{f}) LIKE ?"}.join(" OR ")
-        where(clause, *fields.map{ qstr })
+    qstr = q.split(" ")
+    fields = %w(claims.title claims.description tags.name)
+    clause = []
+    
+    qstr.each do |qs|
+      if !STOP_WORDS.include?(qs.downcase)
+        q = "'%#{qs.downcase}%'"
+        clause << fields.map{ |f| "LOWER(#{f}) LIKE #{q}"}.join(" OR ")
+      end
     end
+    
+    select('distinct claims.*').joins("LEFT JOIN taggings on claims.id = taggings.taggable_id")
+      .joins("LEFT JOIN tags on tags.id = taggings.tag_id")
+      .where(clause.join(" OR "))
+  end
 
 
     def active?

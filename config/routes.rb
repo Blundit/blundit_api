@@ -84,7 +84,8 @@ Rails.application.routes.draw do
 
 
       post 'search' => 'search#index'
-      
+      get 'search/tags' => 'search#most_used_tags'
+       
     end
   end
 end

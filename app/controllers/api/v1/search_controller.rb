@@ -17,5 +17,11 @@ module Api::V1
             @search.user = current_user if !current_user.nil?
             @search.save
         end
+
+
+        def most_used_tags
+            @tags = ActsAsTaggableOn::Tag.most_used
+        end
+
     end
 end

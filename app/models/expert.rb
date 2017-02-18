@@ -62,10 +62,20 @@ class Expert < ApplicationRecord
   
 
   scope :search, -> (q) do
-    qstr = "%#{q.downcase}%"
-    fields = %w(alias name description)
-    clause = fields.map{|f| "LOWER(#{f}) LIKE ?"}.join(" OR ")
-    where(clause, *fields.map{ qstr })
+    qstr = q.split(" ")
+    fields = %w(experts.name experts.description tags.name)
+    clause = []
+    
+    qstr.each do |qs|
+      if !STOP_WORDS.include?(qs.downcase)
+        q = "'%#{qs.downcase}%'"
+        clause << fields.map{ |f| "LOWER(#{f}) LIKE #{q}"}.join(" OR ")
+      end
+    end
+    
+    select('distinct experts.*').joins("LEFT JOIN taggings on experts.id = taggings.taggable_id")
+      .joins("LEFT JOIN tags on tags.id = taggings.tag_id")
+      .where(clause.join(" OR "))
   end
 
 

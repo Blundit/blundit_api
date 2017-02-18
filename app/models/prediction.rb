@@ -61,11 +61,21 @@ class Prediction < ApplicationRecord
 
 
     scope :search, -> (q) do
-        qstr = "%#{q.downcase}%"
-        fields = %w(alias title description)
-        clause = fields.map{|f| "LOWER(#{f}) LIKE ?"}.join(" OR ")
-        where(clause, *fields.map{ qstr })
+    qstr = q.split(" ")
+    fields = %w(predictions.title predictions.description tags.name)
+    clause = []
+    
+    qstr.each do |qs|
+      if !STOP_WORDS.include?(qs.downcase)
+        q = "'%#{qs.downcase}%'"
+        clause << fields.map{ |f| "LOWER(#{f}) LIKE #{q}"}.join(" OR ")
+      end
     end
+    
+    select('distinct predictions.*').joins("LEFT JOIN taggings on predictions.id = taggings.taggable_id")
+      .joins("LEFT JOIN tags on tags.id = taggings.tag_id")
+      .where(clause.join(" OR "))
+  end
 
 
     def open?

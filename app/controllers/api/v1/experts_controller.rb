@@ -90,11 +90,74 @@ module Api::V1
 
 
     def add_category
+      @expert = Expert.find_by_id(params[:expert_id])
 
+      if @expert.nil?
+        render json: { error: "Expert Not Found" }, status: 422
+        return
+      end
+
+      if @category.nil?
+        render json: { error: "Category Not Found" }, status: 422
+        return
+      end
+
+      @expert.add_category_if_necessary(params[:category_id], 1)
+      if @expert.save
+        add_contribution(@expert, :added_category)
+        render json: { status: "success" }
+      else
+        render json: { error: "Unable to Add Category" }, status: 422
+      end
     end
+
+
+    def add_tag
+      @expert = Expert.find_by_id(params[:expert_id])
+      if @expert.nil?
+        render json: { error: "Expert Not Found" }, status: 422
+        return
+      end
+
+      if !params.has_key?(:tag)
+        render json: { error: "Tag Required" }, status: 422
+      end
+
+      @expert.tag_list.add(params[:tag])
+
+      if @expert.save
+        add_contribution(@expert, :added_tag)
+        render json: { status: "Success" }
+      else
+        render json: { status: "Error" }, status: 422
+      end
+    end
+
+
+    def remove_tag
+      @expert = Expert.find_by_id(params[:expert_id])
+      if @expert.nil?
+        render json: { error: "Expert Not Found" }, status: 422
+        return
+      end
+
+      if !params.has_key?(:tag)
+        render json: { error: "Tag Required" }, status: 422
+      end
+
+      @expert.tag_list.remove(params[:tag])
+      
+      if @expert.save
+        add_contribution(@expert, :removed_tag)
+        render json: { status: "Success" }
+      else
+        render json: { status: "Error" }, status: 422
+      end
 
     
     def remove_category
+
+    end
 
 
     def add_publication

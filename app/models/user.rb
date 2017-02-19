@@ -6,7 +6,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, 
-         :confirmable, :omniauthable, :lockable
+         :omniauthable, :lockable
 
   has_many :user_comments, dependent: :destroy
   has_many :comments, -> { distinct }, :through => :user_comments

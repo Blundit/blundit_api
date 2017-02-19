@@ -126,6 +126,49 @@ module Api::V1
     end
 
 
+    def add_tag
+      @prediction = Prediction.find_by_id(params[:prediction])
+      if @prediction.nil?
+        render json: { error: "Prediction Not Found" }, status: 422
+        return
+      end
+
+      if !params.has_key?(:tag)
+        render json: { error: "Tag Required" }, status: 422
+      end
+
+      @prediction.tag_list.add(params[:tag])
+
+      if @prediction.save
+        add_contribution(@claim, :added_tag)
+        render json: { status: "Success" }
+      else
+        render json: { status: "Error" }, status: 422
+      end
+    end
+
+
+    def remove_tag
+      @prediction = Prediction.find_by_id(params[:prediction_id])
+      if @prediction.nil?
+        render json: { error: "Prediction Not Found" }, status: 422
+        return
+      end
+
+      if !params.has_key?(:tag)
+        render json: { error: "Tag Required" }, status: 422
+      end
+
+      @prediction.tag_list.remove(params[:tag])
+      
+      if @prediction.save
+        add_contribution(@prediction, :removed_tag)
+        render json: { status: "Success" }
+      else
+        render json: { status: "Error" }, status: 422
+      end
+
+
     private
 
     def set_prediction

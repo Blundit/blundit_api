@@ -124,6 +124,51 @@ module Api::V1
     end
 
 
+    def add_tag
+      @claim = Claim.find_by_id(params[:claim_id])
+      if @claim.nil?
+        render json: { error: "Claim Not Found" }, status: 422
+        return
+      end
+
+      if !params.has_key?(:tag)
+        render json: { error: "Tag Required" }, status: 422
+      end
+
+      @claim.tag_list.add(params[:tag])
+
+      if @claim.save
+        add_contribution(@claim, :added_tag)
+        render json: { status: "Success" }
+      else
+        render json: { status: "Error" }, status: 422
+      end
+    end
+
+
+    def remove_tag
+      @claim = Claim.find_by_id(params[:claim_id])
+      if @claim.nil?
+        render json: { error: "Claim Not Found" }, status: 422
+        return
+      end
+
+      if !params.has_key?(:tag)
+        render json: { error: "Tag Required" }, status: 422
+      end
+
+      @claim.tag_list.remove(params[:tag])
+      
+      if @claim.save
+        add_contribution(@claim, :removed_tag)
+        render json: { status: "Success" }
+      else
+        render json: { status: "Error" }, status: 422
+      end
+    end
+
+
+
     private
 
     def set_claim

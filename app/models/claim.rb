@@ -31,11 +31,13 @@ class Claim < ApplicationRecord
     attr_reader :contributions_list
     def contributions_list
         {
-                created_claim: "Created Claim",
-                edited_claim: "Edited Claim",
-                destroyed_claim: "Destroyed Claim",
-                added_comment: "Added Comment to Claim",
-                added_category: "Added Category to Claim",
+            created_claim: "Created Claim",
+            edited_claim: "Edited Claim",
+            destroyed_claim: "Destroyed Claim",
+            added_comment: "Added Comment to Claim",
+            added_category: "Added Category to Claim",
+            added_tag: "Added Tag to Claim",
+            removed_tag: "Removed Tag From Claim"
         }
     end
 

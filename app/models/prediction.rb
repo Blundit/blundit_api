@@ -38,6 +38,8 @@ class Prediction < ApplicationRecord
             destroyed_prediction: "Destroyed Prediction",
             added_comment: "Added Comment to Prediction",
             added_category: "Added Category to Prediction",
+            added_tag: "Added Tag to Prediction",
+            removed_tag: "Removed Tag From Prediction"
 
         }
     end

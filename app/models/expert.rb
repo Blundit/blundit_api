@@ -38,7 +38,9 @@ class Expert < ApplicationRecord
       added_claim: "Added Claim to Expert",
       added_prediction: "Added Prediction to Expert",
       flagged_expert: "Flagged Expert",
-      added_publication: "Added Publication to Expert"
+      added_publication: "Added Publication to Expert",
+      added_tag: "Added Tag to Expert",
+      removed_tag: "Removed Tag From Expert"
 
     }
   end

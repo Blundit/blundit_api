@@ -1,11 +1,11 @@
 class Contribution < ApplicationRecord
   belongs_to :user
-  belongs_to :expert
-  belongs_to :claim
-  belongs_to :evidence
-  belongs_to :comment
-  belongs_to :flag
-  belongs_to :prediction
+  belongs_to :expert, optional: true
+  belongs_to :claim, optional: true
+  belongs_to :evidence, optional: true
+  belongs_to :comment, optional: true
+  belongs_to :flag, optional: true
+  belongs_to :prediction, optional: true
 
   def type?
     return "expert" if !self.expert.nil?

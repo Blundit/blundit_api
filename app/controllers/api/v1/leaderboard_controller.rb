@@ -114,5 +114,30 @@ module Api::V1
 
             @experts = ExpertCategoryAccuracy.order("#{@type}_accuracy #{@sort}").where("category_id = #{params[:id]}")
         end
+
+
+        def claims_by_category
+            if !params.has_key?(:id)
+                render json: { errors: "Category ID Not Found" }, status: 422
+            end
+
+            @sort = "DESC"
+            @sort = params[:sort] if params.has_key?(:sort)
+
+            @claims = Claim.joins(:claim_categories).where(:claim_categories => {:category_id => params[:id]}).order("vote_value #{@sort}")
+        end
+
+
+        def predictions_by_category
+            if !params.has_key?(:id)
+                render json: { errors: "Category ID Not Found" }, status: 422
+            end
+
+            @sort = "DESC"
+            @sort = params[:sort] if params.has_key?(:sort)
+
+            @predictions = Prediction.joins(:prediction_categories).where(:prediction_categories => {:prediction_id => params[:id]}).order("vote_value #{@sort}")
+        end
+
     end
 end

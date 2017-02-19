@@ -25,18 +25,6 @@ module Api::V1
     end
 
 
-    def by_category
-      if !params.has_key?(:id)
-          render json: { errors: "Category ID Not Found" }, status: 422
-      end
-
-      @sort = "DESC"
-      @sort = params[:sort] if params.has_key?(:sort)
-
-      @claims = Claim.joins(:claim_categories).where(:claim_categories => {:category_id => params[:id]}).order("vote_value #{@sort}")
-    end
-
-
     def new
       # GET /pundits/new
       @claim = Claim.new

@@ -20,9 +20,11 @@ Rails.application.routes.draw do
         resources :prediction_votes
         resources :prediction_flags
 
-        post 'predictions/:prediction_id/add_comment' => 'predictions#add_comment'
-        post 'predictions/:prediction_id/add_expert' => 'predictions#add_expert'
       end
+
+      post 'predictions/:prediction_id/add_comment' => 'predictions#add_comment'
+      post 'predictions/:prediction_id/add_expert' => 'predictions#add_expert'
+      post 'predictions/by_category' => 'predictions#by_category'
 
       resources :claims do
         resources :claim_comments
@@ -35,6 +37,7 @@ Rails.application.routes.draw do
 
       post 'claims/:claim_id/add_comment' => 'claims#add_comment'
       post 'claims/:claim_id/add_expert' => 'claims#add_expert'
+      post 'claims/by_category' => 'claims#by_category'
       
       resources :categories
 
@@ -81,6 +84,8 @@ Rails.application.routes.draw do
       post 'leaderboard/experts' => 'leaderboard#experts'
       post 'leaderboard/experts/newest' => 'leaderboard#newest_experts'
       post 'leaderboard/experts/recently_updated' => 'leaderboard#recently_updated_experts'
+
+      post 'leaderboard/experts/category' => 'leaderboard#experts_by_category'
 
 
       post 'search' => 'search#index'

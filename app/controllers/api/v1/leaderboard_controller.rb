@@ -6,10 +6,12 @@ module Api::V1
 
         ## CLAIMS
         def claims
-            @status = nil
-            @status = params[:status] if params.has_key?(:status)
+            @sort = "DESC"
 
-            @claims = Claim.order('vote_value DESC')
+            @status = params[:status] if params.has_key?(:status)
+            @sort = params[:sort] if params.has_key?(:sort)
+
+            @claims = Claim.order("vote_value #{@sort}")
             @claims = @claims.where(status: @status) if !@status.nil?
         end
 
@@ -99,6 +101,18 @@ module Api::V1
 
             @experts = Expert.order("updated_at #{@sort}")
             @experts = @experts.where(status: @status) if !@status.nil?
+        end
+
+
+        def experts_by_category
+            @type = "overall"
+
+            return false if !params.has_key?(:id)
+
+            @type = params[:type] if params.has_key?(:type)
+            @sort = params[:sort] if params.has_key?(:sort)
+
+            @experts = ExpertCategoryAccuracy.order("#{@type}_accuracy #{@sort}").where("category_id = #{params[:id]}")
         end
     end
 end

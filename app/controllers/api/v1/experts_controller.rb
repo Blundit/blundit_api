@@ -160,6 +160,7 @@ module Api::V1
     
     def remove_category
 
+
     end
 
 
@@ -202,6 +203,9 @@ module Api::V1
         add_contribution(@expert, :added_comment)
       end
     end
+
+
+    # remove comment is in application helper
 
 
     def add_claim

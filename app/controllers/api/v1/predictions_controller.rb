@@ -106,6 +106,9 @@ module Api::V1
     end
 
 
+    # remove comment in application helper
+
+
     def add_category
       @prediction = Prediction.find_by_id(params[:prediction_id])
       @category = Category.find_by_id(params[:category_id])

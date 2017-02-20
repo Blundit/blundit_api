@@ -105,6 +105,8 @@ module Api::V1
       end
     end
 
+    # remove comment method defined in application helper.
+    
 
     def add_category
       @claim = Claim.find_by_id(params[:claim_id])

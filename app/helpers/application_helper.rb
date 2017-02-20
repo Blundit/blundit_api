@@ -1,6 +1,13 @@
 module ApplicationHelper
-    def @hasPermissionToDestroy
+    def has_permission_to_destroy
         # TODO: Make this actually check user object for an admin property,
+        # and check categories
+        false
+    end
+
+
+    def has_permission_to_remove
+        # TODO: Make this actually check user object for admin property,
         # and check categories
         false
     end
@@ -13,6 +20,7 @@ module ApplicationHelper
       end
 
       @comment = Comment.find_by_id(params[:id])
+      
 
       if @comment.nil?
         render json: { error: "Comment Not Found" }, status: 422

@@ -27,8 +27,9 @@ module Api::V1
 
     def destroy
       # DELETE /pundits/:id
-      if !@hasPermissionToDestroy()
-        return json: { result: "You don't have permission to destroy." }, status: 422
+      if !has_permission_to_destroy
+        render json: { result: "You don't have permission to destroy." }, status: 422
+        return
       end
     end
   end

@@ -70,8 +70,9 @@ module Api::V1
 
     def destroy
       # DELETE /pundits/:id
-      if !@hasPermissionToDestroy()
-        return json: { result: "You don't have permission to destroy." }, status: 422
+      if !has_permission_to_destroy
+        render json: { result: "You don't have permission to destroy." }, status: 422
+        return
       end
 
       if params.has_key?(:id)
@@ -124,6 +125,7 @@ module Api::V1
 
       if !params.has_key?(:tag)
         render json: { error: "Tag Required" }, status: 422
+        return
       end
 
       @expert.tag_list.add(params[:tag])
@@ -146,6 +148,7 @@ module Api::V1
 
       if !params.has_key?(:tag)
         render json: { error: "Tag Required" }, status: 422
+        return
       end
 
       @expert.tag_list.remove(params[:tag])
@@ -159,15 +162,40 @@ module Api::V1
 
     
     def remove_category
+      if !params.has_key?(:category_id)
+        render json: { error: "Category ID Not Found" }, status: 422
+        return
+      end
 
+      if !params.has_key?(:expert_id)
+        render json: { error: "Expert ID Not Found" }, status: 422
+        return
+      end
 
+      @expert = Expert.find_by_id(params[:expert_id])
+      @category = Category.find_by_id(params[:category_id])
+
+      if @category.nil?
+        render json: { error: "Category Not Found" }, status: 422
+        return
+      end
+
+      if @expert.nil?
+        render json: { error: "Expert Not Found" }, status: 422
+        return
+      end
+
+      if @expert.expert_categories.where("category_id = ?", params[:category_id]).first.destroy
+        add_contribution(@expert, :removed_category)
+        render json: { status: "Success" }
+      else
+        render json: { status: "Error" }
+      end
     end
 
 
     def add_publication
       # /experts/:expert_id/add_publication
-      # TODO: Page scrape here to take url and determine title and description, figure out if it's amazon, youtube or whatever?
-      # How complicated should this be?
       @expert = Expert.find_by_id(params[:expert_id])
 
       if @expert.nil?

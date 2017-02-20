@@ -65,8 +65,9 @@ module Api::V1
     def destroy
       # DELETE /pundits/:id
 
-      if !@hasPermissionToDestroy()
-        return json: { result: "You don't have permission to destroy." }, status: 422
+      if !has_permission_to_destroy
+        render json: { result: "You don't have permission to destroy." }, status: 422
+        return
       end
 
       if params.has_key?[:id]
@@ -106,7 +107,7 @@ module Api::V1
     end
 
     # remove comment method defined in application helper.
-    
+
 
     def add_category
       @claim = Claim.find_by_id(params[:claim_id])
@@ -165,6 +166,7 @@ module Api::V1
 
       if !params.has_key?(:tag)
         render json: { error: "Tag Required" }, status: 422
+        return
       end
 
       @claim.tag_list.add(params[:tag])
@@ -187,6 +189,7 @@ module Api::V1
 
       if !params.has_key?(:tag)
         render json: { error: "Tag Required" }, status: 422
+        return
       end
 
       @claim.tag_list.remove(params[:tag])

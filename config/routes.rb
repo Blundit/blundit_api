@@ -23,10 +23,14 @@ Rails.application.routes.draw do
       end
 
       post 'predictions/:prediction_id/add_comment' => 'predictions#add_comment'
+      post 'predictions/:prediction_id/remove_comment' => 'predictions#remove_comment'
       post 'predictions/:prediction_id/add_expert' => 'predictions#add_expert'
+      post 'predictions/:prediction_id/remove_expert' => 'predictions#remove_expert'
       post 'predictions/:prediction_id/add_tag' => 'predictions#add_tag'
       post 'predictions/:prediction_id/remove_tag' => 'predictions#remove_tag'
       post 'predictions/:prediction_id/add_category' => 'predictions#add_category'
+      post 'predictions/:prediction_id/remove_category' => 'predictions#remove_category'
+
 
       resources :claims do
         resources :claim_comments
@@ -38,10 +42,14 @@ Rails.application.routes.draw do
       end
 
       post 'claims/:claim_id/add_comment' => 'claims#add_comment'
+      post 'claims/:claim_id/remove_comment' => 'claims#remove_comment'
       post 'claims/:claim_id/add_expert' => 'claims#add_expert'
+      post 'claims/:claim_id/remove_expert' => 'claims#remove_expert'
       post 'claims/:claim_id/add_tag' => 'claims#add_tag'
       post 'claims/:claim_id/remove_tag' => 'claims#remove_tag'
       post 'claims/:claim_id/add_category' => 'claims#add_category'
+      post 'claims/:claim_id/remove_category' => 'claims#remove_category'
+      
 
       
       resources :categories
@@ -59,12 +67,18 @@ Rails.application.routes.draw do
       end
 
       post 'experts/:expert_id/add_publication' => 'experts#add_publication'
+      post 'experts/:expert_id/remove_publication' => 'experts#remove_publication'
+
       post 'experts/:expert_id/add_comment' => 'experts#add_comment'
+      post 'experts/:expert_id/remove_comment' => 'experts#remove_comment'
       post 'experts/:expert_id/add_claim' => 'experts#add_claim'
+      post 'experts/:expert_id/remove_claim' => 'experts#remove_claim'
       post 'experts/:expert_id/add_prediction' => 'experts#add_prediction'
+      post 'experts/:expert_id/remove_prediction' => 'experts#remove_prediction'
       post 'experts/:expert_id/add_tag' => 'experts#add_tag'
       post 'experts/:expert_id/remove_tag' => 'experts#remove_tag'
       post 'experts/:expert_id/add_category' => 'experts#add_category'
+      post 'experts/:expert_id/remove_category' => 'experts#remove_category'
 
       resources :publications do
         resources :publication_comments

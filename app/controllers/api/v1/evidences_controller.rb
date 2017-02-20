@@ -26,5 +26,32 @@ module Api::V1
                 render json: { error: 'Unable to add evidence' }, status: 422
             end
         end
+        
+
+        def remove_evidence
+            if !has_permission_to_remove
+                render json: { error: "You don't have permission to remove this" }, status: 422
+                return 
+            end
+
+            if !params.has_key?(:id)
+                render json: { error: "ID Not Found" }, status: 422
+                return
+            end
+
+            @evidence = Evidence.find_by_id(params[:id])
+
+            if @evidence.nil?
+                render json: { error: "Evidence Not Found" }, status: 422
+                return
+            end
+
+            if @evidence.destroy
+                add_contribution(@evidence, :destroyed_evidence)
+                render json: { status: "Success" }
+            else
+                render json: { status: "Error" }
+            end
+        end
     end
 end

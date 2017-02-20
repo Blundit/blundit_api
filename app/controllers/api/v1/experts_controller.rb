@@ -70,8 +70,11 @@ module Api::V1
 
     def destroy
       # DELETE /pundits/:id
+      if !@hasPermissionToDestroy()
+        return json: { result: "You don't have permission to destroy." }, status: 422
+      end
 
-      if params[:id]
+      if params.has_key?(:id)
         if @expert.destroy
           add_contribution(@expert, :destroyed_expert)
           render json: { result: "success" }
@@ -79,7 +82,7 @@ module Api::V1
           render json: { result: "error" }
         end
       else
-        render json: { result: "error" }
+        render json: { result: "ID Not Found" }, status: 422
       end
     end
 

@@ -65,7 +65,11 @@ module Api::V1
 
     def destroy
       # DELETE /pundits/:id
-      if params[:id]
+      if !@hasPermissionToDestroy()
+        return json: { result: "You don't have permission to destroy." }, status: 422
+      end
+
+      if params.has_key?(:id)
         if @prediction.destroy
           add_contribution(@prediction, :destroyed_prediction)
           render json: { result: "success" }
@@ -73,7 +77,7 @@ module Api::V1
           render json: { result: "error" }
         end
       else
-        render json: { result: "error" }
+        render json: { result: "ID Not Found" }, status: 422
       end
     end
 
@@ -117,13 +121,37 @@ module Api::V1
       end
 
       if @prediction.categories << @category
-        @prediction.update_expert_categories(params[:category_id])
+        @prediction.update_expert_categories(params[:category_id], true)
         add_contribution(@prediction, :added_category)
         render json: { status: "success" }
       else
         render json: { error: "Unable to Add Category" }, status: 422
       end
     end
+
+
+    def remove_category
+      @prediction = Prediction.find_by_id(params[:prediction_id])
+      @category = Category.find_by_id(params[:category_id])
+
+      if @prediction.nil?
+        render json: { error: "Prediction Not Found" }, status: 422
+        return
+      end
+
+      if @category.nil?
+        render json: { error: "Category Not Found" }, status: 422
+        return
+      end
+
+      if @prediction.categories.find(params[:category_id]).destroy
+        @prediction.update_expert_categories(params[:category_id], false)
+        add_contribution(@prediction, :removed_category)
+        render json: { status: "success" }
+      else
+        render json: { error: "Unable to Add Category" }, status: 422
+      end
+    end    
 
 
     def add_tag

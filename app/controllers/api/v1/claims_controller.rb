@@ -64,7 +64,13 @@ module Api::V1
 
     def destroy
       # DELETE /pundits/:id
-      if params[:id]
+
+      if !@hasPermissionToDestroy()
+        return json: { result: "You don't have permission to destroy." }, status: 422
+      end
+
+      if params.has_key?[:id]
+    
         if @claim.destroy
           add_contribution(@claim, :destroyed_claim)
           render json: { result: "success" }
@@ -72,7 +78,7 @@ module Api::V1
           render json: { result: "error" }
         end
       else
-        render json: { result: "error" }
+        render json: { result: "ID Not Found" }, status: 422
       end
     end
 
@@ -115,11 +121,35 @@ module Api::V1
       end
 
       if @claim.categories << @category
-        @claim.update_expert_categories(params[:category_id])
+        @claim.update_expert_categories(params[:category_id], true)
         add_contribution(@claim, :added_category)
         render json: { status: "success" }
       else
         render json: { error: "Unable to Add Category" }, status: 422
+      end
+    end
+
+
+    def remove_category
+      @claim = Claim.find_by_id(params[:claim_id])
+      @category = Category.find_by_id(params[:category_id])
+
+      if @claim.nil?
+        render json: { error: "Claim Not Found" }, status: 422
+        return
+      end
+
+      if @category.nil?
+        render json: { error: "Category Not Found" }, status: 422
+        return
+      end
+
+      if @claim.categories.find(params[:category_id]).destroy
+        @claim.update_expert_categories(params[:category_id], false)
+        add_contribution(@claim, :removed_category)
+        render json: { status: "success" }
+      else
+        render json: { error: "Unable to Remove Category" }, status: 422
       end
     end
 

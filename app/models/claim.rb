@@ -186,23 +186,12 @@ class Claim < ApplicationRecord
     end
 
 
-    def add_expert_categories(category_id)
+    def update_expert_categories(category_id, add)
         self.experts.each do |expert|
-            self.categories.each do |category|
-                if expert.categories.where(id: category.id).count == 0
-                    expert.categories << category
-                end
-            end
-        end
-    end
-
-
-    def remove_expert_categories(category_id)
-        self.experts.each do |expert|
-            self.categories.each do |category|
-                if expert.categories.where(id: category.id).count > 0
-                    expert.categories.delete(category)
-                end
+            if add == true
+                expert.add_category_if_necessary(category_id, false)
+            else
+                expert.remove_category_if_possible(category_id)
             end
         end
     end

@@ -233,7 +233,7 @@ class Expert < ApplicationRecord
   end
 
 
-  def remove_category_if_possible (id)
+  def remove_category_if_possible(id)
     self.claims.each do |claim|
       if claim.categories.where({ id: id }).count > 0
         return false

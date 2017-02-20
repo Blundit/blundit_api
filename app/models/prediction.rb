@@ -38,6 +38,7 @@ class Prediction < ApplicationRecord
             destroyed_prediction: "Destroyed Prediction",
             added_comment: "Added Comment to Prediction",
             added_category: "Added Category to Prediction",
+            removed_category: "Removed Category from Prediction",
             added_tag: "Added Tag to Prediction",
             removed_tag: "Removed Tag From Prediction"
 
@@ -63,21 +64,21 @@ class Prediction < ApplicationRecord
 
 
     scope :search, -> (q) do
-    qstr = q.split(" ")
-    fields = %w(predictions.title predictions.description tags.name)
-    clause = []
-    
-    qstr.each do |qs|
-      if !STOP_WORDS.include?(qs.downcase)
-        q = "'%#{qs.downcase}%'"
-        clause << fields.map{ |f| "LOWER(#{f}) LIKE #{q}"}.join(" OR ")
-      end
+        qstr = q.split(" ")
+        fields = %w(predictions.title predictions.description tags.name)
+        clause = []
+        
+        qstr.each do |qs|
+        if !STOP_WORDS.include?(qs.downcase)
+            q = "'%#{qs.downcase}%'"
+            clause << fields.map{ |f| "LOWER(#{f}) LIKE #{q}"}.join(" OR ")
+        end
+        end
+        
+        select('distinct predictions.*').joins("LEFT JOIN taggings on predictions.id = taggings.taggable_id")
+        .joins("LEFT JOIN tags on tags.id = taggings.tag_id")
+        .where(clause.join(" OR "))
     end
-    
-    select('distinct predictions.*').joins("LEFT JOIN taggings on predictions.id = taggings.taggable_id")
-      .joins("LEFT JOIN tags on tags.id = taggings.tag_id")
-      .where(clause.join(" OR "))
-  end
 
 
     def open?
@@ -159,9 +160,11 @@ class Prediction < ApplicationRecord
         calc_vote_status
     end
 
+
     def votes_count
         return self.prediction_votes_count
     end
+
 
     def comments_count
         return self.prediction_comments_count
@@ -219,23 +222,12 @@ class Prediction < ApplicationRecord
     end
 
 
-    def add_expert_categories(category_id)
+    def update_expert_categories(category_id, add)
         self.experts.each do |expert|
-            self.categories.each do |category|
-                if expert.categories.where(id: category.id).count == 0
-                    expert.categories << category
-                end
-            end
-        end
-    end
-
-
-    def remove_expert_categories(category_id)
-        self.experts.each do |expert|
-            self.categories.each do |category|
-                if expert.categories.where(id: category.id).count > 0
-                    expert.categories.delete(category)
-                end
+            if add == true
+                expert.add_category_if_necessary(category_id, false)
+            else
+                expert.remove_category_if_possible(category_id)
             end
         end
     end

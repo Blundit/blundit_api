@@ -23,11 +23,6 @@ class Claim < ApplicationRecord
 
     acts_as_taggable
 
-    ## Variables
-    VOTES_REQUIRED_TO_CLOSE_PREDICTION = 5
-    VOTING_WINDOW = 1.day
-
-
     attr_reader :contributions_list
     def contributions_list
         {
@@ -37,7 +32,8 @@ class Claim < ApplicationRecord
             added_comment: "Added Comment to Claim",
             added_category: "Added Category to Claim",
             added_tag: "Added Tag to Claim",
-            removed_tag: "Removed Tag From Claim"
+            removed_tag: "Removed Tag From Claim",
+            voted: "Voted on Claim"
         }
     end
 
@@ -56,6 +52,16 @@ class Claim < ApplicationRecord
                 end
             end
         end
+    end
+
+
+    after_create :add_to_sidekiq
+    def add_to_sidekiq
+        params = {
+            id: self.id
+        }
+
+        ClaimWorker.perform_at(ENV['claim_voting_window'].to_i.days.from_now, params)
     end
     
 
@@ -127,7 +133,7 @@ class Claim < ApplicationRecord
         self.vote_value = vote_value.to_f / self.votes.length
         self.save
 
-        calc_vote_status
+        calc_status
     end
 
     def votes_count
@@ -146,16 +152,20 @@ class Claim < ApplicationRecord
         if self.votes.where(user_id: user.id).count == 0
             @vote = Vote.create({user_id: user, vote: value})
             self.votes << @vote
-            add_contribution(:voted)
+            add_contribution(@claim, :voted)
             calc_votes
         end
     end
 
 
-    def calc_vote_status
+    def calc_status (force = nil)
+        if force == true and self.status == 1
+            return false
+        end
+
         num_votes = self.votes.length
         status = 0
-        if num_votes >= VOTES_REQUIRED_TO_CLOSE_PREDICTION and self.can_close
+        if num_votes >= ENV['votes_required_to_close_claim'].to_i and self.can_close
             status = 1
         end
 
@@ -178,7 +188,7 @@ class Claim < ApplicationRecord
 
     def can_close
         @can_close = true
-        if (Time.now - self.created_at) > VOTING_WINDOW and self.votes.length >= VOTES_REQUIRED_TO_CLOSE_PREDICTION
+        if (Time.now - self.created_at) > ENV['voting_window'].to_i.days.from_now and self.votes.length >= VOTES_REQUIRED_TO_CLOSE_PREDICTION
             return true
         end
 

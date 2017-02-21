@@ -24,12 +24,6 @@ class Prediction < ApplicationRecord
     acts_as_taggable
 
 
-
-    ## Variables
-    VOTES_REQUIRED_TO_CLOSE_PREDICTION = 5
-    VOTING_WINDOW = 1.day
-
-
     attr_reader :contributions_list
     def contributions_list
         {
@@ -60,6 +54,15 @@ class Prediction < ApplicationRecord
                 end
             end
         end
+    end
+
+
+    after_create :add_to_sidekiq
+    def add_to_sidekiq
+        params = { 
+            id: self.id
+        }
+        PredictionWorker.perform_at(self.prediction_date.to_time, params)
     end
 
 
@@ -157,7 +160,7 @@ class Prediction < ApplicationRecord
         self.vote_value = vote_value.to_f / self.votes.length
         self.save
 
-        calc_vote_status
+        calc_status
     end
 
 
@@ -184,20 +187,23 @@ class Prediction < ApplicationRecord
     end
 
 
-    def calc_vote_status
-        num_votes = self.votes.length
-        status = 0
-        if num_votes >= VOTES_REQUIRED_TO_CLOSE_PREDICTION and self.can_close
-            status = 1
+    def calc_status (force = nil)
+        p "CALCULATING STATUS FOR PREDICTION"
+        if force == true and self.status == 1
+            return false
         end
 
+        num_votes = self.votes.length
+        status = 0
+        if num_votes >= ENV['votes_required_to_close_prediction'].to_i and self.can_close
+            status = 1
+        end
 
         self.status = status
         self.save
 
         if status == 1
             # TODO: Post-save actions, notifications, etc.
-
             calc_expert_accuracy
         end
     end
@@ -214,7 +220,7 @@ class Prediction < ApplicationRecord
         return false if self.prediction_date.nil?
 
         @can_close = true
-        if (Time.now - self.prediction_date) > VOTING_WINDOW and self.votes.length >= VOTES_REQUIRED_TO_CLOSE_PREDICTION
+        if (Time.now - self.prediction_date) > ENV['prediction_voting_window'].to_i.days.from_now and self.votes.length >= VOTES_REQUIRED_TO_CLOSE_PREDICTION
             return true
         end
 

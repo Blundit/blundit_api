@@ -63,7 +63,7 @@ class Expert < ApplicationRecord
   end
   
 
-  scope :search, -> (q) do
+  scope :do_search, -> (q) do
     qstr = q.split(" ")
     fields = %w(experts.name experts.description tags.name)
     clause = []

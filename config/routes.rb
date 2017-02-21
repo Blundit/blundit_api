@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
+  
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  require 'sidekiq/web'
+  mount Sidekiq::Web => '/sidekiq'
   
   get 'home' => 'home#index'
 
@@ -79,6 +83,8 @@ Rails.application.routes.draw do
       post 'experts/:expert_id/remove_tag' => 'experts#remove_tag'
       post 'experts/:expert_id/add_category' => 'experts#add_category'
       post 'experts/:expert_id/remove_category' => 'experts#remove_category'
+
+      get 'expertly' => 'experts#sidekiq'
 
       resources :publications do
         resources :publication_comments

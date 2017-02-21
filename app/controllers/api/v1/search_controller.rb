@@ -6,9 +6,9 @@ module Api::V1
                 return
             end
 
-            @claims = Claim.search(params[:query])
-            @experts = Expert.search(params[:query])
-            @predictions = Prediction.search(params[:query])
+            @claims = Claim.do_search(params[:query])
+            @experts = Expert.do_search(params[:query])
+            @predictions = Prediction.do_search(params[:query])
 
 
             # record search history

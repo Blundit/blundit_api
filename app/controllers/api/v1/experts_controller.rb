@@ -67,6 +67,14 @@ module Api::V1
 
     end
 
+    def sidekiq
+      # ClaimWorker.perform_async("Async")
+      # ClaimWorker.perform_in(30.seconds, "30 Seconds")
+      # ClaimWorker.perform_at(1.minute.from_now, "1 minute")
+      # ClaimWorker.perform_at("2017-02-20 8:59".to_time, "8:59")
+      ClaimWorker.perform_async(1)
+    end
+
 
     def destroy
       # DELETE /pundits/:id
@@ -89,7 +97,7 @@ module Api::V1
 
 
     def search
-      @expert = Expert.search(params[:term])
+      @expert = Expert.do_search(params[:term])
     end
 
 
@@ -159,6 +167,7 @@ module Api::V1
       else
         render json: { status: "Error" }, status: 422
       end
+    end
 
     
     def remove_category

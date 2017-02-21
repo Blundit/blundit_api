@@ -63,7 +63,7 @@ class Prediction < ApplicationRecord
     end
 
 
-    scope :search, -> (q) do
+    scope :do_search, -> (q) do
         qstr = q.split(" ")
         fields = %w(predictions.title predictions.description tags.name)
         clause = []

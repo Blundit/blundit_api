@@ -45,7 +45,18 @@ gem 'omniauth-google'
 gem 'figaro'
 gem 'acts-as-taggable-on', '~> 4.0'
 gem 'kaminari'
+
+# sidekiq stuff, including web interface
 gem 'sidekiq', '~> 4.0.0'
+gem 'sinatra', github: 'sinatra/sinatra'
+
+# admin panel
+gem 'activeadmin', git: 'https://github.com/activeadmin/activeadmin'
+gem 'inherited_resources', git: 'https://github.com/activeadmin/inherited_resources'
+gem 'cancan' # or cancancan
+gem 'activemodel-serializers-xml', github: 'rails/activemodel-serializers-xml'
+gem 'draper', github: 'audionerd/draper', branch: 'rails5'
+gem 'pundit'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

@@ -85,7 +85,7 @@ module Api::V1
 
 
     def search
-      @claim = Claim.search(params[:term])
+      @claim = Claim.do_search(params[:term])
     end
 
 

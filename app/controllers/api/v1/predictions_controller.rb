@@ -84,7 +84,7 @@ module Api::V1
 
 
     def search
-      @prediction = Prediction.search(params[:term])
+      @prediction = Prediction.do_search(params[:term])
     end
 
 
@@ -199,6 +199,7 @@ module Api::V1
       else
         render json: { status: "Error" }, status: 422
       end
+    end
 
 
     private

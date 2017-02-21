@@ -10,3 +10,4 @@
 User.create! :name => 'Brian Hogg', :email => 'brian@hoggworks.com', :password => 'This is a ludicrously long password that is also secure', :password_confirmation => 'This is a ludicrously long password that is also secure'
 
 # categories
+User.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password')

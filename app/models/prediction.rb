@@ -188,7 +188,6 @@ class Prediction < ApplicationRecord
 
 
     def calc_status (force = nil)
-        p "CALCULATING STATUS FOR PREDICTION"
         if force == true and self.status == 1
             return false
         end

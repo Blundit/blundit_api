@@ -103,6 +103,15 @@ module Api::V1
         current_user.comments << @comment
         add_contribution(@prediction, :added_comment)
 
+        # add to notification queue for user notifications
+        attrs = {
+          user_id: current_user.id
+          comment_id: @comment.id
+          prediction_id: @prediction.id
+          type: :added_comment_to_prediction
+          message: @comment.content
+        }
+        NotificationQueue::delay.process(attrs)
       end
     end
 

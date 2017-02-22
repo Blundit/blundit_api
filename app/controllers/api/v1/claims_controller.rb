@@ -103,6 +103,16 @@ module Api::V1
       if @claim.comments << @comment
         current_user.comments << @comment
         add_contribution(@claim, :added_comment)
+
+        # add to notification queue for user notifications
+        attrs = {
+          user_id: current_user.id
+          comment_id: @comment.id
+          claim_id: @claim.id
+          type: :added_comment_to_claim
+          message: @comment.content
+        }
+        NotificationQueue::delay.process(attrs)
       end
     end
 

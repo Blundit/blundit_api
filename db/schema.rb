@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170220202122) do
+ActiveRecord::Schema.define(version: 20170222131731) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -223,6 +223,23 @@ ActiveRecord::Schema.define(version: 20170220202122) do
     t.integer  "user_id"
     t.text     "description"
     t.text     "url"
+  end
+
+  create_table "notification_queue_items", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "type"
+    t.integer  "claim_id"
+    t.integer  "prediction_id"
+    t.integer  "expert_id"
+    t.string   "message"
+    t.integer  "comment_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  create_table "notification_queues", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "prediction_categories", force: :cascade do |t|

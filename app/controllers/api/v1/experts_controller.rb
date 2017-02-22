@@ -238,6 +238,16 @@ module Api::V1
       if @experts.comments << @comment
         current_user.comments << @comment
         add_contribution(@expert, :added_comment)
+
+        # add to notification queue for user notifications
+        attrs = {
+          user_id: current_user.id
+          comment_id: @comment.id
+          expert_id: @expert.id
+          type: :added_comment_to_expert
+          message: @comment.content
+        }
+        NotificationQueue::delay.process(attrs)
       end
     end
 

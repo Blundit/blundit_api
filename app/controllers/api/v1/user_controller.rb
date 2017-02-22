@@ -42,6 +42,11 @@ module Api::V1
             end
 
             if Bookmark.find(params[:id]).destroy
+                attrs = {}
+                attrs["user_id"] = @bookmmark.user_id
+                attrs["#{@bookmark.type?}_id"] = @bookmark.object.id 
+
+                NotificationQueue::delay.prune_unnecessary_queue_items(attrs)
                 render json: { result: "Success" }
             else
                 render json: { error: "Unable to remove bookmark" }, status: 422

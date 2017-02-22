@@ -271,6 +271,45 @@ module Api::V1
     end
 
 
+    def remove_claim
+      if !params.has_key?(:expert_id) or !params.has_key?(:claim_id)
+        render json: { error: "Expert ID and Claim ID required" }, status: 422
+        return
+      end
+
+      @expert = Expert.find_by_id(params[:expert_id])
+      @claim = Claim.find_by_id(params[:claim_id])
+
+      @removed = true
+
+      @expert_claim = @expert.expert_claims.find_by_claim_id(params[:claim_id])
+      if @expert_claim != nil
+
+        if @expert_claim.destroy
+          
+        else
+          @removed = false
+        end
+      end
+
+      @claim_expert = @claim.claim_experts.find_by_expert_id(params[:expert_id])
+      if @claim_expert != nil
+        if @claim_expert.destroy
+        
+        else
+          @removed = false
+        end
+      end
+
+      if @removed == true
+        add_contribution(@expert, :removed_claim)
+        render json: { status: "Success" }
+      else
+        render json: { status: "Error" }
+      end
+    end
+
+
     def add_prediction
       @expert = Expert.find_by_id(params[:expert_id])
       @prediction = Prediction.find_by_id(params[:prediction_id])
@@ -292,6 +331,44 @@ module Api::V1
         add_contribution(@expert, :added_claim)
       else
         render json: { error: "Expert ID Not Found" }, status: 422
+      end
+    end
+
+
+    def remove_prediction
+      if !params.has_key?(:expert_id) or !params.has_key?(:prediction_id)
+        render json: { error: "Expert ID and Prediction ID required" }, status: 422
+        return
+      end
+
+      @expert = Expert.find_by_id(params[:expert_id])
+      @prediction = Prediction.find_by_id(params[:prediction_id])
+
+      @removed = true
+
+      @expert_prediction = @expert.expert_predictions.find_by_claim_id(params[:prediction_id])
+      if @expert_prediction != nil
+        if @expert_prediction.destroy
+          
+        else
+          @removed = false
+        end
+      end
+
+      @prediction_expert = @prediction.prediction_experts.find_by_expert_id(params[:expert_id])
+      if @prediction_expert != nil
+        if @prediction_expert.destroy
+        
+        else
+          @removed = false
+        end
+      end
+
+      if @removed == true
+        add_contribution(@expert, :removed_prediction)
+        render json: { status: "Success" }
+      else
+        render json: { status: "Error" }
       end
     end
 

@@ -148,14 +148,78 @@ module Api::V1
         return
       end
 
-      if @prediction.categories.find(params[:category_id]).destroy
+      if @prediction.expert_categories.find_by_category_id(params[:category_id]).destroy
         @prediction.update_expert_categories(params[:category_id], false)
         add_contribution(@prediction, :removed_category)
         render json: { status: "success" }
       else
         render json: { error: "Unable to Add Category" }, status: 422
       end
-    end    
+    end  
+
+
+    def add_expert
+      @prediction = Prediction.find_by_id(params[:prediction_id])
+      @expert = Expert.find_by_id(params[:expert_id])
+
+      if @prediction.nil?
+        render json: { error: "Prediction Not Found" }, status: 422
+        return
+      end
+
+      if @expert.nil?
+        render json: { error: "Expert Not Found" }, status: 422
+        return
+      end
+
+      if @prediction.experts << @expert
+        add_contribution(@prediction, :added_expert)
+        render json: { status: "success" }
+      else
+        render json: { error: "Unable to Add Expert" }, status: 422
+      end
+
+    end
+
+
+    def remove_expert
+      @prediction = Prediction.find_by_id(params[:prediction_id])
+      @expert = Expert.find_by_id(params[:expert_id])
+
+      if @prediction.nil?
+        render json: { error: "Prediction Not Found" }, status: 422
+        return
+      end
+
+      if @expert.nil?
+        render json: { error: "Expert Not Found" }, status: 422
+        return
+      end
+
+      @prediction_expert = @prediction.prediction_experts.find_by_expert_id(params[:expert_id])
+      if @prediction_expert != nil
+        if @prediction_expert.destroy
+        
+        else
+          @removed = false
+        end
+      end
+
+      @expert_prediction = @expert.expert_predictions.find_by_claim_id(params[:prediction_id])
+      if @expert_prediction != nil
+        if @expert_prediction.destroy
+        else
+          @removed = false
+        end
+      end
+
+      if @removed == true
+        add_contribution(@prediction, :removed_expert)
+        render json: { status: "Success" }
+      else
+        render json: { status: "Error" }
+      end
+    end  
 
 
     def add_tag

@@ -36,9 +36,12 @@ class Expert < ApplicationRecord
       removed_category: "Removed Category from Expert",
       added_comment: "Added Comment to Expert",
       added_claim: "Added Claim to Expert",
+      removed_claim: "Removed Claim from Expert"
       added_prediction: "Added Prediction to Expert",
+      removed_prediction: "Removed Prediction from Expert"
       flagged_expert: "Flagged Expert",
       added_publication: "Added Publication to Expert",
+      removed_publication: "Removed Publication from Expert"
       added_tag: "Added Tag to Expert",
       removed_tag: "Removed Tag From Expert"
 

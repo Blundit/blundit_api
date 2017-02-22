@@ -157,6 +157,69 @@ module Api::V1
     end
 
 
+    def add_expert
+      @claim = Claim.find_by_id(params[:claim_id])
+      @expert = Expert.find_by_id(params[:expert_id])
+
+      if @claim.nil?
+        render json: { error: "Claim Not Found" }, status: 422
+        return
+      end
+
+      if @expert.nil?
+        render json: { error: "Expert Not Found" }, status: 422
+        return
+      end
+
+      if @claim.experts << @expert
+        add_contribution(@claim, :added_expert)
+        render json: { status: "success" }
+      else
+        render json: { error: "Unable to Add Expert" }, status: 422
+      end
+
+    end
+
+    def remove_expert
+      @claim = Claim.find_by_id(params[:claim_id])
+      @expert = Expert.find_by_id(params[:expert_id])
+
+      if @claim.nil?
+        render json: { error: "Claim Not Found" }, status: 422
+        return
+      end
+
+      if @expert.nil?
+        render json: { error: "Expert Not Found" }, status: 422
+        return
+      end
+
+      @claim_expert = @prediction.claim_experts.find_by_expert_id(params[:expert_id])
+      if @claim_expert != nil
+        if @claim_expert.destroy
+        
+        else
+          @removed = false
+        end
+      end
+
+      @expert_claim = @expert.expert_claims.find_by_claim_id(params[:claim_id])
+      if @expert_claim != nil
+        if @expert_claim.destroy
+        else
+          @removed = false
+        end
+      end
+
+      if @removed == true
+        add_contribution(@claim, :removed_expert)
+        render json: { status: "Success" }
+      else
+        render json: { status: "Error" }
+      end
+    end
+
+
     def add_tag
       @claim = Claim.find_by_id(params[:claim_id])
       if @claim.nil?

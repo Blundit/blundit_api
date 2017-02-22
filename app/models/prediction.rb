@@ -34,8 +34,10 @@ class Prediction < ApplicationRecord
             added_category: "Added Category to Prediction",
             removed_category: "Removed Category from Prediction",
             added_tag: "Added Tag to Prediction",
-            removed_tag: "Removed Tag From Prediction"
-
+            removed_tag: "Removed Tag From Prediction",
+            added_expert: "Added Expert to Prediction",
+            removed_expert: "Removed Expert from Prediction",
+            voted: "Voted on Prediction"
         }
     end
 

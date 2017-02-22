@@ -31,9 +31,12 @@ class Claim < ApplicationRecord
             destroyed_claim: "Destroyed Claim",
             added_comment: "Added Comment to Claim",
             added_category: "Added Category to Claim",
+            removed_category: "Removed Category from Claim",
+            added_expert: "Added Expert to Claim",
+            removed_expert: "Removed Expert from Claim"
             added_tag: "Added Tag to Claim",
             removed_tag: "Removed Tag From Claim",
-            voted: "Voted on Claim"
+            voted: "Voted on Claim",
         }
     end
 

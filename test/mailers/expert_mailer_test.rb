@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class ExpertAddedToPredictionMailerTest < ActionMailer::TestCase
+class ExpertMailerTest < ActionMailer::TestCase
   # test "the truth" do
   #   assert true
   # end

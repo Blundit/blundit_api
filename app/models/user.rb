@@ -40,6 +40,11 @@ class User < ApplicationRecord
   enumerize :notification_frequency, in: {:as_they_happen => 1, :daily => 2, :weekly => 3, :monthly => 4, :none => 0}, default: 1
 
 
+  def name
+    @name = "#{self.first_name} #{self.last_name}"
+  end
+  
+
   VOTING_RANK_OPTIONS = [
     { min: 0, max: 25, rank: "newbie", badge: "" },
     { min: 26, max: 50, rank: "average", badge: "" },
@@ -62,10 +67,12 @@ class User < ApplicationRecord
     return @rank
   end
 
+
   def comments_count
     return self.user_comments_count
   end
   
+
   def comments_rank
 
   end

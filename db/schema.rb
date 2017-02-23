@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170223005208) do
+ActiveRecord::Schema.define(version: 20170223140606) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -228,7 +228,7 @@ ActiveRecord::Schema.define(version: 20170223005208) do
 
   create_table "notification_queue_items", force: :cascade do |t|
     t.integer  "user_id"
-    t.string   "type"
+    t.string   "item_type"
     t.integer  "claim_id"
     t.integer  "prediction_id"
     t.integer  "expert_id"

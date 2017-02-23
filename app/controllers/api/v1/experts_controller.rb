@@ -227,21 +227,28 @@ module Api::V1
         return
       end
 
+      if !current_user
+        current_user = User.find(1)
+      end
+
       @comment = Comment.create(comment_params)
 
-      if @experts.comments << @comment
+      if @expert.comments << @comment
         current_user.comments << @comment
         add_contribution(@expert, :added_comment)
 
         # add to notification queue for user notifications
         attrs = {
-          user_id: current_user.id
-          comment_id: @comment.id
-          expert_id: @expert.id
-          type: "new_expert_comment"
+          user_id: current_user.id,
+          comment_id: @comment.id,
+          expert_id: @expert.id,
+          item_type: "new_expert_comment",
           message: @comment.content
         }
         NotificationQueue::delay.process(attrs)
+        render json: { status: "Success" }
+      else
+        render json: { status: "Error" }
       end
     end
 

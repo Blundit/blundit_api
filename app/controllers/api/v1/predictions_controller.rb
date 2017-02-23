@@ -99,6 +99,10 @@ module Api::V1
         return
       end
 
+      if !current_user
+        current_user = User.find(1)
+      end
+
       @comment = Comment.create(comment_params)
 
       if @prediction.comments << @comment
@@ -107,13 +111,17 @@ module Api::V1
 
         # add to notification queue for user notifications
         attrs = {
-          user_id: current_user.id
-          comment_id: @comment.id
-          prediction_id: @prediction.id
-          type: "new_prediction_comment"
+          user_id: current_user.id,
+          comment_id: @comment.id,
+          prediction_id: @prediction.id,
+          item_type: "new_prediction_comment",
           message: @comment.content
         }
         NotificationQueue::delay.process(attrs)
+        
+        render json: { status: "Success" }
+      else
+        render json: { status: "Error" }
       end
     end
 

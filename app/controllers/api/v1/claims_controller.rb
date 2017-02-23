@@ -97,6 +97,10 @@ module Api::V1
       # /claims/:claim_id/add_comment
       @claim = Claim.find_by_id(params[:claim_id])
 
+      if !current_user
+        current_user = User.find(1)
+      end
+
       if @claim.nil?
         render json: { error: 'Claim Not Found' }, status: 422
         return
@@ -110,13 +114,17 @@ module Api::V1
 
         # add to notification queue for user notifications
         attrs = {
-          user_id: current_user.id
-          comment_id: @comment.id
-          claim_id: @claim.id
-          type: "new_claim_comment"
+          user_id: current_user.id,
+          comment_id: @comment.id,
+          claim_id: @claim.id,
+          item_type: "new_claim_comment",
           message: @comment.content
         }
         NotificationQueue::delay.process(attrs)
+
+        render json: { status: "Success" }
+      else
+        render json: { status: "Error" }
       end
     end
 

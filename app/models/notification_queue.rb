@@ -12,7 +12,7 @@ class NotificationQueue < ApplicationRecord
 
         @bookmarks.each do |bookmark|
             if bookmark.user.notification_frequency == 1
-                @newItem = add_to_notification_queue(attrs)
+                @newItem = self.add_to_notification_queue(attrs)
                 self.delay.compile_and_send_email([@newItem])
             else
                 self.delay.add_to_notification_queue(attrs)
@@ -23,10 +23,8 @@ class NotificationQueue < ApplicationRecord
     end
 
 
-    def add_to_notification_queue(attrs)
-        # TODO: Create notification queue
-        @item = NotificationQueueItem.create(attrs)
-        return item
+    def self.add_to_notification_queue(attrs)
+        return NotificationQueueItem.create(attrs)
     end
 
 
@@ -67,36 +65,40 @@ class NotificationQueue < ApplicationRecord
             @email = @user.email
             @name = @user.name
 
-            # TODO: generate email here
-            # if multiple items, use items to build a list of absolute links
-            # if single item, display content
-            # add links to email text
-            # add to actionmailer using sidekiq?
-            # delete items from the queue after sending in email
+            # TODO: if multiple items, use items to build a list of absolute links
+            # TODO: if single item, display content
+            # TODO: add links to email text, format generally
 
-            if item.type == "new_claim_comment"
+            if item.item_type == "new_claim_comment"
                 ClaimMailer.new_comment(item).deliver_later
-            elsif item.type == "claim_updated"
+            elsif item.item_type == "claim_updated"
                 ClaimMailer.claim_updated(item).deliver_later
-            elsif item.type == "expert_added_to_claim"
+            elsif item.item_type == "expert_added_to_claim"
                 ClaimMailer.expert_added_to_claim(item).deliver_later
-            elsif item.type == "new_prediction_comment"
+            elsif item.item_type == "claim_status_changed"
+                ClaimMailer.status_changed(item).deliver_later
+            elsif item.item_type == "new_prediction_comment"
                 PredictionMailer.new_comment(item).deliver_later
-            elsif item.type == "claim_updated"
+            elsif item.item_type == "claim_updated"
                 PredictionMailer.prediction_updated(item).deliver_later
-            elsif item.type == "expert_added_to_prediction"
+            elsif item.item_type == "expert_added_to_prediction"
                 PredictionMailer.expert_added_to_prediction(item).deliver_later
-            elsif item.type == "new_expert_comment"
+            elsif item.item_type == "prediction_status_changed"
+                PredictionMailer.status_changed(item).deliver_later
+            elsif item.item_type == "new_expert_comment"
                 ExpertMailer.new_comment(item).deliver_later
-            elsif item.type == "prediction_updated"
+            elsif item.item_type == "prediction_updated"
                 ExpertMailer.prediction_updated(item).deliver_later
-            elsif item.type == "claim_added_to_expert"
+            elsif item.item_type == "claim_added_to_expert"
                 ExpertMailer.claim_added_to_expert(item).deliver_later
-            elsif item.type == "prediction_added_to_expert"
+            elsif item.item_type == "prediction_added_to_expert"
                 ExpertMailer.prediction_added_to_expert(item).deliver_later
+            elsif item.item_type == "expert_claim_status_changed"
+                ExpertMailer.claim_status_changed(item).deliver_later
+            elsif item.item_type == "expert_prediction_status_changed"
+                ExpertMailer.prediction_status_changed(item).deliver_later
             end
 
-            # clear out sent notifications
             item.destroy
         end
 

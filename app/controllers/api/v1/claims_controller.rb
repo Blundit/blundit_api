@@ -12,6 +12,7 @@ module Api::V1
       if params[:id] == 'search' && !params[:term].nil?
         return self.search
       end
+
       
       if params[:id].to_i != 0
         @claim = Claim.find_by_id(params[:id])
@@ -22,6 +23,9 @@ module Api::V1
           render json: { errors: "Claim Not Found" }, status: 422
         end
       end
+
+
+      mark_as_read(@claim)
     end
 
 
@@ -109,7 +113,7 @@ module Api::V1
           user_id: current_user.id
           comment_id: @comment.id
           claim_id: @claim.id
-          type: :added_comment_to_claim
+          type: "new_claim_comment"
           message: @comment.content
         }
         NotificationQueue::delay.process(attrs)

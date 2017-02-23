@@ -23,6 +23,8 @@ module Api::V1
           render json: { errors: "Prediction Not Found" }, status: 422
         end
       end
+
+      mark_as_read(@prediction)
     end
 
 
@@ -108,7 +110,7 @@ module Api::V1
           user_id: current_user.id
           comment_id: @comment.id
           prediction_id: @prediction.id
-          type: :added_comment_to_prediction
+          type: "new_prediction_comment"
           message: @comment.content
         }
         NotificationQueue::delay.process(attrs)

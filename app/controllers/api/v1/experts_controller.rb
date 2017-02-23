@@ -23,6 +23,8 @@ module Api::V1
           render json: { errors: "Expert Not Found" }, status: 422
         end
       end
+
+      mark_as_read(@expert)
     end
 
 
@@ -65,14 +67,6 @@ module Api::V1
         render json: { result: "error" }
       end
 
-    end
-
-    def sidekiq
-      # ClaimWorker.perform_async("Async")
-      # ClaimWorker.perform_in(30.seconds, "30 Seconds")
-      # ClaimWorker.perform_at(1.minute.from_now, "1 minute")
-      # ClaimWorker.perform_at("2017-02-20 8:59".to_time, "8:59")
-      ClaimWorker.perform_async(1)
     end
 
 
@@ -244,7 +238,7 @@ module Api::V1
           user_id: current_user.id
           comment_id: @comment.id
           expert_id: @expert.id
-          type: :added_comment_to_expert
+          type: "new_expert_comment"
           message: @comment.content
         }
         NotificationQueue::delay.process(attrs)

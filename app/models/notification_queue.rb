@@ -12,15 +12,13 @@ class NotificationQueue < ApplicationRecord
 
         @bookmarks.each do |bookmark|
             if bookmark.user.notification_frequency == 1
-                # TODO: Provide info here? Possibly use different compile and send method?
-                self.delay.compile_and_send_email(, attrs)
+                @newItem = add_to_notification_queue(attrs)
+                self.delay.compile_and_send_email([@newItem])
             else
                 self.delay.add_to_notification_queue(attrs)
             end
 
-            # TODO mark bookmark as having an update for the user to compile_and_send_email
-            # TODO Make it so that when you view a claim, prediction or expert, it resets the bookmark. 
-            # probably put that in the application_helper.rb or something
+            bookmark.update({ has_update: true })
         end
     end
 
@@ -28,6 +26,7 @@ class NotificationQueue < ApplicationRecord
     def add_to_notification_queue(attrs)
         # TODO: Create notification queue
         @item = NotificationQueueItem.create(attrs)
+        return item
     end
 
 
@@ -48,7 +47,6 @@ class NotificationQueue < ApplicationRecord
 
         @queueItems = NotificationQueueItem.where("created_at >= #{@range_from} and created_at <= #{@range_to}").where("user_id = ?", attrs["user_id"])
         self.delay.compile_and_send_email(@queueItems)
-
     end
 
 
@@ -62,17 +60,45 @@ class NotificationQueue < ApplicationRecord
     end
 
 
-    def self.compile_and_send_email(items, attrs)
-        @user = User.find(attrs["user_id"])
+    def self.compile_and_send_email(items)
+        items.each do |item|
+            @user = User.find(item.user_id)
 
-        @email = @user.email
-        @name = @user.name
+            @email = @user.email
+            @name = @user.name
 
-        # TODO: generate email here
-        # if multiple items, use items to build a list of absolute links
-        # if single item, display content
-        # add links to email text
-        # add to actionmailer using sidekiq?
+            # TODO: generate email here
+            # if multiple items, use items to build a list of absolute links
+            # if single item, display content
+            # add links to email text
+            # add to actionmailer using sidekiq?
+            # delete items from the queue after sending in email
+
+            if item.type == "new_claim_comment"
+                ClaimMailer.new_comment(item).deliver_later
+            elsif item.type == "claim_updated"
+                ClaimMailer.claim_updated(item).deliver_later
+            elsif item.type == "expert_added_to_claim"
+                ClaimMailer.expert_added_to_claim(item).deliver_later
+            elsif item.type == "new_prediction_comment"
+                PredictionMailer.new_comment(item).deliver_later
+            elsif item.type == "claim_updated"
+                PredictionMailer.prediction_updated(item).deliver_later
+            elsif item.type == "expert_added_to_prediction"
+                PredictionMailer.expert_added_to_prediction(item).deliver_later
+            elsif item.type == "new_expert_comment"
+                ExpertMailer.new_comment(item).deliver_later
+            elsif item.type == "prediction_updated"
+                ExpertMailer.prediction_updated(item).deliver_later
+            elsif item.type == "claim_added_to_expert"
+                ExpertMailer.claim_added_to_expert(item).deliver_later
+            elsif item.type == "prediction_added_to_expert"
+                ExpertMailer.prediction_added_to_expert(item).deliver_later
+            end
+
+            # clear out sent notifications
+            item.destroy
+        end
 
     end
 

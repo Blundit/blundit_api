@@ -44,7 +44,6 @@ class Expert < ApplicationRecord
       removed_publication: "Removed Publication from Expert",
       added_tag: "Added Tag to Expert",
       removed_tag: "Removed Tag From Expert"
-
     }
   end
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170222131731) do
+ActiveRecord::Schema.define(version: 20170223005208) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -31,9 +31,10 @@ ActiveRecord::Schema.define(version: 20170222131731) do
     t.integer  "expert_id"
     t.integer  "claim_id"
     t.integer  "prediction_id"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
     t.boolean  "notify",        default: true
+    t.boolean  "has_update",    default: false
   end
 
   create_table "categories", force: :cascade do |t|
@@ -235,6 +236,7 @@ ActiveRecord::Schema.define(version: 20170222131731) do
     t.integer  "comment_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.integer  "category_id"
   end
 
   create_table "notification_queues", force: :cascade do |t|
@@ -416,6 +418,8 @@ ActiveRecord::Schema.define(version: 20170222131731) do
     t.integer  "failed_attempts",        default: 0,  null: false
     t.string   "unlock_token"
     t.datetime "locked_at"
+    t.string   "first_name"
+    t.string   "last_name"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

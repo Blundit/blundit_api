@@ -84,8 +84,6 @@ Rails.application.routes.draw do
       post 'experts/:expert_id/add_category' => 'experts#add_category'
       post 'experts/:expert_id/remove_category' => 'experts#remove_category'
 
-      get 'expertly' => 'experts#sidekiq'
-
       resources :publications do
         resources :publication_comments
       end

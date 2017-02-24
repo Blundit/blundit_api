@@ -1,0 +1,7 @@
+It's your monthly digest! Here are the things that happened last month:
+
+<% @items.each do |item| %>
+    <%= render partial: "mailers/#{item.item_type}" %>
+<% end %>
+
+Email footer!

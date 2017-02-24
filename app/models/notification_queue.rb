@@ -11,11 +11,13 @@ class NotificationQueue < ApplicationRecord
         @bookmarks = Bookmark.where(query)
 
         @bookmarks.each do |bookmark|
-            if bookmark.user.notification_frequency == 1
-                @newItem = self.add_to_notification_queue(attrs)
-                self.delay.compile_and_send_email([@newItem])
-            else
-                self.delay.add_to_notification_queue(attrs)
+            if bookmark.notify == true
+                if bookmark.user.notification_frequency == 1
+                    @newItem = self.add_to_notification_queue(attrs)
+                    self.delay.compile_and_send_email([@newItem], attrs)
+                else i
+                    self.delay.add_to_notification_queue(attrs)
+                end
             end
 
             bookmark.update({ has_update: true })
@@ -28,38 +30,64 @@ class NotificationQueue < ApplicationRecord
     end
 
 
+    def self.process_digests
+
+
+    end
+
+
     def self.process_daily_digests(attrs)
-        @date = attrs["date"].to_time
+        @date = Time.now
         @range_from = @date.beginning_of_day
         @range_to = @date.end_of_day
 
-        @queueItems = NotificationQueueItem.where("created_at >= #{@range_from} and created_at <= #{@range_to}").where("user_id = ?", attrs["user_id"])
-        self.delay.compile_and_send_email(@queueItems)
+        @users = NotificationQueueItem.uniq.pluck(:user_id)
+        @users.each do |user|
+            u = User.find_by_id(user)
+            if !u.nil? and u.notification_frequency == 2
+                @queueItems = NotificationQueueItem.where("created_at >= #{@range_from} and created_at <= #{@range_to}").where("user_id = ?", user)
+                self.delay.compile_and_send_email(@queueItems, "daily")
+            end
+        end
+
     end
 
 
     def self.process_weekly_digests(attrs)
-        @date = attrs["date"].to_time
+        @date = Time.now
         @range_from = @date.beginning_of_week
         @range_to = @date.end_of_week
 
-        @queueItems = NotificationQueueItem.where("created_at >= #{@range_from} and created_at <= #{@range_to}").where("user_id = ?", attrs["user_id"])
-        self.delay.compile_and_send_email(@queueItems)
+        @users = NotificationQueueItem.uniq.pluck(:user_id)
+        @users.each do |user|
+            u = User.find_by_id(user)
+            if !u.nil? and u.notification_frequency == 3
+                @queueItems = NotificationQueueItem.where("created_at >= #{@range_from} and created_at <= #{@range_to}").where("user_id = ?", user)
+                self.delay.compile_and_send_email(@queueItems, "weekly")
+            end
+        end
     end
 
 
     def self.process_monthly_digests(attrs)
-        @date = attrs["date"].to_time
+        @date = Time.now
         @range_from = @date.beginning_of_month
         @range_ro = @date.end_of_month
 
-        @queueItems = NotificationQueueItem.where("created_at >= #{@range_from} and created_at <= #{@range_to}").where("user_id = ?", attrs["user_id"])
-        self.delay.compile_and_send_email(@queueItems, attrs)
+        @users = NotificationQueueItem.uniq.pluck(:user_id)
+        @users.each do |user|
+            u = User.find_by_id(user)
+            if !u.nil? and u.notification_frequency == 3
+                @queueItems = NotificationQueueItem.where("created_at >= #{@range_from} and created_at <= #{@range_to}").where("user_id = ?", user)
+                self.delay.compile_and_send_email(@queueItems, "monthly")
+            end
+        end
     end
 
 
-    def self.compile_and_send_email(items)
-        items.each do |item|
+    def self.compile_and_send_email(items, digest_type = nil)
+        if digest_type.nil?
+            item = items.first
             @user = User.find(item.user_id)
 
             @email = @user.email
@@ -69,37 +97,17 @@ class NotificationQueue < ApplicationRecord
             # TODO: if single item, display content
             # TODO: add links to email text, format generally
 
-            if item.item_type == "new_claim_comment"
-                ClaimMailer.new_comment(item).deliver_later
-            elsif item.item_type == "claim_updated"
-                ClaimMailer.claim_updated(item).deliver_later
-            elsif item.item_type == "expert_added_to_claim"
-                ClaimMailer.expert_added_to_claim(item).deliver_later
-            elsif item.item_type == "claim_status_changed"
-                ClaimMailer.status_changed(item).deliver_later
-            elsif item.item_type == "new_prediction_comment"
-                PredictionMailer.new_comment(item).deliver_later
-            elsif item.item_type == "claim_updated"
-                PredictionMailer.prediction_updated(item).deliver_later
-            elsif item.item_type == "expert_added_to_prediction"
-                PredictionMailer.expert_added_to_prediction(item).deliver_later
-            elsif item.item_type == "prediction_status_changed"
-                PredictionMailer.status_changed(item).deliver_later
-            elsif item.item_type == "new_expert_comment"
-                ExpertMailer.new_comment(item).deliver_later
-            elsif item.item_type == "prediction_updated"
-                ExpertMailer.prediction_updated(item).deliver_later
-            elsif item.item_type == "claim_added_to_expert"
-                ExpertMailer.claim_added_to_expert(item).deliver_later
-            elsif item.item_type == "prediction_added_to_expert"
-                ExpertMailer.prediction_added_to_expert(item).deliver_later
-            elsif item.item_type == "expert_claim_status_changed"
-                ExpertMailer.claim_status_changed(item).deliver_later
-            elsif item.item_type == "expert_prediction_status_changed"
-                ExpertMailer.prediction_status_changed(item).deliver_later
-            end
-
+            ImmediateMailer.as_they_happen(item).deliver_later
             item.destroy
+        else
+            # send digest
+            if digest_type == "daily"
+                DigestMailer.daily(items).deliver_later
+            elsif digest_type == "weekly"
+                DigestMailer.weekly(items).deliver_later
+            elsif digest_type == "monthly"
+                DigestMailer.monthly(items).deliver_later
+            end
         end
 
     end

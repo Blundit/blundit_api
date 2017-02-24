@@ -52,5 +52,32 @@ module Api::V1
                 render json: { error: "Unable to remove bookmark" }, status: 422
             end
         end
+        
+
+        def update_bookmark
+            if params[:id].nil?
+                render json: { error: "Missing Data: id expected." }, status: 422
+                return
+            end
+
+            @bookmark = Bookmark.find(params[:id])
+
+            #TODO: remove
+            current_user = User.first
+
+            if @bookmark.user_id != current_user.id
+                render json: { error: "Can't remove bookmark belonging to other user." }, status: 422
+            end
+
+            @bookmark.notify = params[:notify]
+
+            if @bookmark.save
+                render json: { result: "Success" }
+            else
+                render json: { error: "Unable to remove Bookmark" }, status: 422
+            end
+
+
+        end
     end
 end

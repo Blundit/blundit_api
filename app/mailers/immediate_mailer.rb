@@ -91,9 +91,10 @@ class ImmediateMailer < ApplicationMailer
 
 
     def as_they_happen(item)
+        p "AS THEY HAPPEN"
         @item = item
         @user = User.find_by_id(item.user_id)
-        @subject = @determine_subject(item)
+        @subject = determine_subject(item)
 
         @content = @comment.content
         @content = "" if @comment.content.nil?

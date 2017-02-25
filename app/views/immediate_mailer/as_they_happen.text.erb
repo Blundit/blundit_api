@@ -1,1 +1,1 @@
-<%= render partial: "mailers/#{@item.item_type}" %>
+<%= render partial: "mailers/#{@item.item_type}", locals: { item: @item } %>

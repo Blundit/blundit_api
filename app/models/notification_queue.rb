@@ -14,7 +14,7 @@ class NotificationQueue < ApplicationRecord
             if bookmark.notify == true
                 if bookmark.user.notification_frequency == 1
                     @newItem = self.add_to_notification_queue(attrs)
-                    self.delay.compile_and_send_email([@newItem], attrs)
+                    self.delay.compile_and_send_email([@newItem])
                 else i
                     self.delay.add_to_notification_queue(attrs)
                 end
@@ -86,6 +86,7 @@ class NotificationQueue < ApplicationRecord
 
 
     def self.compile_and_send_email(items, digest_type = nil)
+        p "compile and send email", digest_type
         if digest_type.nil?
             item = items.first
             @user = User.find(item.user_id)
@@ -96,8 +97,9 @@ class NotificationQueue < ApplicationRecord
             # TODO: if multiple items, use items to build a list of absolute links
             # TODO: if single item, display content
             # TODO: add links to email text, format generally
+            p "WHAT"
 
-            ImmediateMailer.as_they_happen(item).deliver_later
+            ImmediateMailer.as_they_happen(item).deliver
             item.destroy
         else
             # send digest

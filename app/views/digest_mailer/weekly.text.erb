@@ -1,7 +1,7 @@
 It's your weekly digest! Here are the things that happened last week:
 
 <% @items.each do |item| %>
-    <%= render partial: "mailers/#{item.item_type}" %>
+    <%= render partial: "mailers/#{item.item_type}", locals: { item: item } %>
 <% end %>
 
 Email footer!

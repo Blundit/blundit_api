@@ -39,11 +39,23 @@ class ApplicationController < ActionController::Base
       end
   end
 
+
   def auth_token
     @auth_token ||= JsonWebToken.decode(http_token)
   end
 
+
   def user_id_in_token?
     http_token && auth_token && auth_token[:user_id].to_i
   end
+
+
+  def current_page
+    if params.has_key?(:page)
+      @page = params[:page]
+    else
+      @page = 1
+    end
+  end
+
 end

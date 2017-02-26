@@ -1,12 +1,4 @@
 class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, 
-         :recoverable, :rememberable, :trackable, :validatable
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, 
-         :recoverable, :rememberable, :trackable, :validatable
   extend Enumerize
   extend ActiveModel::Naming
 
@@ -35,9 +27,12 @@ class User < ApplicationRecord
   has_many :predictions, -> { distinct }, :through => :user_predictions
 
   has_many :votes
-  has_many :bookmarks, dependent: :destroy
+  has_many :bookmarks, -> { distinct }, dependent: :destroy
 
   enumerize :notification_frequency, in: {:as_they_happen => 1, :daily => 2, :weekly => 3, :monthly => 4, :none => 0}, default: 1
+
+  has_attached_file :avatar, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "/images/users/missing.png"
+  validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\z/
 
 
   def name

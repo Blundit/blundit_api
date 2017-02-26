@@ -3,7 +3,7 @@ module Api::V1
 
     def index
       # GET /CONTROLLER
-      @claims = Claim.all
+      @claims = Claim.page(current_page)
     end
 
 
@@ -13,7 +13,6 @@ module Api::V1
         return self.search
       end
 
-      
       if params[:id].to_i != 0
         @claim = Claim.find_by_id(params[:id])
       else
@@ -23,7 +22,6 @@ module Api::V1
           render json: { errors: "Claim Not Found" }, status: 422
         end
       end
-
 
       mark_as_read(@claim)
     end
@@ -48,6 +46,7 @@ module Api::V1
           @claim.experts << @expert
         end
 
+        add_bookmark("claim", @claim.id)
         render json: { result: "success" }
       else
         render json: { result: "error" }
@@ -59,6 +58,8 @@ module Api::V1
       # PUT /pundits/:id
       if @claim.update(claim_params)
         add_contribution(@claim, :edited_claim)
+        add_bookmark("claim", @claim.id)
+
         render json: { result: "success" }
       else
         render json: { result: "error" }
@@ -78,6 +79,7 @@ module Api::V1
     
         if @claim.destroy
           add_contribution(@claim, :destroyed_claim)
+          remove_bookmark(@claim.id, "claim")
           render json: { result: "success" }
         else
           render json: { result: "error" }
@@ -105,7 +107,6 @@ module Api::V1
         render json: { error: 'Claim Not Found' }, status: 422
         return
       end
-
       
       @comment = Comment.create(comment_params)
 
@@ -122,6 +123,8 @@ module Api::V1
           message: @comment.content
         }
         NotificationQueue::delay.process(attrs)
+
+        add_bookmark("claim", @claim.id)
 
         render json: { status: "Success" }
       else
@@ -149,6 +152,7 @@ module Api::V1
       if @claim.categories << @category
         @claim.update_expert_categories(params[:category_id], true)
         add_contribution(@claim, :added_category)
+        add_bookmark("claim", @claim.id)
         render json: { status: "success" }
       else
         render json: { error: "Unable to Add Category" }, status: 422
@@ -173,6 +177,7 @@ module Api::V1
       if @claim.categories.find(params[:category_id]).destroy
         @claim.update_expert_categories(params[:category_id], false)
         add_contribution(@claim, :removed_category)
+        add_bookmark("claim", @claim.id)
         render json: { status: "success" }
       else
         render json: { error: "Unable to Remove Category" }, status: 422
@@ -196,6 +201,7 @@ module Api::V1
 
       if @claim.experts << @expert
         add_contribution(@claim, :added_expert)
+        add_bookmark("claim", @claim.id)
 
         attrs = {
           expert_id: @expert.id,
@@ -245,6 +251,7 @@ module Api::V1
 
       if @removed == true
         add_contribution(@claim, :removed_expert)
+        add_bookmark("claim", @claim.id)
         render json: { status: "Success" }
       else
         render json: { status: "Error" }
@@ -268,6 +275,7 @@ module Api::V1
 
       if @claim.save
         add_contribution(@claim, :added_tag)
+        add_bookmark("claim", @claim.id)
         render json: { status: "Success" }
       else
         render json: { status: "Error" }, status: 422
@@ -291,12 +299,12 @@ module Api::V1
       
       if @claim.save
         add_contribution(@claim, :removed_tag)
+        add_bookmark("claim", @claim.id)
         render json: { status: "Success" }
       else
         render json: { status: "Error" }, status: 422
       end
     end
-
 
 
     private
@@ -312,7 +320,8 @@ module Api::V1
         :description,
         :url,
         :tag_list,
-        :claim_id
+        :claim_id,
+        :pic
       )
     end
 

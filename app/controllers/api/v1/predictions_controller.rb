@@ -4,7 +4,7 @@ module Api::V1
 
     def index
       # GET /CONTROLLER
-      @predictions = Prediction.all
+      @predictions = Prediction.page(current_page)
     end
 
 
@@ -47,6 +47,7 @@ module Api::V1
           @prediction.experts << @expert
         end
 
+        add_bookmark("prediction", @prediction.id)
         render json: { result: "success" }
       else
         render json: { result: "error" }
@@ -58,6 +59,7 @@ module Api::V1
       # PUT /pundits/:id
       if @prediction.update(prediction_params)
         add_contribution(@prediction, :edited_prediction)
+        add_bookmark("prediction", @prediction.id)
         render json: { result: "success" }
       else
         render json: { result: "error" }
@@ -75,6 +77,7 @@ module Api::V1
       if params.has_key?(:id)
         if @prediction.destroy
           add_contribution(@prediction, :destroyed_prediction)
+          remove_bookmark(@prediction.id, "prediction")
           render json: { result: "success" }
         else
           render json: { result: "error" }
@@ -108,6 +111,7 @@ module Api::V1
       if @prediction.comments << @comment
         current_user.comments << @comment
         add_contribution(@prediction, :added_comment)
+        add_bookmark("prediction", @prediction.id)
 
         # add to notification queue for user notifications
         attrs = {
@@ -146,6 +150,8 @@ module Api::V1
       if @prediction.categories << @category
         @prediction.update_expert_categories(params[:category_id], true)
         add_contribution(@prediction, :added_category)
+        add_bookmark("prediction", @prediction.id)
+
         render json: { status: "success" }
       else
         render json: { error: "Unable to Add Category" }, status: 422
@@ -170,6 +176,8 @@ module Api::V1
       if @prediction.expert_categories.find_by_category_id(params[:category_id]).destroy
         @prediction.update_expert_categories(params[:category_id], false)
         add_contribution(@prediction, :removed_category)
+        add_bookmark("prediction", @prediction.id)
+
         render json: { status: "success" }
       else
         render json: { error: "Unable to Add Category" }, status: 422
@@ -193,6 +201,7 @@ module Api::V1
 
       if @prediction.experts << @expert
         add_contribution(@prediction, :added_expert)
+        add_bookmark("prediction", @prediction.id)
 
         attrs = {
           user_id: current_user.id,
@@ -207,7 +216,6 @@ module Api::V1
       else
         render json: { error: "Unable to Add Expert" }, status: 422
       end
-
     end
 
 
@@ -244,6 +252,7 @@ module Api::V1
 
       if @removed == true
         add_contribution(@prediction, :removed_expert)
+        add_bookmark("prediction", @prediction.id)
         render json: { status: "Success" }
       else
         render json: { status: "Error" }
@@ -266,6 +275,8 @@ module Api::V1
 
       if @prediction.save
         add_contribution(@claim, :added_tag)
+        add_bookmark("prediction", @prediction.id)
+
         render json: { status: "Success" }
       else
         render json: { status: "Error" }, status: 422
@@ -288,6 +299,8 @@ module Api::V1
       
       if @prediction.save
         add_contribution(@prediction, :removed_tag)
+        add_bookmark("prediction", @prediction.id)
+
         render json: { status: "Success" }
       else
         render json: { status: "Error" }, status: 422
@@ -308,7 +321,8 @@ module Api::V1
         :description,
         :tag_list,
         :prediction_id,
-        :user_id
+        :user_id,
+        :pic
       )
     end
 

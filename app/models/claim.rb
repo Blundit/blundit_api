@@ -21,6 +21,9 @@ class Claim < ApplicationRecord
 
     validates_presence_of :title
 
+    has_attached_file :pic, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "/images/claims/missing.png"
+    validates_attachment_content_type :pic, content_type: /\Aimage\/.*\z/
+
     acts_as_taggable
 
     attr_reader :contributions_list

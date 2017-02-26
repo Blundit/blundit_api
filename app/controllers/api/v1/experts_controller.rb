@@ -1,10 +1,11 @@
 module Api::V1
   class ExpertsController < ApiController
     before_action :set_expert, only: [:edit, :update, :destroy]
+    include Bookmarks
 
     def index
       # GET /CONTROLLER
-      @experts = Expert.all
+      @experts = Expert.page(current_page)
     end
 
 
@@ -51,6 +52,8 @@ module Api::V1
           @expert.claims << @claim
         end
 
+        add_bookmark("expert", @expert.id)
+
         render json: { result: "success" }
       else
         render json: { result: "error" }
@@ -62,6 +65,8 @@ module Api::V1
       # PUT /pundits/:id
       if @expert.update(expert_params)
         add_contribution(@expert, :edited_expert)
+        add_bookmark("expert", @expert.id)
+
         render json: { result: "success" }
       else
         render json: { result: "error" }
@@ -80,6 +85,8 @@ module Api::V1
       if params.has_key?(:id)
         if @expert.destroy
           add_contribution(@expert, :destroyed_expert)
+          remove_bookmark(@expert.id, "expert")
+
           render json: { result: "success" }
         else
           render json: { result: "error" }
@@ -111,6 +118,8 @@ module Api::V1
       @expert.add_category_if_necessary(params[:category_id], 1)
       if @expert.save
         add_contribution(@expert, :added_category)
+        add_bookmark("expert", @expert.id)
+
         render json: { status: "success" }
       else
         render json: { error: "Unable to Add Category" }, status: 422
@@ -134,6 +143,8 @@ module Api::V1
 
       if @expert.save
         add_contribution(@expert, :added_tag)
+        add_bookmark("expert", @expert.id)
+
         render json: { status: "Success" }
       else
         render json: { status: "Error" }, status: 422
@@ -157,6 +168,8 @@ module Api::V1
       
       if @expert.save
         add_contribution(@expert, :removed_tag)
+        add_bookmark("expert", @expert.id)
+
         render json: { status: "Success" }
       else
         render json: { status: "Error" }, status: 422
@@ -190,6 +203,8 @@ module Api::V1
 
       if @expert.expert_categories.where("category_id = ?", params[:category_id]).first.destroy
         add_contribution(@expert, :removed_category)
+        add_bookmark("expert", @expert.id)
+
         render json: { status: "Success" }
       else
         render json: { status: "Error" }
@@ -211,6 +226,8 @@ module Api::V1
       if @expert.publications << @publication
         add_contribution(@publication, :created_publication)
         add_contribution(@expert, :added_publication)
+        add_bookmark("expert", @expert.id)
+
         render json: { status: 'success' }
       else
         render json: { error: 'Unable to Add Publication to Expert' }, status: 422
@@ -236,6 +253,7 @@ module Api::V1
       if @expert.comments << @comment
         current_user.comments << @comment
         add_contribution(@expert, :added_comment)
+        add_bookmark("expert", @expert.id)
 
         attrs = {
           user_id: current_user.id,
@@ -276,6 +294,7 @@ module Api::V1
           @expert.calc_accuracy
 
           add_contribution(@expert, :added_claim)
+          add_bookmark("expert", @expert.id)
       else
           render json: { error: "Claim ID Not Found" }, status: 422
       end
@@ -314,6 +333,8 @@ module Api::V1
 
       if @removed == true
         add_contribution(@expert, :removed_claim)
+        add_bookmark("expert", @expert.id)
+
         render json: { status: "Success" }
       else
         render json: { status: "Error" }
@@ -340,6 +361,9 @@ module Api::V1
         @expert.predictions << @prediction
         @expert.calc_accuracy
         add_contribution(@expert, :added_claim)
+        add_bookmark("expert", @expert.id)
+
+        render json: { status: "Success" }
       else
         render json: { error: "Expert ID Not Found" }, status: 422
       end
@@ -377,6 +401,8 @@ module Api::V1
 
       if @removed == true
         add_contribution(@expert, :removed_prediction)
+        add_bookmark("expert", @expert.id)
+
         render json: { status: "Success" }
       else
         render json: { status: "Error" }
@@ -412,7 +438,8 @@ module Api::V1
         :url,
         :description,
         :expert_id,
-        :user_id
+        :user_id,
+        :avatar
       )
     end
 

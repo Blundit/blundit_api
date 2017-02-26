@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170223140606) do
+ActiveRecord::Schema.define(version: 20170226120052) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -100,6 +100,10 @@ ActiveRecord::Schema.define(version: 20170223140606) do
     t.integer  "claim_votes_count",    default: 0
     t.float    "vote_value"
     t.integer  "claim_comments_count", default: 0
+    t.string   "pic_file_name"
+    t.string   "pic_content_type"
+    t.integer  "pic_file_size"
+    t.datetime "pic_updated_at"
   end
 
   create_table "comments", force: :cascade do |t|
@@ -297,6 +301,10 @@ ActiveRecord::Schema.define(version: 20170223140606) do
     t.string   "alias"
     t.datetime "prediction_date"
     t.integer  "prediction_comments_count", default: 0
+    t.string   "pic_file_name"
+    t.string   "pic_content_type"
+    t.integer  "pic_file_size"
+    t.datetime "pic_updated_at"
   end
 
   create_table "publications", force: :cascade do |t|
@@ -420,6 +428,10 @@ ActiveRecord::Schema.define(version: 20170223140606) do
     t.datetime "locked_at"
     t.string   "first_name"
     t.string   "last_name"
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

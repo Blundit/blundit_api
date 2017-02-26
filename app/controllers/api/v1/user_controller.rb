@@ -47,6 +47,7 @@ module Api::V1
                 attrs["#{@bookmark.type?}_id"] = @bookmark.object.id 
 
                 NotificationQueue::delay.prune_unnecessary_queue_items(attrs)
+                
                 render json: { result: "Success" }
             else
                 render json: { error: "Unable to remove bookmark" }, status: 422

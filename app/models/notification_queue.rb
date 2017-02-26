@@ -8,6 +8,7 @@ class NotificationQueue < ApplicationRecord
             query = "expert_id = #{attrs["expert_id"]}"
         end
 
+        p query
         @bookmarks = Bookmark.where(query)
 
         @bookmarks.each do |bookmark|
@@ -15,7 +16,7 @@ class NotificationQueue < ApplicationRecord
                 if bookmark.user.notification_frequency == 1
                     @newItem = self.add_to_notification_queue(attrs)
                     self.delay.compile_and_send_email([@newItem])
-                else i
+                else
                     self.delay.add_to_notification_queue(attrs)
                 end
             end
@@ -30,35 +31,28 @@ class NotificationQueue < ApplicationRecord
     end
 
 
-    def self.process_digests
-
-
-    end
-
-
-    def self.process_daily_digests(attrs)
+    def self.process_daily_digests
         @date = Time.now
-        @range_from = @date.beginning_of_day
-        @range_to = @date.end_of_day
+        @range_from = @date.yesterday.beginning_of_day
+        @range_to = @date.yesterday.end_of_day
 
-        @users = NotificationQueueItem.uniq.pluck(:user_id)
+        @users = NotificationQueueItem.distinct.pluck(:user_id)
         @users.each do |user|
             u = User.find_by_id(user)
             if !u.nil? and u.notification_frequency == 2
-                @queueItems = NotificationQueueItem.where("created_at >= #{@range_from} and created_at <= #{@range_to}").where("user_id = ?", user)
+                @queueItems = NotificationQueueItem.where("created_at >= '#{@range_from}' and created_at <= '#{@range_to}'").where("user_id = ?", user)
                 self.delay.compile_and_send_email(@queueItems, "daily")
             end
         end
-
     end
 
 
-    def self.process_weekly_digests(attrs)
+    def self.process_weekly_digests
         @date = Time.now
-        @range_from = @date.beginning_of_week
-        @range_to = @date.end_of_week
+        @range_from = @date.last_week.beginning_of_week
+        @range_to = @date.last_week.end_of_week
 
-        @users = NotificationQueueItem.uniq.pluck(:user_id)
+        @users = NotificationQueueItem.distinct.pluck(:user_id)
         @users.each do |user|
             u = User.find_by_id(user)
             if !u.nil? and u.notification_frequency == 3
@@ -69,12 +63,12 @@ class NotificationQueue < ApplicationRecord
     end
 
 
-    def self.process_monthly_digests(attrs)
+    def self.process_monthly_digests
         @date = Time.now
-        @range_from = @date.beginning_of_month
-        @range_ro = @date.end_of_month
+        @range_from = @date.last_month.beginning_of_month
+        @range_ro = @date.last_month.end_of_month
 
-        @users = NotificationQueueItem.uniq.pluck(:user_id)
+        @users = NotificationQueueItem.distinct.pluck(:user_id)
         @users.each do |user|
             u = User.find_by_id(user)
             if !u.nil? and u.notification_frequency == 3
@@ -86,18 +80,12 @@ class NotificationQueue < ApplicationRecord
 
 
     def self.compile_and_send_email(items, digest_type = nil)
-        p "compile and send email", digest_type
         if digest_type.nil?
             item = items.first
             @user = User.find(item.user_id)
 
             @email = @user.email
             @name = @user.name
-
-            # TODO: if multiple items, use items to build a list of absolute links
-            # TODO: if single item, display content
-            # TODO: add links to email text, format generally
-            p "WHAT"
 
             ImmediateMailer.as_they_happen(item).deliver
             item.destroy
@@ -109,6 +97,10 @@ class NotificationQueue < ApplicationRecord
                 DigestMailer.weekly(items).deliver_later
             elsif digest_type == "monthly"
                 DigestMailer.monthly(items).deliver_later
+            end
+
+            for item in items
+                item.destroy
             end
         end
 
@@ -134,7 +126,7 @@ class NotificationQueue < ApplicationRecord
 
         query += " and user_id = #{attrs["user_id"]}"
 
-        NotificationQueueItems.where(query).each do |item|
+        NotificationQueueItem.where(query).each do |item|
             item.destroy
         end
     end

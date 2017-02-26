@@ -1,0 +1,11 @@
+<%
+@claim = Claim.find(item.claim_id)
+
+if @claim.vote_value >= 0.5
+    @status = 'TRUE'
+else
+    @status = 'FALSE'
+end
+%>
+
+The claim you're following, '<%= @claim.title %>', has just been marked as <%= @status %> by the community. We thought you'd like to know.

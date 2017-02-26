@@ -1,0 +1,13 @@
+<%
+@claim = Claim.find(item.claim_id)
+@comment = Comment.find(item.comment_id)
+@commenter = User.find(@comment.user_id)
+%>
+A new comment on <%= @claim.title %> has been left by <%= @commenter.email %>:
+
+<p>
+<% if !@comment.title.nil? %>
+    Title: <strong><%= @comment.title %></strong><br/>
+<% end %>
+<%= @comment.content %>
+</p>

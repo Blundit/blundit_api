@@ -237,15 +237,15 @@ module Api::V1
         current_user.comments << @comment
         add_contribution(@expert, :added_comment)
 
-        # add to notification queue for user notifications
         attrs = {
           user_id: current_user.id,
           comment_id: @comment.id,
           expert_id: @expert.id,
-          item_type: "new_expert_comment",
+          item_type: "expert_comment_added",
           message: @comment.content
         }
         NotificationQueue::delay.process(attrs)
+
         render json: { status: "Success" }
       else
         render json: { status: "Error" }
@@ -411,7 +411,8 @@ module Api::V1
         :title,
         :url,
         :description,
-        :expert_id
+        :expert_id,
+        :user_id
       )
     end
 
@@ -419,7 +420,9 @@ module Api::V1
     def comment_params
       params.permit(
         :title,
-        :content
+        :content,
+        :user_id,
+        :expert_id
       )
     end
   end

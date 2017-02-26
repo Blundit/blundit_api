@@ -1,0 +1,11 @@
+<%
+@prediction = Prediction.find(item.prediction_id)
+@comment = Comment.find(item.comment_id)
+@commenter = User.find(@comment.user_id)
+%>
+A new comment on <%= @prediction.title %> has been left by <%= @commenter.email %>:
+
+<p>
+<% if !@comment.title.nil? %>Title: <strong><%= @comment.title %></strong><br/><% end %>
+<%= @comment.content %>
+</p>

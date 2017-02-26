@@ -4,7 +4,7 @@ class Claim < ApplicationRecord
     has_many :claim_experts, dependent: :destroy
     has_many :experts, -> { distinct }, through: :claim_experts
 
-    has_many :claim_categories, dependent: :destroy
+    has_many :claim_categories, dependent: :destroy, after_add: :push_category_update_notification
     has_many :categories, -> { distinct }, :through => :claim_categories
 
     has_many :claim_votes, dependent: :destroy
@@ -65,6 +65,30 @@ class Claim < ApplicationRecord
         }
 
         ClaimWorker.perform_at(ENV['claim_voting_window'].to_i.days.from_now, params)
+    end
+
+
+    after_save :push_update_notifications
+    def push_update_notifications
+        attrs = {
+            claim_id: self.id,
+            message: self.previous_changes,
+            item_type: "claim_updated"
+        }
+        NotificationQueue::delay.process(attrs)
+    end
+
+
+    def push_category_update_notification(obj)
+        #TODO: Also call when removed?
+        attrs = {
+            claim_id: self.id,
+            category_id: obj.id,
+            message: "category_added",
+            item_type: "claim_updated"
+        }
+        
+        NotificationQueue::delay.process(attrs)
     end
     
 
@@ -177,13 +201,34 @@ class Claim < ApplicationRecord
 
         if status == 1
             # TODO: Post-save actions, notifications, etc.
+
+            # add status changed notification
+            send_status_notifications
             calc_expert_accuracy
         end
     end
 
 
+    def send_status_notifications
+        attrs = {
+            claim_id: self.id,
+            item_type: "claim_status_changed"
+        }
+        NotificationQueue::delay.process(attrs)
+
+        self.experts.each do |expert|
+            attrs = {
+                claim_id: self.id,
+                expert_id: expert.id,
+                item_type: "expert_claim_status_changed"
+            }
+            NotificationQueue::delay.process(attrs)
+        end
+    end
+
+
     def calc_expert_accuracy
-        self.experts.each do | expert |
+        self.experts.each do |expert|
             expert.calc_accuracy
         end
     end

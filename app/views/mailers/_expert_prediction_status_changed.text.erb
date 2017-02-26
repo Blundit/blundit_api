@@ -1,0 +1,12 @@
+<%
+@prediction = Prediction.find(item.prediction_id)
+@expert = Expert.find(item.expert_id)
+
+if @prediction.vote_value >= 0.5
+    @status = 'TRUE'
+else
+    @status = 'FALSE'
+end
+%>
+
+You're following <%= @expert.name %>, and a prediction they've made, '<%= @prediction.title %>', has just been marked as <%= @status %> by the community. We thought you'd like to know.

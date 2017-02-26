@@ -1,0 +1,11 @@
+<%
+@expert = Expert.find(item.expert_id)
+%>
+
+The expert you're following, '<%= @expert.name %>', has been updated.
+
+Not sure how to record exactly what's been changed, though.
+
+<% if !item.message.nil? %>
+    <%= item.message %>
+<% end %>

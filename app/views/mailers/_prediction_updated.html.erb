@@ -1,0 +1,11 @@
+<%
+@prediction = Prediction.find(item.prediction_id)
+%>
+
+The prediction you're following, '<%= @prediction.title %>', has been updated.
+
+<p>Not sure how to record exactly what's been changed, though.</p>
+
+<% if !item.message.nil? %>
+    <p><%= item.message %></p>
+<% end %>

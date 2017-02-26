@@ -1,0 +1,11 @@
+<%
+    @cla[im = Claim.find(item.claim_id)
+%>
+
+<p>The claim you're following, '<%= @claim.title %>', has been updated.</p>
+
+<p>Not sure how to record exactly what's been changed, though.</p>
+
+<% if !item.message.nil? %>
+    <p><%= item.message %></p>
+<% end %>

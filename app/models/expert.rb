@@ -9,7 +9,7 @@ class Expert < ApplicationRecord
   has_many :expert_claims, dependent: :destroy
   has_many :claims, -> { distinct }, :through => :expert_claims
 
-  has_many :expert_categories, dependent: :destroy
+  has_many :expert_categories, dependent: :destroy, after_add: :push_category_update_notification
   has_many :categories, -> { distinct }, :through => :expert_categories
 
   has_many :expert_comments, dependent: :destroy
@@ -64,6 +64,31 @@ class Expert < ApplicationRecord
     end
   end
   
+
+  after_save :push_update_notifications
+  def push_update_notifications
+      # TODO: Only send this when certain things are changed.
+      attrs = {
+          expert_id: self.id,
+          message: self.previous_changes,
+          item_type: "expert_updated"
+      }
+      NotificationQueue::delay.process(attrs)
+  end
+
+
+  def push_category_update_notification(obj)
+    #TODO: Also call when removed?
+    attrs = {
+      expert_id: self.id,
+      category_id: obj.id,
+      message: "category_added",
+      item_type: "expert_updated"
+    }
+    
+    NotificationQueue::delay.process(attrs)
+  end
+
 
   scope :do_search, -> (q) do
     qstr = q.split(" ")

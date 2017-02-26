@@ -106,6 +106,7 @@ module Api::V1
         return
       end
 
+      
       @comment = Comment.create(comment_params)
 
       if @claim.comments << @comment
@@ -117,7 +118,7 @@ module Api::V1
           user_id: current_user.id,
           comment_id: @comment.id,
           claim_id: @claim.id,
-          item_type: "new_claim_comment",
+          item_type: "claim_comment_added",
           message: @comment.content
         }
         NotificationQueue::delay.process(attrs)
@@ -195,6 +196,15 @@ module Api::V1
 
       if @claim.experts << @expert
         add_contribution(@claim, :added_expert)
+
+        attrs = {
+          expert_id: @expert.id,
+          claim_id: @claim.id,
+          item_type: "expert_added_to_claim",
+        }
+
+        NotificationQueue::delay.process(attrs)
+
         render json: { status: "success" }
       else
         render json: { error: "Unable to Add Expert" }, status: 422
@@ -302,6 +312,7 @@ module Api::V1
         :description,
         :url,
         :tag_list,
+        :claim_id
       )
     end
 
@@ -309,7 +320,9 @@ module Api::V1
     def comment_params
       params.permit(
         :title,
-        :content
+        :content,
+        :user_id,
+        :claim_id
       )
     end
   end

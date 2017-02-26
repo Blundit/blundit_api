@@ -1,0 +1,11 @@
+<%
+@prediction = Prediction.find(item.prediction_id)
+
+if @prediction.vote_value >= 0.5
+    @status = 'TRUE'
+else
+    @status = 'FALSE'
+end
+%>
+
+<p>The prediction you're following, '<%= @prediction.title %>', has just been marked as <%= @status %> by the community. We thought you'd like to know.</p>

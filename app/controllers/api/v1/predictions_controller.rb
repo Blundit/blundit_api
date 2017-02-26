@@ -114,7 +114,7 @@ module Api::V1
           user_id: current_user.id,
           comment_id: @comment.id,
           prediction_id: @prediction.id,
-          item_type: "new_prediction_comment",
+          item_type: "prediction_comment_added",
           message: @comment.content
         }
         NotificationQueue::delay.process(attrs)
@@ -193,6 +193,16 @@ module Api::V1
 
       if @prediction.experts << @expert
         add_contribution(@prediction, :added_expert)
+
+        attrs = {
+          user_id: current_user.id,
+          expert_id: @expert.id,
+          prediction_id: @prediction.id,
+          item_type: "expert_added_to_prediction",
+        }
+        NotificationQueue::delay.process(attrs)
+
+
         render json: { status: "success" }
       else
         render json: { error: "Unable to Add Expert" }, status: 422
@@ -296,7 +306,9 @@ module Api::V1
       params.permit(
         :title,
         :description,
-        :tag_list
+        :tag_list,
+        :prediction_id,
+        :user_id
       )
     end
 
@@ -304,7 +316,9 @@ module Api::V1
     def comment_params
       params.permit(
         :title,
-        :content
+        :content,
+        :user_id,
+        :prediction_id
       )
     end
   end

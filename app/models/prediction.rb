@@ -1,7 +1,7 @@
 class Prediction < ApplicationRecord
     has_many :contributions
 
-    has_many :prediction_categories, dependent: :destroy
+    has_many :prediction_categories, dependent: :destroy, after_add: :push_category_update_notification
     has_many :categories, :through => :prediction_categories
 
     has_many :prediction_comments, dependent: :destroy
@@ -65,6 +65,30 @@ class Prediction < ApplicationRecord
             id: self.id
         }
         PredictionWorker.perform_at(self.prediction_date.to_time, params)
+    end
+
+
+    after_save :push_update_notifications
+    def push_update_notifications
+        attrs = {
+            prediction_id: self.id,
+            message: self.previous_changes,
+            item_type: "prediction_updated",
+        }
+        NotificationQueue::delay.process(attrs)
+    end
+
+
+    def push_category_update_notification(obj)
+        #TODO: Also call when removed?
+        attrs = {
+            prediction_id: self.id,
+            category_id: obj.id,
+            message: "category_added",
+            item_type: "prediction_updated",
+        }
+        
+        NotificationQueue::delay.process(attrs)
     end
 
 
@@ -205,7 +229,26 @@ class Prediction < ApplicationRecord
 
         if status == 1
             # TODO: Post-save actions, notifications, etc.
+            send_status_notifications
             calc_expert_accuracy
+        end
+    end
+
+
+    def send_status_notifications
+        attrs = {
+            prediction_id: self.id,
+            item_type: "prediction_status_changed"
+        }
+        NotificationQueue::delay.process(attrs)
+
+        self.experts.each do |expert|
+            attrs = {
+                prediction_id: self.id,
+                expert_id: expert.id,
+                item_type: "expert_prediction_status_changed"
+            }
+            NotificationQueue::delay.process(attrs)
         end
     end
 

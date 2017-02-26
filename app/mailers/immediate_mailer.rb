@@ -22,7 +22,7 @@ class ImmediateMailer < ApplicationMailer
 
 
         case item.item_type
-        when "new_claim_comment"
+        when "claim_comment_added"
             return "New comment on '#{@claim.title}'"
 
         when "expert_updated"
@@ -39,7 +39,7 @@ class ImmediateMailer < ApplicationMailer
             end
             return "'#{@claim.title}' is #{@status}!"
 
-        when "new_prediction_comment"
+        when "prediction_comment_added"
             return "New comment on '#{@prediction.title}'"
 
         when "claim_updated"
@@ -56,7 +56,7 @@ class ImmediateMailer < ApplicationMailer
             end
             return "'#{@prediction.title}' is #{@status}!"
 
-        when "new_expert_comment"
+        when "expert_comment_added"
             return "New comment on #{@expert.name}"
 
         when "prediction_updated"
@@ -91,15 +91,10 @@ class ImmediateMailer < ApplicationMailer
 
 
     def as_they_happen(item)
-        p "AS THEY HAPPEN"
         @item = item
         @user = User.find_by_id(item.user_id)
         @subject = determine_subject(item)
 
-        @content = @comment.content
-        @content = "" if @comment.content.nil?
-
         @send_message = mail(to: @user.email, from: ENV['default_email_address'], subject: @subject)
-
     end
 end

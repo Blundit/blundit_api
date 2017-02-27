@@ -1,0 +1,10 @@
+:schedule:
+    daily_digest:
+        cron: '01 00 * * *'
+        class: DailyDigestWorker
+    weekly_digest:
+        cron: '00 02 * * 1'
+        class: WeeklyDigestWorker
+    monthly_digest:
+        cron: '00 04 * 1 *'
+        class: MonthlyDigestWorker

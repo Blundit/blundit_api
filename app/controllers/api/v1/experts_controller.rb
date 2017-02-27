@@ -1,7 +1,6 @@
 module Api::V1
   class ExpertsController < ApiController
     before_action :set_expert, only: [:edit, :update, :destroy]
-    include Bookmarks
 
     def index
       # GET /CONTROLLER

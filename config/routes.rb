@@ -70,8 +70,8 @@ Rails.application.routes.draw do
         resources :expert_flags
       end
 
-      post 'experts/:expert_id/add_publication' => 'experts#add_publication'
-      post 'experts/:expert_id/remove_publication' => 'experts#remove_publication'
+      post 'experts/:expert_id/add_bona_fide' => 'experts#add_bona_fide'
+      post 'experts/:expert_id/remove_bona_fide' => 'experts#remove_bona_fide'
 
       post 'experts/:expert_id/add_comment' => 'experts#add_comment'
       post 'experts/:expert_id/remove_comment' => 'experts#remove_comment'
@@ -84,9 +84,7 @@ Rails.application.routes.draw do
       post 'experts/:expert_id/add_category' => 'experts#add_category'
       post 'experts/:expert_id/remove_category' => 'experts#remove_category'
 
-      resources :publications do
-        resources :publication_comments
-      end
+      resources :publications
 
       resources :users
 

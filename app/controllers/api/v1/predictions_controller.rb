@@ -89,7 +89,7 @@ module Api::V1
 
 
     def search
-      @prediction = Prediction.do_search(params[:term])
+      @predictions = Prediction.do_search(params[:term])
     end
 
 

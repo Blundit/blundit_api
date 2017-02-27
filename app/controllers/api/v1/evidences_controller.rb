@@ -21,6 +21,8 @@ module Api::V1
 
             if @added
                 add_contribution(@evidence, :added_evidence)
+                add_or_update_publication(@page.host)
+
                 render json: { status: 'success' }
             else
                 render json: { error: 'Unable to add evidence' }, status: 422

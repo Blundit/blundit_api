@@ -23,7 +23,7 @@ class Expert < ApplicationRecord
 
   has_many :expert_category_accuracies
 
-  has_many :publications
+  has_many :bona_fides
 
   has_attached_file :avatar, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "/images/experts/missing.png"
   validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\z/
@@ -43,8 +43,8 @@ class Expert < ApplicationRecord
       added_prediction: "Added Prediction to Expert",
       removed_prediction: "Removed Prediction from Expert",
       flagged_expert: "Flagged Expert",
-      added_publication: "Added Publication to Expert",
-      removed_publication: "Removed Publication from Expert",
+      added_bona_fide: "Added Bona Fide to Expert",
+      removed_bona_fide: "Removed Bona Fide from Expert",
       added_tag: "Added Tag to Expert",
       removed_tag: "Removed Tag From Expert"
     }

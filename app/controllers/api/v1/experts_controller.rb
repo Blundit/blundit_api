@@ -212,8 +212,8 @@ module Api::V1
     end
 
 
-    def add_publication
-      # /experts/:expert_id/add_publication
+    def add_bona_fide
+      # /experts/:expert_id/add_bona_fide
       @expert = Expert.find_by_id(params[:expert_id])
 
       if @expert.nil?
@@ -221,16 +221,16 @@ module Api::V1
         return
       end
       
-      @publication = Publication.create(publication_params)
+      @bona_fide = BonaFide.create(bona_fide_params)
 
-      if @expert.publications << @publication
-        add_contribution(@publication, :created_publication)
-        add_contribution(@expert, :added_publication)
+      if @expert.bona_fides << @bona_fide
+        add_contribution(@bona_fide, :created_bona_fide)
+        add_contribution(@expert, :added_bona_fide)
         add_bookmark("expert", @expert.id)
 
         render json: { status: 'success' }
       else
-        render json: { error: 'Unable to Add Publication to Expert' }, status: 422
+        render json: { error: 'Unable to Add Bona Fide to Expert' }, status: 422
       end
     end
 
@@ -432,7 +432,7 @@ module Api::V1
     end
 
 
-    def publication_params
+    def bona_fide_params
       params.permit(
         :title,
         :url,

@@ -33,6 +33,24 @@ class ApplicationController < ActionController::Base
   end
 
 
+  def add_or_update_publication (domain)
+    @page = MetaInspector.new(domain, :allow_non_html_content => true)
+
+    publication_params = {
+      title: @page.best_title,
+      domain: @page.host,
+      description: @page.description,
+      pic: @page.images.best,
+    }
+
+    if Publication.where({domain: domain}).count == 0            
+      Publication.create(publication_params)
+    else
+      # TODO: Handle updating of publication data
+    end
+  end
+
+
   def http_token
       @http_token ||= if request.headers['Authorization'].present?
         request.headers['Authorization'].split(' ').last

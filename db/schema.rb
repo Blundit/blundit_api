@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170226120052) do
+ActiveRecord::Schema.define(version: 20170227141750) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -24,6 +24,14 @@ ActiveRecord::Schema.define(version: 20170226120052) do
     t.index ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id"
     t.index ["namespace"], name: "index_active_admin_comments_on_namespace"
     t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id"
+  end
+
+  create_table "bona_fides", force: :cascade do |t|
+    t.integer "expert_id"
+    t.string  "url"
+    t.text    "description"
+    t.string  "title"
+    t.string  "bona_fide_type"
   end
 
   create_table "bookmarks", force: :cascade do |t|
@@ -308,12 +316,20 @@ ActiveRecord::Schema.define(version: 20170226120052) do
   end
 
   create_table "publications", force: :cascade do |t|
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.integer  "expert_id"
-    t.string   "url"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.string   "domain"
     t.text     "description"
     t.string   "title"
+    t.string   "pic"
+    t.integer  "correct_predictions"
+    t.integer  "correct_claims"
+    t.integer  "incorrect_predictions"
+    t.integer  "incorrect_claims"
+    t.float    "prediction_accuracy"
+    t.float    "claim_accuracy"
+    t.integer  "claims_count"
+    t.integer  "predictions_count"
   end
 
   create_table "searches", force: :cascade do |t|

@@ -87,7 +87,7 @@ class ApplicationController < ActionController::Base
     if params.has_key?(:id)
       @id = params[:id]
     elsif !id.nil?
-      @id = params[:id]
+      @id = id
     end
 
     if type.nil? or id.nil?
@@ -99,12 +99,16 @@ class ApplicationController < ActionController::Base
     current_user = User.first
 
     bookmark_params = { "user_id": current_user.id }
-    bookmark_params["#{params[:type]}_id".to_sym] = params[:id]
-    
-    if current_user.bookmarks << Bookmark.create(bookmark_params)
-      render json: { result: "Success" }
+    bookmark_params["#{@type}_id".to_sym] = @id
+
+    if Bookmark.where(bookmark_params).count == 0
+      if current_user.bookmarks << Bookmark.create(bookmark_params)
+        return true
+      else
+        return false
+      end
     else
-      render json: { error: "Unable to add bookmark" }, status: 422
+      return false
     end
   end
 
@@ -141,9 +145,9 @@ class ApplicationController < ActionController::Base
 
       NotificationQueue::delay.prune_unnecessary_queue_items(attrs)
       
-      render json: { result: "Success" }
+      return true
     else
-      render json: { error: "Unable to remove bookmark" }, status: 422
+      return false
     end
   end
     
@@ -172,9 +176,9 @@ class ApplicationController < ActionController::Base
     @bookmark.notify = params[:notify]
 
     if @bookmark.save
-      render json: { result: "Success" }
+      return true
     else
-      render json: { error: "Unable to remove Bookmark" }, status: 422
+      return false
     end
   end
 

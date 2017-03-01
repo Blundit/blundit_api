@@ -1,22 +1,26 @@
 class NotificationQueue < ApplicationRecord
     def self.process(attrs)
-        if attrs.has_key?("claim_id")
-            query = "claim_id = #{attrs["claim_id"]}"
-        elsif attrs.has_key?("prediction_id")
-            query = "prediction_id = #{attrs["prediction_id"]}"
-        elsif attrs.has_key?("expert_id")
-            query = "expert_id = #{attrs["expert_id"]}"
+        if attrs.has_key?(:claim_id)
+            query = "claim_id = #{attrs[:claim_id]}"
+        elsif attrs.has_key?(:prediction_id)
+            query = "prediction_id = #{attrs[:prediction_id]}"
+        elsif attrs.has_key?(:expert_id)
+            query = "expert_id = #{attrs[:expert_id]}"
+        end
+ 
+        if attrs.has_key?(:user_id)
+            query += " and user_id = #{attrs[:user_id]}" 
         end
 
-        p query
         @bookmarks = Bookmark.where(query)
-
+        
         @bookmarks.each do |bookmark|
             if bookmark.notify == true
                 if bookmark.user.notification_frequency == 1
                     @newItem = self.add_to_notification_queue(attrs)
                     self.delay.compile_and_send_email([@newItem])
                 else
+
                     self.delay.add_to_notification_queue(attrs)
                 end
             end

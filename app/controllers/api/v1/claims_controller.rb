@@ -107,8 +107,8 @@ module Api::V1
         render json: { error: 'Claim Not Found' }, status: 422
         return
       end
-      
-      @comment = Comment.create(comment_params)
+
+      @comment = Comment.create(comment_params)      
 
       if @claim.comments << @comment
         current_user.comments << @comment
@@ -130,6 +130,7 @@ module Api::V1
       else
         render json: { status: "Error" }
       end
+    
     end
 
     # remove comment method defined in application helper.
@@ -331,7 +332,6 @@ module Api::V1
         :title,
         :content,
         :user_id,
-        :claim_id
       )
     end
   end

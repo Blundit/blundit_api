@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   mount Sidekiq::Web => '/sidekiq'
   
   get 'home' => 'home#index'
+  root to: 'home#index'
+
 
   # react paths here
 
@@ -83,6 +85,7 @@ Rails.application.routes.draw do
       post 'experts/:expert_id/remove_tag' => 'experts#remove_tag'
       post 'experts/:expert_id/add_category' => 'experts#add_category'
       post 'experts/:expert_id/remove_category' => 'experts#remove_category'
+      post 'experts/:expert_id/add_evidence_of_belief' => 'experts#add_evidence_of_belief'
 
       resources :publications
 

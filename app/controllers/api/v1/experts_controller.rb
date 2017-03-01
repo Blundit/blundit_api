@@ -292,6 +292,10 @@ module Api::V1
           @expert.claims << @claim
           @expert.calc_accuracy
 
+          if params.has_key(:evidence_of_belief_url)
+            add_evidence_of_belief(params[:evidence_of_belief_url], params[:claim_id], "claim")
+          end
+
           add_contribution(@expert, :added_claim)
           add_bookmark("expert", @expert.id)
       else
@@ -362,12 +366,85 @@ module Api::V1
         add_contribution(@expert, :added_claim)
         add_bookmark("expert", @expert.id)
 
+        if params.has_key?(:evidence_of_belief_url)
+          add_evidence_of_belief(params[:evidence_of_belief_url], params[:claim_id], "claim")
+        end
+
         render json: { status: "Success" }
       else
         render json: { error: "Expert ID Not Found" }, status: 422
       end
     end
 
+
+    def add_evidence_of_belief(url = nil, id = nil, type = nil)
+      if params.has_key?(:url)
+        @url = params[:url]
+      else
+        @url = url
+      end
+
+      if params.has_key?(:id)
+        @id = params[:id]
+      else
+        @id = id
+      end
+
+      if params.has_key?(:type)
+        @type = params[:type]
+      else
+        @type = id
+      end
+
+      if @url.nil? or @id.nil? or @type.nil?
+        render json: { error: "URL, ID and Type required" }, status: 422
+        return
+      end
+
+      @expert = Expert.find(params[:expert_id])
+      @id = @id.to_i
+
+      if @type == "prediction"
+        @item = @expert.expert_predictions.find_by_prediction_id(@id)
+      elsif @type == "claim"
+        @item = @expert.expert_claims.find_by_claim_id(@id)
+      end
+
+      if @item.nil?
+        render json: { error: "Specified Expert doesn't have #{@type} with id #{@id} attached" }, status: 422
+        return
+      end
+
+      # TODO: call scraper as part of class that's applied site-wide
+      @page = MetaInspector.new(@url, :allow_non_html_content => true)
+      eob_params = {
+          title: @page.best_title,
+          domain: @page.host,
+          description: @page.description,
+          pic: @page.images.best,
+          url: params[:url],
+          url_content: @page.hash,
+      }
+
+      eob_params["expert_#{@type}_id".to_sym] = @id
+
+      p eob_params
+
+      if @item.evidence_of_beliefs << EvidenceOfBelief.create(eob_params)
+        add_or_update_publication(@page.host)
+        if params.has_key?(:url)
+          render json: { status: "Success" }
+        else
+          return true
+        end
+      else
+        if params.has_key?(:url)
+          render json: { status: "Error" }
+        else
+          return false
+        end
+      end
+    end
 
     def remove_prediction
       if !params.has_key?(:expert_id) or !params.has_key?(:prediction_id)

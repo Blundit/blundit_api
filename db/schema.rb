@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170227141750) do
+ActiveRecord::Schema.define(version: 20170301130700) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -136,6 +136,20 @@ ActiveRecord::Schema.define(version: 20170227141750) do
     t.integer  "flag_id"
     t.integer  "prediction_id"
     t.text     "payload"
+  end
+
+  create_table "evidence_of_beliefs", force: :cascade do |t|
+    t.integer  "expert_id"
+    t.integer  "expert_prediction_id"
+    t.integer  "expert_claim_id"
+    t.string   "domain"
+    t.text     "description"
+    t.string   "title"
+    t.string   "pic"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+    t.string   "url"
+    t.text     "url_content"
   end
 
   create_table "evidences", force: :cascade do |t|

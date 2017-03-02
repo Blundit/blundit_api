@@ -1,0 +1,31 @@
+@mixin transition($property, $speed)
+  -transition: $property $speed
+  -webkit-transition: $property $speed
+  -moz-transition: $property $speed
+  -o-transition: $property $speed
+
+
+@mixin fast_transition($property)
+  +transition($property, $fast-transition-speed)
+
+
+@mixin medium_transition($property)
+  +transition($property, $medium-transition-speed)
+
+
+@mixin slow_transition($property)
+  +transition($property, $slow-transition-speed)
+
+
+@mixin clearfix
+  &:after
+    clear: both
+    content: ' '
+    display: block
+
+
+@mixin cover
+  background-repeat: no-repeat
+  background-position: 50% 50%
+  background-size: cover
+  -webkit-background-size: cover

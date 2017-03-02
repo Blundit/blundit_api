@@ -46,6 +46,8 @@ gem 'figaro'
 gem 'acts-as-taggable-on', '~> 4.0'
 gem 'kaminari'
 
+gem 'browserify-rails'
+
 # sidekiq stuff, including web interface
 gem 'sidekiq', '~> 4.0.0'
 gem 'sinatra', github: 'sinatra/sinatra'

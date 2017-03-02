@@ -1,0 +1,31 @@
+{
+  "name": "blundit_api",
+  "version": "1.0.0",
+  "description": "Expert tracking app.",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "browserify": "^14.0.0",
+    "browserify-incremental": "^3.1.0",
+    "coffeeify": "~0.6"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hoggworks/blundit_api.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hoggworks/blundit_api/issues"
+  },
+  "homepage": "https://github.com/hoggworks/blundit_api#readme",
+  "engines": {
+    "node": ">= 0.10"
+  }
+}

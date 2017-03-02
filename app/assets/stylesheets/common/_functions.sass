@@ -1,0 +1,8 @@
+@function em($target, $context:$base-fontsize)
+  @return ($target / $context) * 1em
+
+@function tint($color, $percentage)
+  @return mix($color, white, $percentage)
+
+@function shade($color, $percentage)
+  @return mix($color, black, $percentage)

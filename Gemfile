@@ -64,8 +64,6 @@ gem 'mailgun-ruby', require: 'mailgun'
 
 gem "paperclip", "~> 5.0.0"
 
-gem 'react-rails'
-
 gem 'sidekiq-scheduler'
 
 group :development, :test do

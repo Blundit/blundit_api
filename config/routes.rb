@@ -1,20 +1,12 @@
 Rails.application.routes.draw do
   devise_for :users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
-  
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   require 'sidekiq/web'
   mount Sidekiq::Web => '/sidekiq'
   
-  get 'home' => 'home#index'
-  root to: 'home#index'
-
-
-  # react paths here
-
-
   post 'auth_user' => 'authentication#authenticate_user'
-
 
   namespace :api do
     namespace :v1 do
@@ -55,8 +47,6 @@ Rails.application.routes.draw do
       post 'claims/:claim_id/remove_tag' => 'claims#remove_tag'
       post 'claims/:claim_id/add_category' => 'claims#add_category'
       post 'claims/:claim_id/remove_category' => 'claims#remove_category'
-      
-
       
       resources :categories
 

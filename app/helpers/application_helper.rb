@@ -36,10 +36,4 @@ module ApplicationHelper
         render json: { status: "Error" }
       end
     end
-
-    def mark_as_read(object)
-      current_user.bookmarks.where("#{object.class.name.downcase}_id = ?", object.id).each do |bookmark|
-        bookmark.update({ has_update: false })
-      end
-    end
 end

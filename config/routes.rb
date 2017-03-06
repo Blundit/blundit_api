@@ -84,6 +84,7 @@ Rails.application.routes.draw do
       resource :user do
         post 'add_bookmark' => 'user#add_bookmark'
         post 'remove_bookmark' => 'user#remove_bookmark'
+        get 'bookmarks' => 'user#get_bookmarks'
       end
 
       resource :evidences do

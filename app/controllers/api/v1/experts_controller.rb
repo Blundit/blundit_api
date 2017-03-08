@@ -1,5 +1,6 @@
 module Api::V1
   class ExpertsController < ApiController
+    before_action :authenticate_user!, except: [:index, :show, :search]
     before_action :set_expert, only: [:edit, :update, :destroy]
 
     def index

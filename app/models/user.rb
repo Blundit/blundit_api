@@ -1,12 +1,13 @@
 class User < ApplicationRecord
+  # Include default devise modules.
+  devise :database_authenticatable, :registerable,
+          :recoverable, :rememberable, :trackable, :validatable,
+          :confirmable, :omniauthable
+          
+  include DeviseTokenAuth::Concerns::User
   extend Enumerize
   extend ActiveModel::Naming
 
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, 
-         :recoverable, :rememberable, :trackable, :validatable, 
-         :omniauthable, :lockable
 
   has_many :user_comments, dependent: :destroy
   has_many :comments, -> { distinct }, :through => :user_comments

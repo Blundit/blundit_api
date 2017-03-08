@@ -10,6 +10,7 @@ end
 gem 'rails', '~> 5.0.1'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
+
 # Use Puma as the app server
 gem 'puma', '~> 3.0'
 # Use SCSS for stylesheets
@@ -38,6 +39,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'metainspector'
 gem 'devise'
 gem 'jwt'
+gem 'devise_token_auth'
 gem 'enumerize'
 gem 'omniauth'
 gem 'omniauth-facebook'

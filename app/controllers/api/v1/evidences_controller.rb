@@ -1,5 +1,7 @@
 module Api::V1
     class EvidencesController < ApiController
+        before_action :authenticate_user!
+        
         def add_evidence
             return if params[:url].nil? or (params[:prediction_id].nil? and params[:claim_id].nil?)
 

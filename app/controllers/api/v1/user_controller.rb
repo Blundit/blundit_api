@@ -1,7 +1,7 @@
 
 module Api::V1
     class UserController < ApiController
-        # before_action :authenticate_user!
+        before_action :authenticate_user!
 
         def get_bookmarks
             if !current_user
@@ -23,7 +23,6 @@ module Api::V1
                 end
             end
         end
-
 
 
         def user_params

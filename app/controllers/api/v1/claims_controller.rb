@@ -1,5 +1,6 @@
 module Api::V1
   class ClaimsController < ApiController
+    before_action :authenticate_user!, except: [:index, :show, :search]
 
     def index
       # GET /CONTROLLER

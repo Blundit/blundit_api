@@ -1,5 +1,6 @@
 module Api::V1
   class ClaimCommentsController < ApiController
+    before_action :authenticate_user!, only: [:new, :create, :edit, :destroy]
 
     def index
       # GET /CONTROLLER
@@ -26,6 +27,7 @@ module Api::V1
     end
 
     def destroy
+    
       # DELETE /pundits/:id
       if !has_permission_to_destroy
         render json: { result: "You don't have permission to destroy." }, status: 422

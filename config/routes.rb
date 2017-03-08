@@ -1,12 +1,12 @@
 Rails.application.routes.draw do
-  devise_for :users, ActiveAdmin::Devise.config
-  ActiveAdmin.routes(self)
+  mount_devise_token_auth_for 'User', at: 'auth'
+  # devise_for :users
+  # ActiveAdmin.routes(self)
 
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   require 'sidekiq/web'
   mount Sidekiq::Web => '/sidekiq'
   
-  post 'auth_user' => 'authentication#authenticate_user'
+  # post 'auth_user' => 'authentication#authenticate_user'
 
   namespace :api do
     namespace :v1 do
@@ -17,7 +17,6 @@ Rails.application.routes.draw do
         resources :prediction_evidences
         resources :prediction_votes
         resources :prediction_flags
-
       end
 
       post 'predictions/:prediction_id/add_comment' => 'predictions#add_comment'

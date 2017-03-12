@@ -5,7 +5,9 @@ module Api::V1
 
     def index
       # GET /CONTROLLER
-      @experts = Expert.page(current_page)
+      @experts = Expert.page(current_page).per(per_page)
+      @current_page = current_page
+      @per_page = per_page
     end
 
 
@@ -98,7 +100,9 @@ module Api::V1
 
 
     def search
-      @expert = Expert.do_search(params[:term])
+      @expert = Expert.do_search(params[:term]).page(current_page).per(per_page)
+      @current_page = current_page
+      @per_page = per_page
     end
 
 

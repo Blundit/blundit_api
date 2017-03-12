@@ -5,7 +5,9 @@ module Api::V1
 
     def index
       # GET /CONTROLLER
-      @predictions = Prediction.page(current_page)
+      @predictions = Prediction.page(current_page).page(current_page).per(per_page)
+      @current_page = current_page
+      @per_page = per_page
     end
 
 
@@ -90,7 +92,9 @@ module Api::V1
 
 
     def search
-      @predictions = Prediction.do_search(params[:term])
+      @predictions = Prediction.do_search(params[:term]).page(current_page).per(per_page)
+      @current_page = current_page
+      @per_page = per_page
     end
 
 

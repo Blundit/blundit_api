@@ -47,6 +47,19 @@ class ApplicationController < ActionController::Base
     else
       @page = 1
     end
+
+    @page
+  end
+
+
+  def per_page
+    if params.has_key?(:per_page)
+      @per_page = params[:per_page]
+    else
+      @per_page = 2
+    end
+
+    @per_page
   end
 
 

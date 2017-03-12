@@ -1,10 +1,11 @@
 Rails.application.routes.draw do
   mount_devise_token_auth_for 'User', at: 'auth'
-  # devise_for :users
   # ActiveAdmin.routes(self)
 
   require 'sidekiq/web'
   mount Sidekiq::Web => '/sidekiq'
+
+  match '*path', via: [:options], to: lambda {|_| [204, { 'Content-Type' => 'text/plain' }]}
   
   # post 'auth_user' => 'authentication#authenticate_user'
 

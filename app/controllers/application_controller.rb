@@ -68,9 +68,6 @@ class ApplicationController < ActionController::Base
       return
     end
 
-    # TODO: remove
-    current_user = User.first
-
     bookmark_params = { "user_id": current_user.id }
     bookmark_params["#{@type}_id".to_sym] = @id
 
@@ -97,9 +94,6 @@ class ApplicationController < ActionController::Base
       render json: { error: "Missing Data: id expected." }, status: 422
       return
     end
-
-    #TODO: remove
-    current_user = User.first
 
     if !find_type.nil?
       id = Bookmark.where("#{find_type}_id = #{id} and user_id = #{current_user.id}").first.id
@@ -138,9 +132,6 @@ class ApplicationController < ActionController::Base
     end
 
     @bookmark = Bookmark.find(params[:id])
-
-    #TODO: remove
-    current_user = User.first
 
     if @bookmark.user_id != current_user.id
       render json: { error: "Can't remove bookmark belonging to other user." }, status: 422

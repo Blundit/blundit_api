@@ -4,10 +4,6 @@ module Api::V1
         before_action :authenticate_user!
 
         def get_bookmarks
-            if !current_user
-                current_user = User.find(1)
-            end
-
             @bookmarks = []
 
             Bookmark.where({ user_id: current_user.id }).each do |b|

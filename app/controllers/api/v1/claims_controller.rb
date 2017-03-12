@@ -1,6 +1,7 @@
 module Api::V1
   class ClaimsController < ApiController
-    before_action :authenticate_user!, except: [:index, :show, :search]
+    # before_action :authenticate_user!, except: [:index, :show, :search]
+    before_action :authenticate_current_user, except: [:index, :show, :search]
 
     def index
       # GET /CONTROLLER
@@ -100,16 +101,15 @@ module Api::V1
       # /claims/:claim_id/add_comment
       @claim = Claim.find_by_id(params[:claim_id])
 
-      if !current_user
-        current_user = User.find(1)
-      end
-
       if @claim.nil?
         render json: { error: 'Claim Not Found' }, status: 422
         return
       end
 
-      @comment = Comment.create(comment_params)      
+      params[:user_id] = current_user.id   
+
+      @comment = Comment.create(comment_params)   
+      # @comment.update({user_id: current_user.id})
 
       if @claim.comments << @comment
         current_user.comments << @comment

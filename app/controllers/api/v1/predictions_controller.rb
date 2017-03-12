@@ -103,10 +103,6 @@ module Api::V1
         return
       end
 
-      if !current_user
-        current_user = User.find(1)
-      end
-
       @comment = Comment.create(comment_params)
 
       if @prediction.comments << @comment

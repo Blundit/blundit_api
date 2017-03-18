@@ -11,15 +11,15 @@ json.experts @experts.each do |expert|
   json.accuracy expert.accuracy
   json.number_of_predictions expert.predictions.count
   json.number_of_claims expert.claims.count
-  json.most_recent_claim expert.expert_claims.order('updated_at DESC').limit(1).each do |ep|
-    json.alias ep.claim.alias
-    json.title ep.claim.title
-    json.vote_value ep.claim.vote_value
+  json.most_recent_claim expert.expert_claims.order('updated_at DESC').limit(1).each do |ec|
+    json.alias ec.claim.alias
+    json.title ec.claim.title
+    json.vote_value ec.claim.vote_value
   end
-  json.most_recent_prediction expert.predictions.order('updated_at DESC').limit(1).each do |prediction|
-    json.alias prediction.alias
-    json.title prediction.title
-    json.vote_value prediction.vote_value
+  json.most_recent_prediction expert.expert_predictions.order('updated_at DESC').limit(1).each do |ep|
+    json.alias ep.prediction.alias
+    json.title ep.prediction.title
+    json.vote_value ep.prediction.vote_value
   end
 end
 json.page @current_page

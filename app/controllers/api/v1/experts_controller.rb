@@ -1,6 +1,6 @@
 module Api::V1
   class ExpertsController < ApiController
-    before_action :authenticate_user!, except: [:index, :show, :search]
+    before_action :authenticate_user!, except: [:index, :show, :search, :comments]
     before_action :set_expert, only: [:edit, :update, :destroy]
 
     def index
@@ -236,6 +236,20 @@ module Api::V1
       else
         render json: { error: 'Unable to Add Bona Fide to Expert' }, status: 422
       end
+    end
+
+    
+    def comments
+      # TODO: Only pass relevant user details
+      @expert = Expert.find_by_id(params[:expert_id])
+
+      if @expert.nil?
+        render json: { error: 'Expert Not Found' }, status: 422
+        return
+      end
+
+      @comments = @expert.comments.page(current_page).per(per_page)
+
     end
 
 

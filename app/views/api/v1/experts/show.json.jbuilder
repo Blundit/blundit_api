@@ -1,3 +1,38 @@
-json.expert @expert
-json.claims @expert.claims
-json.predictions @expert.predictions
+json.expert do
+  json.id @expert.id
+  json.name @expert.name
+  json.description @expert.description
+  json.avatar @expert.avatar
+  json.alias @expert.alias
+  json.categories @expert.categories.each do |category|
+    json.id category.id
+    json.name category.name
+  end
+  json.comments_count @expert.comments.count
+  json.accuracy @expert.accuracy
+  json.number_of_predictions @expert.predictions.count
+  json.number_of_claims @expert.claims.count
+
+  json.category_accuracies @expert.expert_category_accuracies.each do |eca|
+    json.category_id eca.category.id
+    json.category_name eca.category.name
+    json.claim_accuracy eca.claim_accuracy
+    json.correct_claims eca.correct_claims
+    json.incorrect_claims eca.incorrect_claims
+    json.prediction_accuracy eca.prediction_accuracy
+    json.correct_predictions eca.correct_predictions
+    json.incorrect_predictions eca.incorrect_predictions
+  end
+
+  json.bona_fides @expert.bona_fides
+end
+json.claims @expert.expert_claims.order('updated_at DESC').each do |ec|
+  json.alias ec.claim.alias
+  json.title ec.claim.title
+  json.vote_value ec.claim.vote_value
+end
+json.predictions @expert.expert_predictions.order('updated_at DESC').each do |ep|
+  json.alias ep.prediction.alias
+  json.title ep.prediction.title
+  json.vote_value ep.prediction.vote_value
+end

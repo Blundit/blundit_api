@@ -20,6 +20,7 @@ Rails.application.routes.draw do
         resources :prediction_flags
       end
 
+      get 'predictions/:prediction_id/comments' => 'predictions#comments'
       post 'predictions/:prediction_id/add_comment' => 'predictions#add_comment'
       post 'predictions/:prediction_id/remove_comment' => 'predictions#remove_comment'
       post 'predictions/:prediction_id/add_expert' => 'predictions#add_expert'
@@ -39,6 +40,7 @@ Rails.application.routes.draw do
         resources :claim_flags
       end
 
+      get 'claims/:claim_id/comments' => 'claims#comments'
       post 'claims/:claim_id/add_comment' => 'claims#add_comment'
       post 'claims/:claim_id/remove_comment' => 'claims#remove_comment'
       post 'claims/:claim_id/add_expert' => 'claims#add_expert'
@@ -65,6 +67,7 @@ Rails.application.routes.draw do
       post 'experts/:expert_id/add_bona_fide' => 'experts#add_bona_fide'
       post 'experts/:expert_id/remove_bona_fide' => 'experts#remove_bona_fide'
 
+      get 'experts/:expert_id/comments' => 'experts#comments'
       post 'experts/:expert_id/add_comment' => 'experts#add_comment'
       post 'experts/:expert_id/remove_comment' => 'experts#remove_comment'
       post 'experts/:expert_id/add_claim' => 'experts#add_claim'

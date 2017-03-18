@@ -1,5 +1,5 @@
 class Comment < ApplicationRecord
-    has_one :user
+    belongs_to :user
     
     has_one :claim_comment
     has_one :claim, :through => :claim_comment

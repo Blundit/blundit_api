@@ -101,6 +101,18 @@ module Api::V1
     end
 
 
+    def comments
+      @claim = Claim.find_by_id(params[:claim_id])
+
+      if @claim.nil?
+        render json: { error: 'Claim Not Found' }, status: 422
+        return
+      end
+
+      @comments = @claim.comments.page(current_page).per(per_page)
+    end
+
+
     def add_comment
       # /claims/:claim_id/add_comment
       @claim = Claim.find_by_id(params[:claim_id])

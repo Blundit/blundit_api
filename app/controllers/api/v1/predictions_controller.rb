@@ -98,6 +98,18 @@ module Api::V1
     end
 
 
+    def comments
+      @prediction = Prediction.find_by_id(params[:prediction_id])
+
+      if @prediction.nil?
+        render json: { error: 'Prediction Not Found' }, status: 422
+        return
+      end
+
+      @comments = @prediction.comments.page(current_page).per(per_page)
+    end
+
+
     def add_comment
       # /predictions/:prediction_id/add_comment
       @prediction = Prediction.find_by_id(params[:prediction_id])

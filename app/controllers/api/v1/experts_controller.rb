@@ -1,6 +1,6 @@
 module Api::V1
   class ExpertsController < ApiController
-    before_action :authenticate_user!, except: [:index, :show, :search, :comments]
+    before_action :authenticate_current_user, except: [:index, :show, :search, :comments]
     before_action :set_expert, only: [:edit, :update, :destroy]
 
     def index
@@ -248,7 +248,9 @@ module Api::V1
         return
       end
 
-      @comments = @expert.comments.page(current_page).per(per_page)
+      @comments = @expert.comments.order('created_at DESC').page(current_page).per(per_page)
+      @page = current_page
+      @per_page = per_page
 
     end
 
@@ -261,6 +263,8 @@ module Api::V1
         render json: { error: 'Expert Not Found' }, status: 422
         return
       end
+
+      params[:user_id] = current_user.id
 
       @comment = Comment.create(comment_params)
 
@@ -439,11 +443,10 @@ module Api::V1
           pic: @page.images.best,
           url: params[:url],
           url_content: @page.hash,
+          expert_id: params[:expert_id]
       }
 
       eob_params["expert_#{@type}_id".to_sym] = @id
-
-      p eob_params
 
       if @item.evidence_of_beliefs << EvidenceOfBelief.create(eob_params)
         add_or_update_publication(@page.host)
@@ -539,8 +542,7 @@ module Api::V1
       params.permit(
         :title,
         :content,
-        :user_id,
-        :expert_id
+        :user_id
       )
     end
   end

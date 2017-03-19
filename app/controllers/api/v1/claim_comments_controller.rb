@@ -1,6 +1,7 @@
 module Api::V1
   class ClaimCommentsController < ApiController
-    before_action :authenticate_user!, only: [:new, :create, :edit, :destroy]
+    before_action :authenticate_current_user, only: [:new, :create, :edit, :destroy]
+    
 
     def index
       # GET /CONTROLLER

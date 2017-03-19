@@ -1,6 +1,5 @@
 module Api::V1
   class ClaimsController < ApiController
-    # before_action :authenticate_user!, except: [:index, :show, :search]
     before_action :authenticate_current_user, except: [:index, :show, :search]
 
     def index
@@ -109,7 +108,7 @@ module Api::V1
         return
       end
 
-      @comments = @claim.comments.page(current_page).per(per_page)
+      @comments = @claim.comments.order('created_at DESC').page(current_page).per(per_page)
     end
 
 
@@ -122,7 +121,7 @@ module Api::V1
         return
       end
 
-      params[:user_id] = current_user.id   
+      params[:user_id] = current_user.id
 
       @comment = Comment.create(comment_params)   
       # @comment.update({user_id: current_user.id})

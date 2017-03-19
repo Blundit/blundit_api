@@ -1,6 +1,6 @@
 module Api::V1
   class PredictionsController < ApiController
-    before_action :authenticate_user!, except: [:index, :show, :search]
+    before_action :authenticate_current_user, except: [:index, :show, :search]
     before_action :set_prediction, only: [:edit, :update, :destroy]
 
     def index
@@ -106,7 +106,7 @@ module Api::V1
         return
       end
 
-      @comments = @prediction.comments.page(current_page).per(per_page)
+      @comments = @prediction.comments.order('created_at DESC').page(current_page).per(per_page)
     end
 
 
@@ -118,6 +118,8 @@ module Api::V1
         render json: { error: 'Prediction Not Found' }, status: 422
         return
       end
+
+      params[:user_id] = current_user.id
 
       @comment = Comment.create(comment_params)
 
@@ -344,8 +346,7 @@ module Api::V1
       params.permit(
         :title,
         :content,
-        :user_id,
-        :prediction_id
+        :user_id
       )
     end
   end

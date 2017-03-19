@@ -30,9 +30,11 @@ json.claims @expert.expert_claims.order('updated_at DESC').each do |ec|
   json.alias ec.claim.alias
   json.title ec.claim.title
   json.vote_value ec.claim.vote_value
+  json.evidence_of_beliefs ec.evidence_of_beliefs.count
 end
 json.predictions @expert.expert_predictions.order('updated_at DESC').each do |ep|
   json.alias ep.prediction.alias
   json.title ep.prediction.title
   json.vote_value ep.prediction.vote_value
+  json.evidence_of_beliefs ep.evidence_of_beliefs.count
 end

@@ -1,6 +1,6 @@
 module Api::V1
   class PredictionCommentsController < ApiController
-    before_action :authenticate_user!, except: [:index, :shows]
+    before_action :authenticate_current_user, except: [:index, :shows]
 
     def index
       # GET /CONTROLLER

@@ -1,4 +1,5 @@
 json.experts @experts.each do |expert|
+  json.id expert.id
   json.name expert.name
   json.description expert.description
   json.avatar expert.avatar

@@ -11,6 +11,10 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
+      get 'predictions/all' => 'predictions#all'
+      get 'claims/all' => 'claims#all'
+      get 'experts/all' => 'experts#all'
+      
       resources :predictions do
         resources :prediction_comments
         resources :prediction_categories

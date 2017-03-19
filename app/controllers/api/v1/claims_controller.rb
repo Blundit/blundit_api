@@ -1,6 +1,6 @@
 module Api::V1
   class ClaimsController < ApiController
-    before_action :authenticate_current_user, except: [:index, :show, :search]
+    before_action :authenticate_current_user, except: [:index, :show, :search, :all]
 
     def index
       # GET /CONTROLLER
@@ -10,10 +10,19 @@ module Api::V1
     end
 
 
+    def all
+      @claims = Claim.all
+    end
+
+
     def show
       # GET /CONTROLLER/:id
       if params[:id] == 'search' && !params[:term].nil?
-        return self.search
+        redirect_to search and return
+      end
+
+      if params[:id] == 'all'
+        redirect_to all and return
       end
 
       if params[:id].to_i != 0

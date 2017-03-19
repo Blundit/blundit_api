@@ -1,6 +1,6 @@
 module Api::V1
   class ExpertsController < ApiController
-    before_action :authenticate_current_user, except: [:index, :show, :search, :comments]
+    before_action :authenticate_current_user, except: [:index, :show, :search, :comments, :all]
     before_action :set_expert, only: [:edit, :update, :destroy]
 
     def index
@@ -11,10 +11,20 @@ module Api::V1
     end
 
 
+    def all
+      # TODO: Limit to active
+      @experts = Expert.all
+    end
+
+
     def show
       # GET /CONTROLLER/:id
       if params[:id] == 'search' && !params[:term].nil?
-        return self.search
+        redirect_to search and return
+      end
+
+      if params[:id] == 'all'
+        redirect_to all and return
       end
       
       if params[:id].to_i != 0
@@ -294,7 +304,7 @@ module Api::V1
 
     def add_claim
       @expert = Expert.find_by_id(params[:expert_id])
-      @claim = Claim.find_by_id(params[:claim_id])
+      @claim = Claim.find_by_id(params[:id])
 
       if @expert.nil?
         render json: { error: "Expert Not Found" }, status: 422
@@ -365,8 +375,11 @@ module Api::V1
 
 
     def add_prediction
+      p "add_prediction"
+      p params
       @expert = Expert.find_by_id(params[:expert_id])
-      @prediction = Prediction.find_by_id(params[:prediction_id])
+      @prediction = Prediction.find_by_id(params[:id])
+
 
       if @expert.nil?
         render json: { error: "Expert not found" }, status: 422
@@ -378,7 +391,7 @@ module Api::V1
         return
       end
       
-      if params.has_key?(:prediction_id)
+      if params.has_key?(:id)
         @prediction.experts << @expert
         @expert.predictions << @prediction
         @expert.calc_accuracy

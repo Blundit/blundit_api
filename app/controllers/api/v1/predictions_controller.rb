@@ -1,6 +1,6 @@
 module Api::V1
   class PredictionsController < ApiController
-    before_action :authenticate_current_user, except: [:index, :show, :search]
+    before_action :authenticate_current_user, except: [:index, :show, :search, :all]
     before_action :set_prediction, only: [:edit, :update, :destroy]
 
     def index
@@ -11,10 +11,21 @@ module Api::V1
     end
 
 
+    def all
+      # TODO: Show only active
+      @predictions = Prediction.all
+    end
+
+
     def show
+      # TODO: Make this search
       # GET /CONTROLLER/:id
       if params[:id] == 'search' && !params[:term].nil?
-        return self.search
+        redirect_to search and return
+      end
+
+      if params[:id] == 'all'
+        redirect_to all and return
       end
       
       if params[:id].to_i != 0

@@ -316,13 +316,13 @@ module Api::V1
         return
       end
       
-      if params.has_key?(:claim_id)
+      if params.has_key?(:id)
           @claim.experts << @expert
           @expert.claims << @claim
           @expert.calc_accuracy
 
-          if params.has_key(:evidence_of_belief_url)
-            add_evidence_of_belief(params[:evidence_of_belief_url], params[:claim_id], "claim")
+          if params.has_key?(:evidence_of_belief_url)
+            add_evidence_of_belief(params[:evidence_of_belief_url], params[:id], "claim")
           end
 
           add_contribution(@expert, :added_claim)
@@ -375,8 +375,6 @@ module Api::V1
 
 
     def add_prediction
-      p "add_prediction"
-      p params
       @expert = Expert.find_by_id(params[:expert_id])
       @prediction = Prediction.find_by_id(params[:id])
 
@@ -399,7 +397,7 @@ module Api::V1
         add_bookmark("expert", @expert.id)
 
         if params.has_key?(:evidence_of_belief_url)
-          add_evidence_of_belief(params[:evidence_of_belief_url], params[:claim_id], "claim")
+          add_evidence_of_belief(params[:evidence_of_belief_url], params[:id], "prediction")
         end
 
         render json: { status: "Success" }

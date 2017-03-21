@@ -82,7 +82,9 @@ Rails.application.routes.draw do
       post 'experts/:expert_id/remove_tag' => 'experts#remove_tag'
       post 'experts/:expert_id/add_category' => 'experts#add_category'
       post 'experts/:expert_id/remove_category' => 'experts#remove_category'
-      post 'experts/:expert_id/add_evidence_of_belief' => 'experts#add_evidence_of_belief'
+      post 'experts/:expert_id/add_substantiation' => 'experts#add_evidence_of_belief'
+      post 'experts/:expert_id/get_substantiations' => 'experts#get_substantiations'
+
 
       resources :publications
 

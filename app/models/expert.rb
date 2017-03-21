@@ -218,15 +218,15 @@ class Expert < ApplicationRecord
         @category_accuracy = @category_accuracy.first
       end
 
-      @category_accuracy.correct_claims = value[:correct]
-      @category_accuracy.incorrect_claims = value[:incorrect]
+      @category_accuracy.correct_claims = value[:correct].to_i
+      @category_accuracy.incorrect_claims = value[:incorrect].to_i
 
-      if value[:correct] + value[:incorrect] > 0
+      if value[:correct].to_i + value[:incorrect].to_i > 0
         @category_accuracy.claim_accuracy = value[:correct].to_f / (value[:correct].to_f + value[:incorrect].to_f)
       else
       end
 
-      if (value[:correct] + value[:incorrect] + @category_accuracy.incorrect_predictions + @category_accuracy.correct_predictions) > 0
+      if (value[:correct].to_i + value[:incorrect].to_i + @category_accuracy.incorrect_predictions.to_i + @category_accuracy.correct_predictions.to_i) > 0
         @category_accuracy.overall_accuracy = (value[:correct].to_f + @category_accuracy.correct_predictions.to_f) / (value[:correct].to_f + value[:incorrect].to_f + @category_accuracy.correct_predictions.to_f + @category_accuracy.incorrect_predictions.to_f)
       end
 

@@ -1,6 +1,6 @@
 module Api::V1
   class ExpertsController < ApiController
-    before_action :authenticate_current_user, except: [:index, :show, :search, :comments, :all]
+    before_action :authenticate_current_user, except: [:index, :show, :search, :comments, :all, :get_substantiations]
     before_action :set_expert, only: [:edit, :update, :destroy]
 
     def index
@@ -423,7 +423,7 @@ module Api::V1
       if params.has_key?(:type)
         @type = params[:type]
       else
-        @type = id
+        @type = type
       end
 
       if @url.nil? or @id.nil? or @type.nil?
@@ -452,7 +452,7 @@ module Api::V1
           domain: @page.host,
           description: @page.description,
           pic: @page.images.best,
-          url: params[:url],
+          url: @url,
           url_content: @page.hash,
           expert_id: params[:expert_id]
       }
@@ -474,6 +474,26 @@ module Api::V1
         end
       end
     end
+
+
+    def get_substantiations
+      if !params.has_key?(:expert_id) or !params.has_key?(:type) or !params.has_key?(:id)
+        render json: { error: "Expert ID, Type and ID required" }, status: 422
+        return
+      end
+
+      @expert = Expert.find(params[:expert_id])
+
+      if params[:type] == "claim"
+        @items = @expert.expert_claims.where({ claim_id: params[:id] })
+      else
+        @items = @expert.expert_predictions.where({ prediction_id: params[:id] })
+      end
+
+      @evidences = @items.first.evidence_of_beliefs
+    end
+
+
 
     def remove_prediction
       if !params.has_key?(:expert_id) or !params.has_key?(:prediction_id)
@@ -532,7 +552,8 @@ module Api::V1
           :instagram,
           :youtube,
           :avatar_file_name,
-          :tag_list
+          :tag_list,
+          :evidence_of_belief_url
         )
     end
 

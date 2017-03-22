@@ -234,8 +234,21 @@ module Api::V1
         render json: { error: 'Expert Not Found' }, status: 422
         return
       end
+
+      if !params.has_key?(:url)
+        render json: { error: "URL Required" }, status: 422
+        return
+      end
+
+      @page = MetaInspector.new(params[:url], :allow_non_html_content => true)
+      eob_params = {
+          title: @page.best_title,
+          description: @page.description,
+          url: params[:url],
+          expert_id: params[:expert_id]
+      }
       
-      @bona_fide = BonaFide.create(bona_fide_params)
+      @bona_fide = BonaFide.create(eob_params)
 
       if @expert.bona_fides << @bona_fide
         add_contribution(@bona_fide, :created_bona_fide)
@@ -560,12 +573,8 @@ module Api::V1
 
     def bona_fide_params
       params.permit(
-        :title,
         :url,
-        :description,
-        :expert_id,
-        :user_id,
-        :avatar
+        :description
       )
     end
 

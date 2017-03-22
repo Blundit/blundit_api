@@ -6,6 +6,7 @@ class Contribution < ApplicationRecord
   belongs_to :comment, optional: true
   belongs_to :flag, optional: true
   belongs_to :prediction, optional: true
+  belongs_to :bona_fide, optional: true
 
   def type?
     return "expert" if !self.expert.nil?
@@ -14,6 +15,7 @@ class Contribution < ApplicationRecord
     return "comment" if !self.comment.nil?
     return "flag" if !self.flag.nil?
     return "prediction" if !self.prediction.nil?
+    return "bona_fide" if !self.bona_fide.nil?
 
     return ""
   end
@@ -26,6 +28,7 @@ class Contribution < ApplicationRecord
     return self.comment if !self.comment.nil?
     return self.flag if !self.flag.nil?
     return self.prediction if !self.prediction.nil?
+    return self.bona_fide if !self.bona_fide.nil?
   end
 
 

@@ -1,6 +1,12 @@
 class BonaFide < ApplicationRecord
     belongs_to :expert
 
+    attr_reader :contributions_list
+    def contributions_list
+        {
+            created_bona_fide: "Created Bona Fide",
+        }
+  end
     before_save :determine_bona_fide_type
     def determine_bona_fide_type
 

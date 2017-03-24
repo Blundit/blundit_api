@@ -564,9 +564,9 @@ module Api::V1
           :facebook,
           :instagram,
           :youtube,
-          :avatar_file_name,
           :tag_list,
-          :evidence_of_belief_url
+          :evidence_of_belief_url,
+          :avatar
         )
     end
 

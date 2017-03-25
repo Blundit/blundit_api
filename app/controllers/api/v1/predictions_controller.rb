@@ -50,6 +50,7 @@ module Api::V1
 
     def create
       # POST /pundits
+
       @prediction = Prediction.new(prediction_params)
 
       if @prediction.save
@@ -61,10 +62,38 @@ module Api::V1
           @prediction.experts << @expert
         end
 
+        if params.has_key?(:url)
+          add_evidence(@prediction, params[:url])
+        end
+
         add_bookmark("prediction", @prediction.id)
-        render json: { result: "success" }
+        render json: { result: "success", prediction: @prediction }
       else
         render json: { result: "error" }
+      end
+    end
+
+
+    def add_evidence(prediction, url)
+      return if url.nil? or prediction.nil?
+
+      @page = MetaInspector.new(url, :allow_non_html_content => true)
+      evidence_params = {
+        title: @page.best_title,
+        domain: @page.host,
+        description: @page.description,
+        image: @page.images.best,
+        url: params[:url],
+        url_content: @page.hash,
+      }
+
+      if !prediction.nil?
+        @added = prediction.evidences << @evidence = Evidence.create(evidence_params)
+      end
+
+      if @added
+        add_contribution(@evidence, :added_evidence)
+        add_or_update_publication(@page.host)
       end
     end
 
@@ -348,7 +377,8 @@ module Api::V1
         :tag_list,
         :prediction_id,
         :user_id,
-        :pic
+        :pic,
+        :prediction_date
       )
     end
 

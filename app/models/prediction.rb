@@ -67,7 +67,8 @@ class Prediction < ApplicationRecord
         params = { 
             id: self.id
         }
-        PredictionWorker.perform_at(self.prediction_date.to_time, params)
+        p "!!!!!", self.prediction_date
+        # PredictionWorker.perform_at(self.prediction_date.to_time, params)
     end
 
 

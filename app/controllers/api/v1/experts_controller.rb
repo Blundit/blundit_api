@@ -66,7 +66,7 @@ module Api::V1
 
         add_bookmark("expert", @expert.id)
 
-        render json: { result: "success" }
+        render json: { result: "success", expert: @expert }
       else
         render json: { result: "error" }
       end

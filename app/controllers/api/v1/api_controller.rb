@@ -17,13 +17,13 @@ module Api::V1
 
       current_user = User.find_by(uid: request.headers['uid'])
 
-      if current_user &&
-          current_user.tokens.has_key?(request.headers["client"])
+      if current_user && current_user.tokens.has_key?(request.headers["client"])
           token = current_user.tokens[request.headers["client"]]
           expiration_datetime = DateTime.strptime(token["expiry"].to_s, "%s")
 
-          expiration_datetime > DateTime.now
-          @current_user = current_user
+          if expiration_datetime > DateTime.now
+            @current_user = current_user
+          end
       end
 
       @current_user

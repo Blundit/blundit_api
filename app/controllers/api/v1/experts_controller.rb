@@ -5,7 +5,7 @@ module Api::V1
 
     def index
       # GET /CONTROLLER
-      @experts = Expert.page(current_page).per(per_page)
+      @experts = Expert.order('created_at DESC').page(current_page).per(per_page)
       @current_page = current_page
       @per_page = per_page
     end

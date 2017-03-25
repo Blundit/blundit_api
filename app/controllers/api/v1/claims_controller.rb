@@ -4,7 +4,7 @@ module Api::V1
 
     def index
       # GET /CONTROLLER
-      @claims = Claim.page(current_page).page(current_page).per(per_page)
+      @claims = Claim.order('created_at DESC').page(current_page).per(per_page)
       @current_page = current_page
       @per_page = per_page
     end
@@ -58,10 +58,38 @@ module Api::V1
           @claim.experts << @expert
         end
 
+        if params.has_key?(:url)
+          add_evidence(@claim, params[:url])
+        end
+
         add_bookmark("claim", @claim.id)
-        render json: { result: "success" }
+        render json: { result: "success", claim: @claim }
       else
         render json: { result: "error" }
+      end
+    end
+
+
+    def add_evidence(claim, url)
+      return if url.nil? or claim.nil?
+
+      @page = MetaInspector.new(url, :allow_non_html_content => true)
+      evidence_params = {
+        title: @page.best_title,
+        domain: @page.host,
+        description: @page.description,
+        image: @page.images.best,
+        url: params[:url],
+        url_content: @page.hash,
+      }
+
+      if !claim.nil?
+        @added = claim.evidences << @evidence = Evidence.create(evidence_params)
+      end
+
+      if @added
+        add_contribution(@evidence, :added_evidence)
+        add_or_update_publication(@page.host)
       end
     end
 

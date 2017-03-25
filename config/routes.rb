@@ -7,8 +7,6 @@ Rails.application.routes.draw do
 
   match '*path', via: [:options], to: lambda {|_| [204, { 'Content-Type' => 'text/plain' }]}
   
-  # post 'auth_user' => 'authentication#authenticate_user'
-
   namespace :api do
     namespace :v1 do
       get 'predictions/all' => 'predictions#all'

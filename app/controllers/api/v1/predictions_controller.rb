@@ -5,7 +5,7 @@ module Api::V1
 
     def index
       # GET /CONTROLLER
-      @predictions = Prediction.page(current_page).page(current_page).per(per_page)
+      @predictions = Prediction.order('created_at DESC').page(current_page).per(per_page)
       @current_page = current_page
       @per_page = per_page
     end

@@ -66,6 +66,10 @@ module Api::V1
           add_evidence(@prediction, params[:url])
         end
 
+        if params.has_key?(:category)
+          add_category(@prediction, params[:category])
+        end
+
         add_bookmark("prediction", @prediction.id)
         render json: { result: "success", prediction: @prediction }
       else
@@ -76,6 +80,7 @@ module Api::V1
 
     def add_evidence(prediction, url)
       return if url.nil? or prediction.nil?
+      return if url.index("://").nil?
 
       @page = MetaInspector.new(url, :allow_non_html_content => true)
       evidence_params = {
@@ -188,9 +193,19 @@ module Api::V1
     # remove comment in application helper
 
 
-    def add_category
-      @prediction = Prediction.find_by_id(params[:prediction_id])
-      @category = Category.find_by_id(params[:category_id])
+    def add_category(prediction, category_id)
+      
+      if prediction.nil?
+        @prediction = Prediction.find_by_id(params[:prediction_id])
+      else
+        @prediction = prediction
+      end
+      
+      if category_id.nil?
+        category_id = params[:category_id]
+      end
+
+      @category = Category.find_by_id(category_id)
 
       if @prediction.nil?
         render json: { error: "Prediction Not Found" }, status: 422
@@ -207,9 +222,13 @@ module Api::V1
         add_contribution(@prediction, :added_category)
         add_bookmark("prediction", @prediction.id)
 
-        render json: { status: "success" }
+        if params.has_key?(:prediction_id)
+          render json: { status: "success" }
+        end
       else
-        render json: { error: "Unable to Add Category" }, status: 422
+        if params.has_key?(:prediction_id)
+          render json: { error: "Unable to Add Category" }, status: 422
+        end
       end
     end
 

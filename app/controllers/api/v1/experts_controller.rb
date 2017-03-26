@@ -64,6 +64,10 @@ module Api::V1
           @expert.claims << @claim
         end
 
+        if params.has_key?(:category)
+          add_category(@expert, params[:category])
+        end
+
         add_bookmark("expert", @expert.id)
 
         render json: { result: "success", expert: @expert }
@@ -116,8 +120,21 @@ module Api::V1
     end
 
 
-    def add_category
-      @expert = Expert.find_by_id(params[:expert_id])
+    def add_category(expert, category_id)
+
+      if expert.nil?
+        @expert = Expert.find_by_id(params[:expert_id])
+      else
+        @expert = expert
+      end
+
+      @category_source = 0
+      if category_id.nil?
+        @category_source = 1
+        category_id = params[:category_id]
+      end
+
+      @category = Category.find_by_id(category_id)
 
       if @expert.nil?
         render json: { error: "Expert Not Found" }, status: 422
@@ -129,14 +146,18 @@ module Api::V1
         return
       end
 
-      @expert.add_category_if_necessary(params[:category_id], 1)
+      @expert.add_category_if_necessary(category_id, @category_source)
       if @expert.save
         add_contribution(@expert, :added_category)
         add_bookmark("expert", @expert.id)
 
-        render json: { status: "success" }
+        if params.has_key?(:expert_id)
+          render json: { status: "success" }
+        end
       else
-        render json: { error: "Unable to Add Category" }, status: 422
+        if params.has_key?(:expert_id)
+          render json: { error: "Unable to Add Category" }, status: 422
+        end
       end
     end
 

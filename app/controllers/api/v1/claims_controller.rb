@@ -62,6 +62,10 @@ module Api::V1
           add_evidence(@claim, params[:url])
         end
 
+        if params.has_key?(:category)
+          add_category(@claim, params[:category])
+        end
+
         add_bookmark("claim", @claim.id)
         render json: { result: "success", claim: @claim }
       else
@@ -72,6 +76,7 @@ module Api::V1
 
     def add_evidence(claim, url)
       return if url.nil? or claim.nil?
+      return if url.index("://").nil?
 
       @page = MetaInspector.new(url, :allow_non_html_content => true)
       evidence_params = {
@@ -189,9 +194,19 @@ module Api::V1
     # remove comment method defined in application helper.
 
 
-    def add_category
-      @claim = Claim.find_by_id(params[:claim_id])
-      @category = Category.find_by_id(params[:category_id])
+    def add_category(claim, category_id)
+
+      if claim.nil?
+        @claim = Claim.find_by_id(params[:claim_id])
+      else
+        @claim = claim
+      end
+      
+      if category_id.nil?
+        category_id = params[:category_id]
+      end
+
+      @category = Category.find_by_id(category_id)
 
       if @claim.nil?
         render json: { error: "Claim Not Found" }, status: 422
@@ -207,9 +222,14 @@ module Api::V1
         @claim.update_expert_categories(params[:category_id], true)
         add_contribution(@claim, :added_category)
         add_bookmark("claim", @claim.id)
-        render json: { status: "success" }
+
+        if params.has_key?(:claim_id)
+          render json: { status: "success" }
+        end
       else
-        render json: { error: "Unable to Add Category" }, status: 422
+        if params.has_key?(:claim_id)
+          render json: { error: "Unable to Add Category" }, status: 422
+        end
       end
     end
 

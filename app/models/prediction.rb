@@ -118,10 +118,10 @@ class Prediction < ApplicationRecord
         return false if self.prediction_date.nil?
 
         if Time.now < self.prediction_date
-            return true
+            return false
         end
         
-        return false
+        return true
     end
 
 

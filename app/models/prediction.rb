@@ -67,8 +67,9 @@ class Prediction < ApplicationRecord
         params = { 
             id: self.id
         }
-        p "!!!!!", self.prediction_date
-        # PredictionWorker.perform_at(self.prediction_date.to_time, params)
+
+        @sidekiq_time = self.prediction_date.to_time + ENV['claim_voting_window'].to_i.days.from_now
+        PredictionWorker.perform_at(@sidekiq_time, params)
     end
 
 
@@ -119,6 +120,10 @@ class Prediction < ApplicationRecord
 
         if Time.now < self.prediction_date
             return false
+        end
+
+        if Time.now >= self.prediction_date and self.status == 0
+            return true
         end
         
         return true

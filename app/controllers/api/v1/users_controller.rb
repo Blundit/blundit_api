@@ -10,5 +10,6 @@ module Api::V1
       # GET /CONTROLLER/:id
       @user = User.find(params[:id])
     end
+    
   end
 end

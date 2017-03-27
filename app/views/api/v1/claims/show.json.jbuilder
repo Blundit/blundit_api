@@ -13,6 +13,8 @@ json.claim do
   json.vote_value @claim.vote_value
   json.status @claim.status
   json.number_of_experts @claim.experts.count
+  json.user_vote @user_vote
+  json.open @claim.active?
 
   json.evidences @claim.evidences.order('updated_at DESC').each do |evidence|
     json.title evidence.title

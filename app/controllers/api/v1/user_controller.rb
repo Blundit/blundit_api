@@ -21,6 +21,12 @@ module Api::V1
         end
 
 
+        def get_votes
+            @prediction_votes = PredictionVote.joins(:vote).where("votes.user_id = #{current_user.id}")
+            @claim_votes = ClaimVote.joins(:vote).where("votes.user_id = #{current_user.id}")
+        end
+
+
         def user_params
             params.permit(
                 :email,

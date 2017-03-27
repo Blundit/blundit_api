@@ -1,6 +1,6 @@
 module Api::V1
   class ClaimsController < ApiController
-    before_action :authenticate_current_user, except: [:index, :show, :search, :all]
+    before_action :authenticate_current_user, except: [:index, :show, :search, :all, :comments]
 
     def index
       # GET /CONTROLLER
@@ -33,6 +33,12 @@ module Api::V1
         if @claim.nil?
           render json: { errors: "Claim Not Found" }, status: 422
         end
+      end
+
+      if current_user.nil?
+        @user_vote = null
+      else
+        @user_vote = @claim.votes.where({user_id: current_user.id}).first
       end
 
       mark_as_read(@claim)

@@ -1,6 +1,6 @@
 module Api::V1
   class PredictionsController < ApiController
-    before_action :authenticate_current_user, except: [:index, :show, :search, :all]
+    before_action :authenticate_current_user, except: [:index, :show, :search, :all, :comments]
     before_action :set_prediction, only: [:edit, :update, :destroy]
 
     def index
@@ -36,6 +36,13 @@ module Api::V1
         if @prediction.nil?
           render json: { errors: "Prediction Not Found" }, status: 422
         end
+      end
+
+      current_user = User.find(1)
+      if current_user.nil?
+        @user_vote = nil
+      else
+        @user_vote = @prediction.votes.where({user_id: current_user.id}).first
       end
 
       mark_as_read(@prediction)
@@ -99,6 +106,27 @@ module Api::V1
       if @added
         add_contribution(@evidence, :added_evidence)
         add_or_update_publication(@page.host)
+      end
+    end
+
+
+    def vote
+      if !params.has_key?(:prediction_id) or !params.has_key?(:value)
+        render json: { result: "prediction_id and value are both required" }, status: 422
+        return
+      end
+
+      @prediction = Prediction.find(params[:prediction_id])
+      
+      if @prediction.nil?
+        render json: { result: "Prediction #{params[:prediction_id]}" }, status: 422
+        return
+      end
+
+      if @prediction.votes << Vote.create({ user_id: current_user.id, vote: params[:value].to_i })
+        render json: { result: "success" }
+      else
+        render json: { result: "error" }
       end
     end
 

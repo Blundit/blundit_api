@@ -31,6 +31,7 @@ Rails.application.routes.draw do
       post 'predictions/:prediction_id/remove_tag' => 'predictions#remove_tag'
       post 'predictions/:prediction_id/add_category' => 'predictions#add_category'
       post 'predictions/:prediction_id/remove_category' => 'predictions#remove_category'
+      post 'predictions/:prediction_id/vote' => 'predictions#vote'
 
 
       resources :claims do
@@ -51,6 +52,7 @@ Rails.application.routes.draw do
       post 'claims/:claim_id/remove_tag' => 'claims#remove_tag'
       post 'claims/:claim_id/add_category' => 'claims#add_category'
       post 'claims/:claim_id/remove_category' => 'claims#remove_category'
+      post 'claims/:claim_id/vote' => 'claims#vote'
       
       resources :categories
 
@@ -92,6 +94,7 @@ Rails.application.routes.draw do
         post 'add_bookmark' => 'user#add_bookmark'
         post 'remove_bookmark' => 'user#remove_bookmark'
         get 'bookmarks' => 'user#get_bookmarks'
+        get 'votes' => 'user#get_votes'
       end
 
       resource :evidences do

@@ -3,7 +3,7 @@ json.prediction do
   json.title @prediction.title
   json.description @prediction.description
   json.pic @prediction.pic
-  json.alias @prediction.pic
+  json.alias @prediction.alias
   json.categories @prediction.categories.each do |category|
     json.id category.id
     json.name category.name
@@ -29,4 +29,5 @@ json.experts @prediction.prediction_experts.order('updated_at DESC').each do |pe
   json.alias pe.expert.alias
   json.name pe.expert.name
   json.accuracy pe.expert.accuracy
+  json.evidence_of_beliefs ExpertPrediction.where({prediction_id: @prediction.id, expert_id: pe.expert.id}).first.evidence_of_beliefs.count
 end

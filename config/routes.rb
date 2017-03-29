@@ -32,6 +32,7 @@ Rails.application.routes.draw do
       post 'predictions/:prediction_id/add_category' => 'predictions#add_category'
       post 'predictions/:prediction_id/remove_category' => 'predictions#remove_category'
       post 'predictions/:prediction_id/vote' => 'predictions#vote'
+      post 'predictions/:prediction_id/add_evidence' => 'predictions#add_evidence'
 
 
       resources :claims do

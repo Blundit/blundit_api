@@ -524,7 +524,9 @@ module Api::V1
         @items = @expert.expert_predictions.where({ prediction_id: params[:id] })
       end
 
-      @evidences = @items.first.evidence_of_beliefs
+      if @items.length > 0
+        @evidences = @items.first.evidence_of_beliefs
+      end
     end
 
 

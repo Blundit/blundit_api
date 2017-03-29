@@ -85,7 +85,16 @@ module Api::V1
     end
 
 
-    def add_evidence(prediction, url)
+    def add_evidence(prediction = nil, url = nil)
+
+      if url.nil? and params.has_key?(:url)
+        url = params[:url]
+      end
+
+      if prediction.nil? and params.has_key?(:prediction_id)
+        prediction = Prediction.find(params[:prediction_id])
+      end
+      
       return if url.nil? or prediction.nil?
       return if url.index("://").nil?
 
@@ -289,7 +298,7 @@ module Api::V1
 
     def add_expert
       @prediction = Prediction.find_by_id(params[:prediction_id])
-      @expert = Expert.find_by_id(params[:expert_id])
+      @expert = Expert.find_by_id(params[:id])
 
       if @prediction.nil?
         render json: { error: "Prediction Not Found" }, status: 422
@@ -302,6 +311,7 @@ module Api::V1
       end
 
       if @prediction.experts << @expert
+        @expert.predictions << @prediction
         add_contribution(@prediction, :added_expert)
         add_bookmark("prediction", @prediction.id)
 

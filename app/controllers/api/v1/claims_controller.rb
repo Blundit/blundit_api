@@ -36,12 +36,37 @@ module Api::V1
       end
 
       if current_user.nil?
-        @user_vote = null
+        @user_vote = nil
       else
         @user_vote = @claim.votes.where({user_id: current_user.id}).first
       end
 
+      @user_vote = get_current_user
+
+
       mark_as_read(@claim)
+    end
+
+
+    def vote
+      if !params.has_key?(:claim_id) or !params.has_key?(:value)
+        render json: { result: "claim_id and value are both required" }, status: 422
+        return
+      end
+
+      @claim = Claim.find(params[:claim_id])
+      
+      if @claim.nil?
+        render json: { result: "Claim #{params[:claim_id]}" }, status: 422
+        return
+      end
+
+      if @claim.votes << Vote.create({ user_id: current_user.id, vote: params[:value].to_i })
+        add_bookmark("claim", @claim.id)
+        render json: { result: "success" }
+      else
+        render json: { result: "error" }
+      end
     end
 
 
@@ -80,7 +105,15 @@ module Api::V1
     end
 
 
-    def add_evidence(claim, url)
+    def add_evidence(claim = nil, url = nil)
+      if url.nil? and params.has_key?(:url)
+        url = params[:url]
+      end
+
+      if claim.nil? and params.has_key?(:claim_id)
+        claim = Claim.find(params[:claim_id])
+      end
+
       return if url.nil? or claim.nil?
       return if url.index("://").nil?
 
@@ -101,6 +134,7 @@ module Api::V1
       if @added
         add_contribution(@evidence, :added_evidence)
         add_or_update_publication(@page.host)
+        add_bookmark("claim", claim.id)
       end
     end
 
@@ -267,7 +301,7 @@ module Api::V1
 
     def add_expert
       @claim = Claim.find_by_id(params[:claim_id])
-      @expert = Expert.find_by_id(params[:expert_id])
+      @expert = Expert.find_by_id(params[:id])
 
       if @claim.nil?
         render json: { error: "Claim Not Found" }, status: 422
@@ -280,10 +314,12 @@ module Api::V1
       end
 
       if @claim.experts << @expert
+        @expert.claims << @claim
         add_contribution(@claim, :added_expert)
         add_bookmark("claim", @claim.id)
 
         attrs = {
+          user_id: current_user.id,
           expert_id: @expert.id,
           claim_id: @claim.id,
           item_type: "expert_added_to_claim",

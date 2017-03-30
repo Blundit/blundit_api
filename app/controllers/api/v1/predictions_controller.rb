@@ -38,7 +38,6 @@ module Api::V1
         end
       end
 
-      current_user = User.find(1)
       if current_user.nil?
         @user_vote = nil
       else
@@ -115,6 +114,7 @@ module Api::V1
       if @added
         add_contribution(@evidence, :added_evidence)
         add_or_update_publication(@page.host)
+        add_bookmark("prediction", prediction.id)
       end
     end
 
@@ -133,6 +133,7 @@ module Api::V1
       end
 
       if @prediction.votes << Vote.create({ user_id: current_user.id, vote: params[:value].to_i })
+        add_bookmark("prediction", @prediction.id)
         render json: { result: "success" }
       else
         render json: { result: "error" }

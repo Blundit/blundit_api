@@ -54,6 +54,7 @@ Rails.application.routes.draw do
       post 'claims/:claim_id/add_category' => 'claims#add_category'
       post 'claims/:claim_id/remove_category' => 'claims#remove_category'
       post 'claims/:claim_id/vote' => 'claims#vote'
+      post 'claims/:claim_id/add_evidence' => 'claims#add_evidence'
       
       resources :categories
 

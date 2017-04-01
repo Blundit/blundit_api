@@ -2,12 +2,19 @@ module Api::V1
   class ExpertsController < ApiController
     before_action :authenticate_current_user, except: [:index, :show, :search, :comments, :all, :get_substantiations]
     before_action :set_expert, only: [:edit, :update, :destroy]
+    before_action :set_user, only: [:index, :show, :search, :comments]
 
     def index
       # GET /CONTROLLER
       @experts = Expert.order('created_at DESC').page(current_page).per(per_page)
       @current_page = current_page
       @per_page = per_page
+    end
+
+
+    def set_user
+
+      current_user = get_current_user
     end
 
 
@@ -154,6 +161,14 @@ module Api::V1
         if params.has_key?(:expert_id)
           render json: { status: "success" }
         end
+
+        attrs = {
+          user_id: current_user.id,
+          expert_id: @expert.id,
+          item_type: "expert_claim_added",
+          message: "Category #{@category.name} added to Expert"
+        }
+        NotificationQueue::delay.process(attrs)
       else
         if params.has_key?(:expert_id)
           render json: { error: "Unable to Add Category" }, status: 422
@@ -276,6 +291,14 @@ module Api::V1
         add_contribution(@expert, :added_bona_fide)
         add_bookmark("expert", @expert.id)
 
+        attrs = {
+          user_id: current_user.id,
+          expert_id: @expert.id,
+          item_type: "expert_bona_fide_added",
+          message: "Bona Fide '#{@page.best_title}' added to Expert"
+        }
+        NotificationQueue::delay.process(attrs)
+
         render json: { status: 'success' }
       else
         render json: { error: 'Unable to Add Bona Fide to Expert' }, status: 422
@@ -361,6 +384,14 @@ module Api::V1
 
           add_contribution(@expert, :added_claim)
           add_bookmark("expert", @expert.id)
+          attrs = {
+            user_id: current_user.id,
+            claim_id: @claim.id,
+            expert_id: @expert.id,
+            item_type: "expert_claim_added",
+            message: "#{@claim.title} added to Expert"
+          }
+          NotificationQueue::delay.process(attrs)
       else
           render json: { error: "Claim ID Not Found" }, status: 422
       end
@@ -400,6 +431,14 @@ module Api::V1
       if @removed == true
         add_contribution(@expert, :removed_claim)
         add_bookmark("expert", @expert.id)
+        attrs = {
+          user_id: current_user.id,
+          claim_id: @claim.id,
+          expert_id: @expert.id,
+          item_type: "expert_claim_removed",
+          message: "#{@claim.title} removed from Expert"
+        }
+        NotificationQueue::delay.process(attrs)
 
         render json: { status: "Success" }
       else
@@ -433,6 +472,15 @@ module Api::V1
         if params.has_key?(:evidence_of_belief_url)
           add_evidence_of_belief(params[:evidence_of_belief_url], params[:id], "prediction")
         end
+
+        attrs = {
+          user_id: current_user.id,
+          expert_id: @expert.id,
+          prediction_id: @prediction.id,
+          item_type: "expert_prediction_added",
+          message: "#{@prediction.title} added to Expert"
+        }
+        NotificationQueue::delay.process(attrs)
 
         render json: { status: "Success" }
       else
@@ -564,6 +612,14 @@ module Api::V1
         add_contribution(@expert, :removed_prediction)
         add_bookmark("expert", @expert.id)
 
+        attrs = {
+            user_id: current_user.id,
+            prediction_id: @prediction.id,
+            expert_id: @expert.id,
+            item_type: "expert_prediction_removed",
+            message: "#{@prediction.title} removed from Expert"
+          }
+          NotificationQueue::delay.process(attrs)
         render json: { status: "Success" }
       else
         render json: { status: "Error" }

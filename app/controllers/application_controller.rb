@@ -3,6 +3,79 @@ class ApplicationController < ActionController::Base
   # protect_from_forgery with: :exception
   attr_reader :current_user
 
+  def remove_bookmark(id = nil, find_type = nil)
+    if params.has_key?(:bookmark_id)
+      @id = params[:bookmark_id]
+    elsif !id.nil?
+      @id = params[:bookmark_id]
+    else
+      @id = id
+    end
+
+    if @id.nil?
+      render json: { error: "Missing Data: id expected." }, status: 422
+      return
+    end
+
+    if !find_type.nil?
+      @id = Bookmark.where("#{find_type}_id = #{id} and user_id = #{current_user.id}").first.id
+    end
+
+    @bookmark = Bookmark.find(@id)
+
+    if @bookmark.user_id != current_user.id
+      render json: { error: "Can't remove bookmark belonging to other user." }, status: 422
+    end
+
+    attrs = {}
+    attrs["user_id"] = @bookmark.user_id
+    if !@bookmark.object.nil?
+      attrs["#{@bookmark.type?}_id"] = @bookmark.object.id 
+    end
+
+    if @bookmark.destroy
+      NotificationQueue::delay.prune_unnecessary_queue_items(attrs)
+      
+      if id.nil?
+        render json: { status: "success" }
+      else
+        return true
+      end
+    else
+      if id.nil?
+        render json: { status: "error" }, status: 422
+      else
+        return false
+      end
+    end
+  end
+    
+
+  def update_bookmark
+    if params.has_key?(:bookmark_id)
+      @id = params[:bookmark_id]
+    end
+
+    if @id.nil?
+      render json: { error: "Missing Data: id expected." }, status: 422
+      return
+    end
+
+    @bookmark = Bookmark.find(@id)
+
+    if @bookmark.user_id != current_user.id
+      render json: { error: "Can't remove bookmark belonging to other user." }, status: 422
+    end
+
+    @bookmark.notify = params[:notify]
+
+    if @bookmark.save
+      return true
+    else
+      return false
+    end
+  end
+
   private
 
   def add_contribution (object, type)
@@ -96,72 +169,10 @@ class ApplicationController < ActionController::Base
   end
 
 
-  def remove_bookmark(id = nil, find_type = nil)
-    if params.has_key?(:id)
-      @id = params[:id]
-    elsif !id.nil?
-      @id = params[:id]
-    end
-
-    if id.nil?
-      render json: { error: "Missing Data: id expected." }, status: 422
-      return
-    end
-
-    if !find_type.nil?
-      id = Bookmark.where("#{find_type}_id = #{id} and user_id = #{current_user.id}").first.id
-    end
-
-    @bookmark = Bookmark.find(id)
-
-    if @bookmark.user_id != current_user.id
-      render json: { error: "Can't remove bookmark belonging to other user." }, status: 422
-    end
-
-    if Bookmark.find(params[:id]).destroy
-      attrs = {}
-      attrs["user_id"] = @bookmmark.user_id
-      attrs["#{@bookmark.type?}_id"] = @bookmark.object.id 
-
-      NotificationQueue::delay.prune_unnecessary_queue_items(attrs)
-      
-      return true
-    else
-      return false
-    end
-  end
-    
-
-  def update_bookmark
-    if params.has_key?(:id)
-      @id = params[:id]
-    elsif !id.nil?
-      @id = params[:id]
-    end
-
-    if id.nil?
-      render json: { error: "Missing Data: id expected." }, status: 422
-      return
-    end
-
-    @bookmark = Bookmark.find(params[:id])
-
-    if @bookmark.user_id != current_user.id
-      render json: { error: "Can't remove bookmark belonging to other user." }, status: 422
-    end
-
-    @bookmark.notify = params[:notify]
-
-    if @bookmark.save
-      return true
-    else
-      return false
-    end
-  end
-
 
   def mark_as_read(object)
     if current_user
+      p object
       current_user.bookmarks.where("#{object.class.name.downcase}_id = ?", object.id).each do |bookmark|
         bookmark.update({ has_update: false })
       end

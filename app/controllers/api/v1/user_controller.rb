@@ -10,14 +10,20 @@ module Api::V1
                 if b.type?
                     @new = {
                         type: b.type?,
-                        id: b.object.id,
+                        id: b.id,
+                        alias: b.object.alias,
                         new: b.has_update,
-                        title: b.type? == "expert" ? b.object.name : b.object.title
+                        title: b.type? == "expert" ? b.object.name : b.object.title,
+                        notify: b.notify
                     }
 
                     @bookmarks << @new
                 end
             end
+        end
+
+        def do_remove_bookmark
+            render json: { thing: "yep" }
         end
 
 

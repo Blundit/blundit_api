@@ -94,7 +94,8 @@ Rails.application.routes.draw do
 
       resource :user do
         post 'add_bookmark' => 'user#add_bookmark'
-        post 'remove_bookmark' => 'user#remove_bookmark'
+        post 'remove_bookmark/:bookmark_id' => 'user#remove_bookmark'
+        post 'update_bookmark/:bookmark_id' => 'user#update_bookmark'
         get 'bookmarks' => 'user#get_bookmarks'
         get 'votes' => 'user#get_votes'
       end

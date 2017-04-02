@@ -100,6 +100,10 @@ Rails.application.routes.draw do
         get 'votes' => 'user#get_votes'
       end
 
+      resource :home do
+        get 'homepage' => 'home#homepage'
+      end
+
       resource :evidences do
         post 'add_evidence' => 'evidences#add_evidence'
       end

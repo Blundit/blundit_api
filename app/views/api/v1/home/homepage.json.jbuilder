@@ -1,0 +1,9 @@
+json.most_recent_active_predictions @most_recent_active_predictions
+json.most_recent_settled_predictions @most_recent_settled_predictions
+json.most_recent_active_claims @most_recent_active_claims
+json.most_recent_settled_claims @most_recent_settled_claims
+json.random_expert @random_expert
+json.random_claim @random_claim
+json.random_prediction @random_prediction
+json.most_accurate_experts @most_accurate_experts
+json.least_accurate_experts @least_accurate_experts

@@ -1,0 +1,10 @@
+<%
+@expert = Expert.find(item.expert_id)
+
+%>
+
+New evidence has been added to the expert you're following, '<%= @expert.name %>'.
+
+<% if !item.message.nil? %>
+    <%= item.message %>
+<% end %>

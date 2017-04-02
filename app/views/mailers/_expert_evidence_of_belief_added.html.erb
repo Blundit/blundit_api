@@ -1,0 +1,15 @@
+<%
+@expert = Expert.find(item.expert_id)
+
+if item.type == "prediction"
+  @prediction = Prediction.find(item.item_id)
+else
+  @claim = Claim.find(item.item_id)
+end
+%>
+
+Since you're interested in <%= @expert.name %>, we thought you might like to know that someone has added new evidence that they believe '#{@item.title}'.
+
+<% if !@prediction.description.nil? %>
+<%= @prediction.description %>
+<% end %>

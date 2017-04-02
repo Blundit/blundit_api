@@ -2,7 +2,7 @@ module Api::V1
   class ExpertsController < ApiController
     before_action :authenticate_current_user, except: [:index, :show, :search, :comments, :all, :get_substantiations]
     before_action :set_expert, only: [:edit, :update, :destroy]
-    before_action :set_user, only: [:index, :show, :search, :comments]
+    before_filter :set_user, only: [:index, :show, :search, :comments]
 
     def index
       # GET /CONTROLLER
@@ -13,7 +13,6 @@ module Api::V1
 
 
     def set_user
-
       current_user = get_current_user
     end
 
@@ -44,6 +43,11 @@ module Api::V1
         end
       end
 
+      if !current_user.nil?
+        @bookmark = current_user.bookmarks.find_by_expert_id(@expert.id)
+      else
+        @bookmark = nil
+      end
       mark_as_read(@expert)
     end
 
@@ -84,40 +88,40 @@ module Api::V1
     end
 
 
-    def edit
-      # PUT /pundits/:id
-      if @expert.update(expert_params)
-        add_contribution(@expert, :edited_expert)
-        add_bookmark("expert", @expert.id)
+    # def edit
+    #   # PUT /pundits/:id
+    #   if @expert.update(expert_params)
+    #     add_contribution(@expert, :edited_expert)
+    #     add_bookmark("expert", @expert.id)
 
-        render json: { result: "success" }
-      else
-        render json: { result: "error" }
-      end
+    #     render json: { result: "success" }
+    #   else
+    #     render json: { result: "error" }
+    #   end
+    # end
 
-    end
 
+    # def destroy
+    #   # DELETE /pundits/:id
+    #   if !has_permission_to_destroy
+    #     render json: { result: "You don't have permission to destroy." }, status: 422
+    #     return
+    #   end
 
-    def destroy
-      # DELETE /pundits/:id
-      if !has_permission_to_destroy
-        render json: { result: "You don't have permission to destroy." }, status: 422
-        return
-      end
+    #   #TODO: Mark item as invalid rather than destoying. (Would require changes in all and other querying to only return valid items)
+    #   if params.has_key?(:id)
+    #     if @expert.destroy
+    #       add_contribution(@expert, :destroyed_expert)
+    #       remove_bookmark(@expert.id, "expert")
 
-      if params.has_key?(:id)
-        if @expert.destroy
-          add_contribution(@expert, :destroyed_expert)
-          remove_bookmark(@expert.id, "expert")
-
-          render json: { result: "success" }
-        else
-          render json: { result: "error" }
-        end
-      else
-        render json: { result: "ID Not Found" }, status: 422
-      end
-    end
+    #       render json: { result: "success" }
+    #     else
+    #       render json: { result: "error" }
+    #     end
+    #   else
+    #     render json: { result: "ID Not Found" }, status: 422
+    #   end
+    # end
 
 
     def search
@@ -543,6 +547,16 @@ module Api::V1
 
       if @item.evidence_of_beliefs << EvidenceOfBelief.create(eob_params)
         add_or_update_publication(@page.host)
+
+        attrs = {
+          expert_id: @expert.id,
+          type: @type,
+          item_id: @item.id,
+          item_type: "expert_evidence_of_belief_added",
+          content: "Evidence that Expert believes '#{@item.title} added to Expert"
+        }
+        NotificationQueue::delay.process(attrs)
+
         if params.has_key?(:url)
           render json: { status: "Success" }
         else

@@ -76,6 +76,51 @@ class ApplicationController < ActionController::Base
     end
   end
 
+
+  def add_bookmark(type = nil, id = nil)
+    if params.has_key?(:type)
+      @type = params[:type]
+    elsif !type.nil?
+      @type = type
+    end
+
+    if params.has_key?(:id)
+      @id = params[:id]
+    elsif !id.nil?
+      @id = id
+    end
+
+    if @type.nil? or @id.nil?
+      render json: { error: "Missing Data: type and id expected." }, status: 422
+      return
+    end
+
+    bookmark_params = { "user_id": current_user.id }
+    bookmark_params["#{@type}_id".to_sym] = @id
+
+    if Bookmark.where(bookmark_params).count == 0
+      @bookmark = Bookmark.create(bookmark_params)
+      if current_user.bookmarks << @bookmark
+        if !type.nil?
+          return true
+        end
+      else
+        if !type.nil?
+          return false
+        else
+          render json: { status: "Error creating bookmark" }, status: 422
+        end
+      end
+    else
+      if !type.nil?
+          return false
+        else
+          render json: { status: "Item already bookmarked by user" }, status: 422
+        end
+    end
+  end
+
+
   private
 
   def add_contribution (object, type)
@@ -134,40 +179,6 @@ class ApplicationController < ActionController::Base
 
     @per_page
   end
-
-
-  def add_bookmark(type = nil, id = nil)
-    if params.has_key?(:type)
-      @type = params[:type]
-    elsif !type.nil?
-      @type = type
-    end
-
-    if params.has_key?(:id)
-      @id = params[:id]
-    elsif !id.nil?
-      @id = id
-    end
-
-    if type.nil? or id.nil?
-      render json: { error: "Missing Data: type and id expected." }, status: 422
-      return
-    end
-
-    bookmark_params = { "user_id": current_user.id }
-    bookmark_params["#{@type}_id".to_sym] = @id
-
-    if Bookmark.where(bookmark_params).count == 0
-      if current_user.bookmarks << Bookmark.create(bookmark_params)
-        return true
-      else
-        return false
-      end
-    else
-      return false
-    end
-  end
-
 
 
   def mark_as_read(object)

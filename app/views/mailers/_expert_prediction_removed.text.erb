@@ -1,0 +1,10 @@
+<%
+@expert = Expert.find(item.expert_id)
+@prediction = Claim.find(item.prediction_id)
+%>
+
+Since you're interested in <%= @expert.name %>, we thought you might like to know that someone has removed the prediction '<%= @prediction.title %>' from them. 
+
+<% if !@prediction.description.nil? %>
+<%= @prediction.description %>
+<% end %>

@@ -1,0 +1,9 @@
+<%
+@prediction = Prediction.find(item.prediction_id)
+%>
+
+New evidence has been added to the prediction you're following, '<%= @prediction.title %>'.
+
+<% if !item.message.nil? %>
+    <%= item.message %>
+<% end %>

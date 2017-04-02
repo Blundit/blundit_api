@@ -12,6 +12,7 @@ json.expert do
   json.accuracy @expert.accuracy
   json.number_of_predictions @expert.predictions.count
   json.number_of_claims @expert.claims.count
+  json.bookmark @bookmark
 
   json.category_accuracies @expert.expert_category_accuracies.each do |eca|
     json.category_id eca.category.id
@@ -23,7 +24,6 @@ json.expert do
     json.correct_predictions eca.correct_predictions
     json.incorrect_predictions eca.incorrect_predictions
   end
-
   json.bona_fides @expert.bona_fides
 end
 json.claims @expert.expert_claims.order('updated_at DESC').each do |ec|

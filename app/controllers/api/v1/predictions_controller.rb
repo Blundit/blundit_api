@@ -2,6 +2,7 @@ module Api::V1
   class PredictionsController < ApiController
     before_action :authenticate_current_user, except: [:index, :show, :search, :all, :comments]
     before_action :set_prediction, only: [:edit, :update, :destroy]
+    before_filter :set_user, only: [:index, :show, :search, :comments]
 
     def index
       # GET /CONTROLLER
@@ -40,17 +41,18 @@ module Api::V1
 
       if current_user.nil?
         @user_vote = nil
+        @bookmark = nil
       else
         @user_vote = @prediction.votes.where({user_id: current_user.id}).first
+        @bookmark = current_user.bookmarks.find_by_prediction_id(@prediction.id)
       end
 
       mark_as_read(@prediction)
     end
 
 
-    def new
-      # GET /pundits/new
-      @prediction = Prediction.new
+    def set_user
+      current_user = get_current_user
     end
 
 
@@ -115,6 +117,13 @@ module Api::V1
         add_contribution(@evidence, :added_evidence)
         add_or_update_publication(@page.host)
         add_bookmark("prediction", prediction.id)
+
+        attrs = {
+          prediction_id: @prediction.id,
+          item_type: "prediction_evidence_added",
+          message: "Evidence added to #{@prediction.title}"
+        }
+        NotificationQueue::delay.process(attrs)
       end
     end
 
@@ -141,37 +150,38 @@ module Api::V1
     end
 
 
-    def edit
-      # PUT /pundits/:id
-      if @prediction.update(prediction_params)
-        add_contribution(@prediction, :edited_prediction)
-        add_bookmark("prediction", @prediction.id)
-        render json: { result: "success" }
-      else
-        render json: { result: "error" }
-      end
-    end
+    # def edit
+    #   # PUT /pundits/:id
+    #   if @prediction.update(prediction_params)
+    #     add_contribution(@prediction, :edited_prediction)
+    #     add_bookmark("prediction", @prediction.id)
+    #     render json: { result: "success" }
+    #   else
+    #     render json: { result: "error" }
+    #   end
+    # end
 
 
-    def destroy
-      # DELETE /pundits/:id
-      if !has_permission_to_destroy
-        render json: { result: "You don't have permission to destroy." }, status: 422
-        return
-      end
+    # def destroy
+    #   # DELETE /pundits/:id
+    #   if !has_permission_to_destroy
+    #     render json: { result: "You don't have permission to destroy." }, status: 422
+    #     return
+    #   end
 
-      if params.has_key?(:id)
-        if @prediction.destroy
-          add_contribution(@prediction, :destroyed_prediction)
-          remove_bookmark(@prediction.id, "prediction")
-          render json: { result: "success" }
-        else
-          render json: { result: "error" }
-        end
-      else
-        render json: { result: "ID Not Found" }, status: 422
-      end
-    end
+    #   #TODO: Make this mark as invalid rather than destroy.
+    #   if params.has_key?(:id)
+    #     if @prediction.destroy
+    #       add_contribution(@prediction, :destroyed_prediction)
+    #       remove_bookmark(@prediction.id, "prediction")
+    #       render json: { result: "success" }
+    #     else
+    #       render json: { result: "error" }
+    #     end
+    #   else
+    #     render json: { result: "ID Not Found" }, status: 422
+    #   end
+    # end
 
 
     def search
@@ -211,7 +221,6 @@ module Api::V1
         add_contribution(@prediction, :added_comment)
         add_bookmark("prediction", @prediction.id)
 
-        # add to notification queue for user notifications
         attrs = {
           user_id: current_user.id,
           comment_id: @comment.id,
@@ -260,6 +269,13 @@ module Api::V1
         add_contribution(@prediction, :added_category)
         add_bookmark("prediction", @prediction.id)
 
+        attrs = {
+          prediction_id: @prediction.id,
+          item_type: "prediction_category_added",
+          message: "Category '#{@category.name}' added to #{@prediction.title}"
+        }
+        NotificationQueue::delay.process(attrs)
+
         if params.has_key?(:prediction_id)
           render json: { status: "success" }
         end
@@ -290,6 +306,14 @@ module Api::V1
         add_contribution(@prediction, :removed_category)
         add_bookmark("prediction", @prediction.id)
 
+        attrs = {
+          prediction_id: @prediction.id,
+          item_type: "prediction_category_removed",
+          message: "Category '#{@category.name}' removed from #{@prediction.title}"
+        }
+        NotificationQueue::delay.process(attrs)
+
+
         render json: { status: "success" }
       else
         render json: { error: "Unable to Add Category" }, status: 422
@@ -317,10 +341,10 @@ module Api::V1
         add_bookmark("prediction", @prediction.id)
 
         attrs = {
-          user_id: current_user.id,
           expert_id: @expert.id,
           prediction_id: @prediction.id,
-          item_type: "expert_added_to_prediction",
+          item_type: "prediction_expert_added",
+          message: "#{@expert.name} added to #{@prediction.title}"
         }
         NotificationQueue::delay.process(attrs)
 
@@ -366,6 +390,14 @@ module Api::V1
       if @removed == true
         add_contribution(@prediction, :removed_expert)
         add_bookmark("prediction", @prediction.id)
+        
+        attrs = {
+          expert_id: @expert.id,
+          prediction_id: @prediction.id,
+          item_type: "prediction_expert_removed",
+          message: "#{@expert.title} removed from #{@prediction.title}"
+        }
+        NotificationQueue::delay.process(attrs)
         render json: { status: "Success" }
       else
         render json: { status: "Error" }

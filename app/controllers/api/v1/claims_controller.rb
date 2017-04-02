@@ -1,6 +1,9 @@
 module Api::V1
   class ClaimsController < ApiController
     before_action :authenticate_current_user, except: [:index, :show, :search, :all, :comments]
+    before_action :set_claim, only: [:edit, :update, :destroy]
+    before_filter :set_user, only: [:index, :show, :search, :comments]
+
 
     def index
       # GET /CONTROLLER
@@ -12,6 +15,11 @@ module Api::V1
 
     def all
       @claims = Claim.all
+    end
+
+    
+    def set_user
+      current_user = get_current_user
     end
 
 
@@ -37,8 +45,10 @@ module Api::V1
 
       if current_user.nil?
         @user_vote = nil
+        @bookmark = nil
       else
         @user_vote = @claim.votes.where({user_id: current_user.id}).first
+        @bookmark = current_user.bookmarks.find_by_claims_id(@claim.id)
       end
 
       @user_vote = get_current_user
@@ -135,44 +145,51 @@ module Api::V1
         add_contribution(@evidence, :added_evidence)
         add_or_update_publication(@page.host)
         add_bookmark("claim", claim.id)
+
+        attrs = {
+          claim_id: @claim.id,
+          item_type: "claim_evidence_added",
+          message: "Evidence added to #{@claim.title}"
+        }
+        NotificationQueue::delay.process(attrs)
       end
     end
 
 
-    def edit
-      # PUT /pundits/:id
-      if @claim.update(claim_params)
-        add_contribution(@claim, :edited_claim)
-        add_bookmark("claim", @claim.id)
+    # def edit
+    #   # PUT /pundits/:id
+    #   if @claim.update(claim_params)
+    #     add_contribution(@claim, :edited_claim)
+    #     add_bookmark("claim", @claim.id)
 
-        render json: { result: "success" }
-      else
-        render json: { result: "error" }
-      end
-    end
+    #     render json: { result: "success" }
+    #   else
+    #     render json: { result: "error" }
+    #   end
+    # end
 
 
-    def destroy
-      # DELETE /pundits/:id
+    # def destroy
+    #   # DELETE /pundits/:id
 
-      if !has_permission_to_destroy
-        render json: { result: "You don't have permission to destroy." }, status: 422
-        return
-      end
+    #   if !has_permission_to_destroy
+    #     render json: { result: "You don't have permission to destroy." }, status: 422
+    #     return
+    #   end
 
-      if params.has_key?[:id]
-    
-        if @claim.destroy
-          add_contribution(@claim, :destroyed_claim)
-          remove_bookmark(@claim.id, "claim")
-          render json: { result: "success" }
-        else
-          render json: { result: "error" }
-        end
-      else
-        render json: { result: "ID Not Found" }, status: 422
-      end
-    end
+    #   if params.has_key?[:id]
+    #     # TODO: Make this set the item to 'invalid' or something, without destorying
+    #     if @claim.destroy
+    #       add_contribution(@claim, :destroyed_claim)
+    #       remove_bookmark(@claim.id, "claim")
+    #       render json: { result: "success" }
+    #     else
+    #       render json: { result: "error" }
+    #     end
+    #   else
+    #     render json: { result: "ID Not Found" }, status: 422
+    #   end
+    # end
 
 
     def search
@@ -263,6 +280,13 @@ module Api::V1
         add_contribution(@claim, :added_category)
         add_bookmark("claim", @claim.id)
 
+        attrs = {
+          claim_id: @claim.id,
+          item_type: "claim_category_added",
+          message: "Category '#{@category.name}' added to #{@claim.title}"
+        }
+        NotificationQueue::delay.process(attrs)
+
         if params.has_key?(:claim_id)
           render json: { status: "success" }
         end
@@ -292,6 +316,13 @@ module Api::V1
         @claim.update_expert_categories(params[:category_id], false)
         add_contribution(@claim, :removed_category)
         add_bookmark("claim", @claim.id)
+
+        attrs = {
+          claim_id: @claim.id,
+          item_type: "claim_category_removed",
+          message: "Category '#{@category.name}' removed from #{@claim.title}"
+        }
+        NotificationQueue::delay.process(attrs)
         render json: { status: "success" }
       else
         render json: { error: "Unable to Remove Category" }, status: 422
@@ -322,7 +353,8 @@ module Api::V1
           user_id: current_user.id,
           expert_id: @expert.id,
           claim_id: @claim.id,
-          item_type: "expert_added_to_claim",
+          item_type: "claim_expert_added",
+          message: "#{@expert.name} added to Claim '#{@claim.title}'"
         }
 
         NotificationQueue::delay.process(attrs)
@@ -368,6 +400,12 @@ module Api::V1
       if @removed == true
         add_contribution(@claim, :removed_expert)
         add_bookmark("claim", @claim.id)
+        attrs = {
+          claim_id: @claim.id,
+          item_type: "claim_expert_removed",
+          message: "#{@expert.name} removed from Claim '#{@claim.title}'"
+        }
+        NotificationQueue::delay.process(attrs)
         render json: { status: "Success" }
       else
         render json: { status: "Error" }

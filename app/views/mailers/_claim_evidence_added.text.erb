@@ -1,0 +1,10 @@
+<%
+@claim = Claim.find(item.claim_id)
+
+%>
+
+New evidence has been added to the claim you're following, '<%= @claim.title %>'.
+
+<% if !item.message.nil? %>
+    <%= item.message %>
+<% end %>

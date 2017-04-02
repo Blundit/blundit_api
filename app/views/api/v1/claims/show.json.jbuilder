@@ -15,6 +15,7 @@ json.claim do
   json.number_of_experts @claim.experts.count
   json.user_vote @user_vote
   json.open @claim.active?
+  json.bookmark @bookmark
 
   json.evidences @claim.evidences.order('updated_at DESC').each do |evidence|
     json.title evidence.title

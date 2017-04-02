@@ -16,6 +16,7 @@ json.prediction do
   json.prediction_date @prediction.prediction_date
   json.open @prediction.open?
   json.user_vote @user_vote
+  json.bookmark @bookmark
 
   json.evidences @prediction.evidences.order('updated_at DESC').each do |evidence|
     json.title evidence.title

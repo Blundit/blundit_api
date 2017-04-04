@@ -6,9 +6,15 @@ module Api::V1
                 return
             end
 
-            @claims = Claim.do_search(params[:query])
-            @experts = Expert.do_search(params[:query])
-            @predictions = Prediction.do_search(params[:query])
+            # :sort
+            # 0 - Newest
+            # 1 - Oldest
+            # 2 - Most Recently Updated
+            # 3 - Least Recently Updated
+
+            @claims = Claim.do_search(params[:query], params[:sort])
+            @experts = Expert.do_search(params[:query], params[:sort])
+            @predictions = Prediction.do_search(params[:query], params[:sort])
 
 
             # record search history

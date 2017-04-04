@@ -97,10 +97,22 @@ class Prediction < ApplicationRecord
     end
 
 
-    scope :do_search, -> (q) do
+    scope :do_search, -> (q, p = 0) do
         qstr = q.split(" ")
         fields = %w(predictions.title predictions.description tags.name)
         clause = []
+
+        if p.to_i == 0
+            @order = "created_at DESC"
+        elsif p.to_i == 1
+            @order = "created_at ASC"
+        elsif p.to_i == 2
+            @order = "updated_at DESC"
+        elsif p.to_i == 3
+            @order = "updated_at ASC"
+        else
+            @order = ""
+        end        
         
         qstr.each do |qs|
         if !STOP_WORDS.include?(qs.downcase)
@@ -108,9 +120,13 @@ class Prediction < ApplicationRecord
             clause << fields.map{ |f| "LOWER(#{f}) LIKE #{q}"}.join(" OR ")
         end
         end
+        p "ORDER!!!!!!"
+        p @order
+        p p
         
         select('distinct predictions.*').joins("LEFT JOIN taggings on predictions.id = taggings.taggable_id")
         .joins("LEFT JOIN tags on tags.id = taggings.tag_id")
+        .order(@order)
         .where(clause.join(" OR "))
     end
 

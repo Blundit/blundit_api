@@ -95,10 +95,22 @@ class Claim < ApplicationRecord
     end
     
 
-    scope :do_search, -> (q) do
+    scope :do_search, -> (q, p = 0) do
         qstr = q.split(" ")
         fields = %w(claims.title claims.description tags.name)
         clause = []
+
+        if p.to_i == 0
+            @order = "created_at DESC"
+        elsif p.to_i == 1
+            @order = "created_at ASC"
+        elsif p.to_i == 2
+            @order = "updated_at DESC"
+        elsif p.to_i == 3
+            @order = "updated_at ASC"
+        else
+            @order = ""
+        end        
         
         qstr.each do |qs|
         if !STOP_WORDS.include?(qs.downcase)
@@ -109,6 +121,7 @@ class Claim < ApplicationRecord
         
         select('distinct claims.*').joins("LEFT JOIN taggings on claims.id = taggings.taggable_id")
         .joins("LEFT JOIN tags on tags.id = taggings.tag_id")
+        .order(@order)
         .where(clause.join(" OR "))
     end
 

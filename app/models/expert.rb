@@ -93,10 +93,22 @@ class Expert < ApplicationRecord
   end
 
 
-  scope :do_search, -> (q) do
+  scope :do_search, -> (q, p = 0) do
     qstr = q.split(" ")
     fields = %w(experts.name experts.description tags.name)
     clause = []
+
+    if p.to_i == 0
+        @order = "created_at DESC"
+    elsif p.to_i == 1
+        @order = "created_at ASC"
+    elsif p.to_i == 2
+        @order = "updated_at DESC"
+    elsif p.to_i == 3
+        @order = "updated_at ASC"
+    else
+        @order = ""
+    end        
     
     qstr.each do |qs|
       if !STOP_WORDS.include?(qs.downcase)
@@ -107,6 +119,7 @@ class Expert < ApplicationRecord
     
     select('distinct experts.*').joins("LEFT JOIN taggings on experts.id = taggings.taggable_id")
       .joins("LEFT JOIN tags on tags.id = taggings.tag_id")
+      .order(@order)
       .where(clause.join(" OR "))
   end
 

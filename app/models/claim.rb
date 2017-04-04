@@ -122,7 +122,7 @@ class Claim < ApplicationRecord
         select('distinct claims.*').joins("LEFT JOIN taggings on claims.id = taggings.taggable_id")
         .joins("LEFT JOIN tags on tags.id = taggings.tag_id")
         .order(@order)
-        .where(clause.join(" OR "))
+        .where(clause.join(" OR ")).page(1).per(2)
     end
 
 

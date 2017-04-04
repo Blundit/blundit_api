@@ -115,19 +115,16 @@ class Prediction < ApplicationRecord
         end        
         
         qstr.each do |qs|
-        if !STOP_WORDS.include?(qs.downcase)
-            q = "'%#{qs.downcase}%'"
-            clause << fields.map{ |f| "LOWER(#{f}) LIKE #{q}"}.join(" OR ")
+            if !STOP_WORDS.include?(qs.downcase)
+                q = "'%#{qs.downcase}%'"
+                clause << fields.map{ |f| "LOWER(#{f}) LIKE #{q}"}.join(" OR ")
+            end
         end
-        end
-        p "ORDER!!!!!!"
-        p @order
-        p p
         
         select('distinct predictions.*').joins("LEFT JOIN taggings on predictions.id = taggings.taggable_id")
         .joins("LEFT JOIN tags on tags.id = taggings.tag_id")
         .order(@order)
-        .where(clause.join(" OR "))
+        .where(clause.join(" OR ")).page(1).per(2)
     end
 
 

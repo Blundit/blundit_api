@@ -7,7 +7,7 @@ module Api::V1
 
     def index
       # GET /CONTROLLER
-      @claims = Claim.order('created_at DESC').page(current_page).per(per_page)
+      @claims = Claim.do_search(params[:query], params[:sort]).order('created_at DESC').page(current_page).per(per_page)
       @current_page = current_page
       @per_page = per_page
     end

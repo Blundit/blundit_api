@@ -32,7 +32,7 @@ class User < ApplicationRecord
 
   enumerize :notification_frequency, in: {:as_they_happen => 1, :daily => 2, :weekly => 3, :monthly => 4, :none => 0}, default: 1
 
-  has_attached_file :avatar, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "/images/users/missing.png"
+  has_attached_file :avatar, styles: { medium: "300x300>", thumb: "100x100>" }, path: ":rails_root/public/images/user_avatars/:basename.:extension", default_url: "/images/users/missing.png"
   validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\z/
 
 

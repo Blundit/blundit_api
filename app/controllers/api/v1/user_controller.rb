@@ -32,12 +32,29 @@ module Api::V1
             @claim_votes = ClaimVote.joins(:vote).where("votes.user_id = #{current_user.id}")
         end
 
+        
+        def update_user
+            if current_user.nil?
+                render json: { error: "Must be logged in." }, status: 422
+                return
+            end
+
+            u = User.find(current_user.id)
+            if u.update(user_params)
+                u.reload
+                render json: { status: "User updated", user: u }
+            else
+                render json: { status: "Error updating user" }, status: 422
+            end
+        end
+
 
         def user_params
             params.permit(
                 :email,
                 :first_name,
                 :last_name,
+                :notification_frequency,
                 :avatar
             )
         end

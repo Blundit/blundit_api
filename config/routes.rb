@@ -98,6 +98,7 @@ Rails.application.routes.draw do
         post 'update_bookmark/:bookmark_id' => 'user#update_bookmark'
         get 'bookmarks' => 'user#get_bookmarks'
         get 'votes' => 'user#get_votes'
+        put 'update' => 'user#update_user'
       end
 
       resource :home do

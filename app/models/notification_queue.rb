@@ -75,7 +75,7 @@ class NotificationQueue < ApplicationRecord
         @users = NotificationQueueItem.distinct.pluck(:user_id)
         @users.each do |user|
             u = User.find_by_id(user)
-            if !u.nil? and u.notification_frequency == 3
+            if !u.nil? and u.notification_frequency == 4
                 @queueItems = NotificationQueueItem.where("created_at >= #{@range_from} and created_at <= #{@range_to}").where("user_id = ?", user)
                 self.delay.compile_and_send_email(@queueItems, "monthly")
             end

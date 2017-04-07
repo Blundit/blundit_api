@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   # protect_from_forgery with: :exception
   attr_reader :current_user
 
+
   def remove_bookmark(id = nil, find_type = nil)
     if params.has_key?(:bookmark_id)
       @id = params[:bookmark_id]

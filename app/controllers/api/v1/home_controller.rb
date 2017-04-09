@@ -1,7 +1,8 @@
 module Api::V1
   class HomeController < ApiController
     def homepage
-      @homepage_items = 5
+      @homepage_items = 4
+      @most_popular_items = 10
       # most recent predictions (active)
       @most_recent_active_predictions = Prediction.order('prediction_date DESC').where(["status = ? and prediction_date >= ? and prediction_date < ?", 0, (Time.now-2), Time.now]).limit(@homepage_items)
       # most recent predictions (settled)
@@ -32,7 +33,14 @@ module Api::V1
       # least accurate axperts
       @least_accurate_experts = Expert.order('accuracy ASC').limit(@homepage_items)
 
+      # most popular experts
+      @most_popular_experts = Expert.order('expert_comments_count DESC').limit(@most_popular_items)
 
+      # most popular predictions
+      @most_popular_predictions = Prediction.order('prediction_comments_count DESC').limit(@most_popular_items)
+
+      # most popular claims
+      @most_popular_claims = Claim.order('claim_comments_count DESC').limit(@most_popular_items)
     end
   end
 end

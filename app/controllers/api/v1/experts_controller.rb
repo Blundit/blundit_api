@@ -285,7 +285,8 @@ module Api::V1
           title: @page.best_title,
           description: @page.description,
           url: params[:url],
-          expert_id: params[:expert_id]
+          expert_id: params[:expert_id],
+          pic: @page.images.best
       }
       
       @bona_fide = BonaFide.create(eob_params)
@@ -548,12 +549,18 @@ module Api::V1
       if @item.evidence_of_beliefs << EvidenceOfBelief.create(eob_params)
         add_or_update_publication(@page.host)
 
+        if @type == "prediction"
+          @title = @item.prediction.title
+        else
+          @title = @item.claim.title
+        end
+
         attrs = {
           expert_id: @expert.id,
           type: @type,
           item_id: @item.id,
           item_type: "expert_evidence_of_belief_added",
-          content: "Evidence that Expert believes '#{@item.title} added to Expert"
+          content: "Evidence that Expert believes '#{@title}' added to Expert"
         }
         NotificationQueue::delay.process(attrs)
 

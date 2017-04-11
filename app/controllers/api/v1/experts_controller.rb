@@ -595,6 +595,8 @@ module Api::V1
 
       if @items.length > 0
         @evidences = @items.first.evidence_of_beliefs
+      else
+        @evidences = []
       end
     end
 

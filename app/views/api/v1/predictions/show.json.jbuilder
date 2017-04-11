@@ -30,6 +30,7 @@ json.experts @prediction.prediction_experts.order('updated_at DESC').each do |pe
   json.alias pe.expert.alias
   json.name pe.expert.name
   json.accuracy pe.expert.accuracy
+  json.avatar pe.expert.avatar
   if ExpertPrediction.where({prediction_id: @prediction.id, expert_id: pe.expert.id}).length > 0
     json.evidence_of_beliefs ExpertPrediction.where({prediction_id: @prediction.id, expert_id: pe.expert.id}).first.evidence_of_beliefs.count
   else

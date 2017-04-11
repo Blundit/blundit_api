@@ -119,9 +119,9 @@ module Api::V1
         add_bookmark("prediction", prediction.id)
 
         attrs = {
-          prediction_id: @prediction.id,
+          prediction_id: prediction.id,
           item_type: "prediction_evidence_added",
-          message: "Evidence added to #{@prediction.title}"
+          message: "Evidence added to #{prediction.title}"
         }
         NotificationQueue::delay.process(attrs)
       end

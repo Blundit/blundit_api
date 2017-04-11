@@ -29,6 +29,7 @@ json.experts @claim.claim_experts.order('updated_at DESC').each do |ce|
   json.alias ce.expert.alias
   json.name ce.expert.name
   json.accuracy ce.expert.accuracy
+  json.avatar ce.expert.avatar
   if ExpertClaim.where({claim_id: @claim.id, expert_id: ce.expert.id}).length > 0
     json.evidence_of_beliefs ExpertClaim.where({claim_id: @claim.id, expert_id: ce.expert.id}).first.evidence_of_beliefs.count
   else

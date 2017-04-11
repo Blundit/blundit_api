@@ -147,9 +147,9 @@ module Api::V1
         add_bookmark("claim", claim.id)
 
         attrs = {
-          claim_id: @claim.id,
+          claim_id: claim.id,
           item_type: "claim_evidence_added",
-          message: "Evidence added to #{@claim.title}"
+          message: "Evidence added to #{claim.title}"
         }
         NotificationQueue::delay.process(attrs)
       end

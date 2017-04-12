@@ -25,7 +25,3 @@ production:
   encoding: utf8
   database: blundit_production
   port: 3306
-  host: ENV['prod_db_host']
-  username: ENV['prod_db_username']
-  password: ENC['prod_db_password']
-

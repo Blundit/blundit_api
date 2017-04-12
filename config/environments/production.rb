@@ -94,5 +94,5 @@ Rails.application.configure do
     :user_name      => ENV['mailgun_username'],
     :password       => ENV['mailgun_password'],
     :authentication => :plain,
-  }}
+  }
 end

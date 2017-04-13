@@ -21,7 +21,7 @@ environment ENV.fetch("RAILS_ENV") { "development" }
 # Workers do not work on JRuby or Windows (both of which do not support
 # processes).
 #
-# workers ENV.fetch("WEB_CONCURRENCY") { 2 }
+workers ENV.fetch("WEB_CONCURRENCY") { 2 }
 
 # Use the `preload_app!` method when specifying a `workers` number.
 # This directive tells Puma to first boot the application and load code
@@ -30,7 +30,7 @@ environment ENV.fetch("RAILS_ENV") { "development" }
 # you need to make sure to reconnect any threads in the `on_worker_boot`
 # block.
 #
-# preload_app!
+preload_app!
 
 # The code in the `on_worker_boot` will be called if you are using
 # clustered mode by specifying a number of `workers`. After each worker
@@ -45,3 +45,36 @@ environment ENV.fetch("RAILS_ENV") { "development" }
 
 # Allow puma to be restarted by `rails restart` command.
 plugin :tmp_restart
+
+on_worker_boot do
+  # worker specific setup
+  ActiveRecord::Base.establish_connection
+
+  # Sidekiq doesn't create connections until you try to do something https://github.com/mperham/sidekiq/issues/627#issuecomment-20366059
+
+  if ENV['AWS_ACCESS_KEY_ID']
+
+    TheLoneDyno.exclusive do |signal|
+      puts "Running on DYNO: #{ENV['DYNO']}"
+
+      require 'objspace'
+      require 'tempfile'
+
+      ObjectSpace.trace_object_allocations_start
+      signal.watch do |payload|
+        puts "Got signal #{payload}"
+        Tempfile.open("heap.dump") do |f|
+
+
+          ObjectSpace.dump_all(output: f)
+          f.close
+
+          s3 = Aws::S3::Client.new(region: 'us-east-1')
+          File.open(f, 'rb') do |file|
+            s3.put_object(body: file, key: "#{Time.now.iso8601}-process:#{Process.pid}-heap.dump", bucket: "heap-dumps-schneems")
+          end
+        end
+      end
+    end
+  end
+end

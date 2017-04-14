@@ -21,7 +21,7 @@ class Prediction < ApplicationRecord
 
     validates_presence_of :title
 
-    has_attached_file :pic, styles: { medium: "300x300>", thumb: "100x100>" }, path: ":rails_root/public/images/prediction_avatars/:basename.:extension", default_url: "/images/avatars/placeholder.png"
+    has_attached_file :pic, styles: { medium: "300x300>", thumb: "100x100>" }, path: ":rails_root/public/images/prediction_avatars/:id/:basename.:extension", default_url: "/images/avatars/placeholder.png"
     validates_attachment_content_type :pic, content_type: /\Aimage\/.*\z/
 
     acts_as_taggable

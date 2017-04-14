@@ -48,3 +48,11 @@ bower.json
 
 # Ignore application configuration
 /config/application.yml
+
+public/images/expert_avatars/*
+public/images/prediction_avatars/*
+public/images/claim_avatars/*
+
+!public/images/expert_avatars/default.png
+!public/images/claim_avatars/default.jpg
+!public/images/prediction_avatars/default.jpg

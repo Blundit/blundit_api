@@ -25,7 +25,7 @@ class Expert < ApplicationRecord
 
   has_many :bona_fides
 
-  has_attached_file :avatar, styles: { medium: "300x300>", thumb: "100x100>" }, path: ":rails_root/public/images/expert_avatars/:basename.:extension", default_url: "/images/avatars/placeholder.png"
+  has_attached_file :avatar, styles: { medium: "300x300>", thumb: "100x100>" }, path: ":rails_root/public/images/expert_avatars/:id/:basename.:extension", default_url: "/images/avatars/placeholder.png"
   validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\z/
 
 

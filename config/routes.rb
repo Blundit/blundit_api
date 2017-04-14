@@ -33,7 +33,8 @@ Rails.application.routes.draw do
       post 'predictions/:prediction_id/remove_category' => 'predictions#remove_category'
       post 'predictions/:prediction_id/vote' => 'predictions#vote'
       post 'predictions/:prediction_id/add_evidence' => 'predictions#add_evidence'
-
+      patch 'predictions/:prediction_id/update_image' => 'predictions#update_image'
+      delete 'predictions/:prediction_id/delete_image' => 'predictions#delete_image'
 
       resources :claims do
         resources :claim_comments
@@ -55,6 +56,8 @@ Rails.application.routes.draw do
       post 'claims/:claim_id/remove_category' => 'claims#remove_category'
       post 'claims/:claim_id/vote' => 'claims#vote'
       post 'claims/:claim_id/add_evidence' => 'claims#add_evidence'
+      patch 'claims/:claim_id/update_image' => 'claims#update_image'
+      delete 'claims/:claim_id/delete_image' => 'claims#delete_image'
       
       resources :categories
 
@@ -86,6 +89,8 @@ Rails.application.routes.draw do
       post 'experts/:expert_id/remove_category' => 'experts#remove_category'
       post 'experts/:expert_id/add_substantiation' => 'experts#add_evidence_of_belief'
       post 'experts/:expert_id/get_substantiations' => 'experts#get_substantiations'
+      patch 'experts/:expert_id/update_image' => 'experts#update_image'
+      delete 'experts/:expert_id/delete_image' => 'experts#delete_image'
 
 
       resources :publications

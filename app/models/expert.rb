@@ -25,7 +25,7 @@ class Expert < ApplicationRecord
 
   has_many :bona_fides
 
-  has_attached_file :avatar, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "/images/avatars/placeholder.png"
+  has_attached_file :avatar, styles: { medium: "300x300>", thumb: "100x100>" }, path: ":rails_root/public/images/expert_avatars/:basename.:extension", default_url: "/images/avatars/placeholder.png"
   validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\z/
 
 
@@ -294,5 +294,11 @@ class Expert < ApplicationRecord
     self.expert_categories.where({ category_id: id }).each do |expert_category|
       expert_category.destroy
     end
+  end
+
+
+  def delete_image
+    self.avatar.clear
+    self.save
   end
 end

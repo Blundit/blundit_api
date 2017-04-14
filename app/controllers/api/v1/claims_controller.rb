@@ -250,6 +250,47 @@ module Api::V1
 
     # remove comment method defined in application helper.
 
+    def update_image
+      if !params.has_key?(:claim_id) or !params.has_key?(:pic)
+        render json: { error: "Expert ID and Pic required." }, status: 422
+        return
+      end
+
+      @claim = Claim.find_by_id(params[:claim_id])
+
+      if @claim.nil?
+        render json: { error: "Claim not found" }, status: 422
+        return
+      end
+
+      if @claim.update(image_params)
+        render json: { status: "Success!" }
+      else
+        render json: { error: "There was an error updating" }, status:422
+      end
+    end
+
+
+    def delete_image
+      if !params.has_key?(:claim_id)
+        render json: { error: "Claim ID required." }, status: 422
+        return
+      end
+
+      @claim = Claim.find_by_id(params[:claim_id])
+
+      if @claim.nil?
+        render json: { error: "Claim not found" }, status: 422
+        return
+      end
+
+      if @claim.delete_image
+        render json: { status: "Success!" }
+      else
+        render json: { error: "Error" }, status: 422
+      end
+    end
+
 
     def add_category(claim, category_id)
 
@@ -477,6 +518,10 @@ module Api::V1
         :claim_id,
         :pic
       )
+    end
+
+    def image_params
+      params.permit(:pic)
     end
 
 

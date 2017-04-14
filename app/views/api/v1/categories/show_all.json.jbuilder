@@ -2,7 +2,7 @@ json.experts @experts.each do |expert|
   json.id expert.id
   json.name expert.name
   json.description expert.description
-  json.avatar expert.avatar
+  json.avatar expert.avatar_file_name
   json.alias expert.alias
   json.categories expert.categories.each do |category|
     json.id category.id
@@ -42,7 +42,7 @@ json.predictions @predictions.each do |prediction|
   json.recent_experts prediction.prediction_experts.order('updated_at DESC').limit(3).each do |pe|
     json.name pe.expert.name
     json.alias pe.expert.alias
-    json.avatar pe.expert.avatar
+    json.avatar pe.expert.avatar_file_name
   end
 
   json.vote_value prediction.vote_value
@@ -67,7 +67,7 @@ json.claims @claims.each do |claim|
   json.recent_experts claim.claim_experts.order('updated_at DESC').limit(3).each do |ce|
     json.name ce.expert.name
     json.alias ce.expert.alias
-    json.avatar ce.expert.avatar
+    json.avatar ce.expert.avatar_file_name
   end
 
   json.vote_value claim.vote_value

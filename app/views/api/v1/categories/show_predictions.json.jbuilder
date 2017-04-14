@@ -16,7 +16,7 @@ json.array! @predictions.each do |prediction|
   json.recent_experts prediction.prediction_experts.order('updated_at DESC').limit(3).each do |pe|
     json.name pe.expert.name
     json.alias pe.expert.alias
-    json.avatar pe.expert.avatar
+    json.avatar pe.expert.avatar_file_name
   end
 
   json.vote_value prediction.vote_value

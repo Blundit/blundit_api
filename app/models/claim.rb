@@ -21,7 +21,7 @@ class Claim < ApplicationRecord
 
     validates_presence_of :title
 
-    has_attached_file :pic, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "/images/claims/missing.jpg"
+    has_attached_file :pic, styles: { medium: "300x300>", thumb: "100x100>" }, path: ":rails_root/public/images/claim_avatars/:basename.:extension", default_url: "/images/avatars/placeholder.png"
     validates_attachment_content_type :pic, content_type: /\Aimage\/.*\z/
 
     acts_as_taggable
@@ -268,5 +268,11 @@ class Claim < ApplicationRecord
                 expert.remove_category_if_possible(category_id)
             end
         end
+    end
+
+
+    def delete_image
+        self.pic.clear
+        self.save
     end
 end

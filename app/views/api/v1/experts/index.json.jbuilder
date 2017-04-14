@@ -2,7 +2,7 @@ json.experts @experts.each do |expert|
   json.id expert.id
   json.name expert.name
   json.description expert.description
-  json.avatar expert.avatar
+  json.avatar expert.avatar_file_name
   json.alias expert.alias
   json.categories expert.categories.each do |category|
     json.id category.id

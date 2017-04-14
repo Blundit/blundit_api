@@ -21,7 +21,7 @@ class Prediction < ApplicationRecord
 
     validates_presence_of :title
 
-    has_attached_file :pic, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "/images/predictions/missing.jpg"
+    has_attached_file :pic, styles: { medium: "300x300>", thumb: "100x100>" }, path: ":rails_root/public/images/prediction_avatars/:basename.:extension", default_url: "/images/avatars/placeholder.png"
     validates_attachment_content_type :pic, content_type: /\Aimage\/.*\z/
 
     acts_as_taggable
@@ -304,4 +304,9 @@ class Prediction < ApplicationRecord
         end
     end
 
+
+    def delete_image
+        self.pic.clear
+        self.save
+    end
 end

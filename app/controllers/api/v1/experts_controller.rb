@@ -131,6 +131,48 @@ module Api::V1
     end
 
 
+    def update_image
+      if !params.has_key?(:expert_id) or !params.has_key?(:avatar)
+        render json: { error: "Expert ID and Avatar required." }, status: 422
+        return
+      end
+
+      @expert = Expert.find_by_id(params[:expert_id])
+
+      if @expert.nil?
+        render json: { error: "Expert not found" }, status: 422
+        return
+      end
+
+      if @expert.update(image_params)
+        render json: { status: "Success!" }
+      else
+        render json: { error: "There was an error updating" }, status:422
+      end
+    end
+
+
+    def delete_image
+      if !params.has_key?(:expert_id)
+        render json: { error: "Expert ID required." }, status: 422
+        return
+      end
+
+      @expert = Expert.find_by_id(params[:expert_id])
+
+      if @expert.nil?
+        render json: { error: "Expert not found" }, status: 422
+        return
+      end
+
+      if @expert.delete_image
+        render json: { status: "Success!" }
+      else
+        render json: { error: "Error" }, status: 422
+      end
+    end
+
+
     def add_category(expert, category_id)
 
       if expert.nil?
@@ -670,6 +712,11 @@ module Api::V1
           :evidence_of_belief_url,
           :avatar
         )
+    end
+
+
+    def image_params
+      params.permit(:avatar)
     end
 
 

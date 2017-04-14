@@ -239,6 +239,47 @@ module Api::V1
 
     # remove comment in application helper
 
+    def update_image
+      if !params.has_key?(:prediction_id) or !params.has_key?(:pic)
+        render json: { error: "Prediction ID and Avatar required." }, status: 422
+        return
+      end
+
+      @prediction = Prediction.find_by_id(params[:prediction_id])
+
+      if @prediction.nil?
+        render json: { error: "Prediction not found" }, status: 422
+        return
+      end
+
+      if @prediction.update(image_params)
+        render json: { status: "Success!" }
+      else
+        render json: { error: "There was an error updating" }, status:422
+      end
+    end
+
+
+    def delete_image
+      if !params.has_key?(:prediction_id)
+        render json: { error: "Prediction ID required." }, status: 422
+        return
+      end
+
+      @prediction = Prediction.find_by_id(params[:prediction_id])
+
+      if @prediction.nil?
+        render json: { error: "Prediction not found" }, status: 422
+        return
+      end
+
+      if @prediction.delete_image
+        render json: { status: "Success!" }
+      else
+        render json: { error: "Error" }, status: 422
+      end
+    end
+
 
     def add_category(prediction, category_id)
       
@@ -470,6 +511,10 @@ module Api::V1
         :pic,
         :prediction_date
       )
+    end
+
+    def image_params
+      params.permit(:pic)
     end
 
 

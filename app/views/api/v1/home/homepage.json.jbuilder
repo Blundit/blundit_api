@@ -14,6 +14,7 @@ json.most_recent_active_predictions @most_recent_active_predictions.each do |pre
 
   json.number_of_experts prediction.experts.count
   json.recent_experts prediction.prediction_experts.order('updated_at DESC').limit(3).each do |pe|
+    json.id pe.expert.id
     json.name pe.expert.name
     json.alias pe.expert.alias
     json.avatar pe.expert.avatar_file_name
@@ -39,6 +40,7 @@ json.most_recent_settled_predictions @most_recent_settled_predictions.each do |p
 
   json.number_of_experts prediction.experts.count
   json.recent_experts prediction.prediction_experts.order('updated_at DESC').limit(3).each do |pe|
+    json.id pe.expert.id
     json.name pe.expert.name
     json.alias pe.expert.alias
     json.avatar pe.expert.avatar_file_name
@@ -64,6 +66,7 @@ json.most_recent_active_claims @most_recent_active_claims.each do |claim|
 
   json.number_of_experts claim.experts.count
   json.recent_experts claim.claim_experts.order('updated_at DESC').limit(3).each do |ce|
+    json.id ce.expert.id
     json.name ce.expert.name
     json.alias ce.expert.alias
     json.avatar ce.expert.avatar_file_name
@@ -89,6 +92,7 @@ json.most_recent_settled_claims @most_recent_settled_claims.each do |claim|
 
   json.number_of_experts claim.experts.count
   json.recent_experts claim.claim_experts.order('updated_at DESC').limit(3).each do |ce|
+    json.id ce.expert.id
     json.name ce.expert.name
     json.alias ce.expert.alias
     json.avatar ce.expert.avatar_file_name
@@ -192,6 +196,7 @@ json.most_popular_predictions @most_popular_predictions.each do |prediction|
 
   json.number_of_experts prediction.experts.count
   json.recent_experts prediction.prediction_experts.order('updated_at DESC').limit(3).each do |pe|
+    json.id pe.expert.id
     json.name pe.expert.name
     json.alias pe.expert.alias
     json.avatar pe.expert.avatar_file_name
@@ -217,6 +222,7 @@ json.most_popular_claims @most_popular_claims.each do |claim|
 
   json.number_of_experts claim.experts.count
   json.recent_experts claim.claim_experts.order('updated_at DESC').limit(3).each do |ce|
+    json.id ce.expert.id
     json.name ce.expert.name
     json.alias ce.expert.alias
     json.avatar ce.expert.avatar_file_name

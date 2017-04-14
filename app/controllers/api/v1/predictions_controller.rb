@@ -118,6 +118,11 @@ module Api::V1
         add_or_update_publication(@page.host)
         add_bookmark("prediction", prediction.id)
 
+        if prediction.pic_file_name.nil?
+          prediction.pic = URI.parse(@page.images.best)
+          prediction.save
+        end
+
         attrs = {
           prediction_id: prediction.id,
           item_type: "prediction_evidence_added",

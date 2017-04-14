@@ -14,6 +14,7 @@ json.claims @claims.each do |claim|
 
   json.number_of_experts claim.experts.count
   json.recent_experts claim.claim_experts.order('updated_at DESC').limit(3).each do |ce|
+    json.id ce.expert.id
     json.name ce.expert.name
     json.alias ce.expert.alias
     json.avatar ce.expert.avatar_file_name

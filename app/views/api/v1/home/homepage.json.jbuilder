@@ -17,7 +17,7 @@ json.most_recent_active_predictions @most_recent_active_predictions.each do |pre
     json.id pe.expert.id
     json.name pe.expert.name
     json.alias pe.expert.alias
-    json.avatar pe.expert.avatar_file_name
+    json.avatar pe.expert.avatar.url
   end
 
   json.vote_value prediction.vote_value
@@ -43,7 +43,7 @@ json.most_recent_settled_predictions @most_recent_settled_predictions.each do |p
     json.id pe.expert.id
     json.name pe.expert.name
     json.alias pe.expert.alias
-    json.avatar pe.expert.avatar_file_name
+    json.avatar pe.expert.avatar.url
   end
 
   json.vote_value prediction.vote_value
@@ -69,7 +69,7 @@ json.most_recent_active_claims @most_recent_active_claims.each do |claim|
     json.id ce.expert.id
     json.name ce.expert.name
     json.alias ce.expert.alias
-    json.avatar ce.expert.avatar_file_name
+    json.avatar ce.expert.avatar.url
   end
 
   json.vote_value claim.vote_value
@@ -95,7 +95,7 @@ json.most_recent_settled_claims @most_recent_settled_claims.each do |claim|
     json.id ce.expert.id
     json.name ce.expert.name
     json.alias ce.expert.alias
-    json.avatar ce.expert.avatar_file_name
+    json.avatar ce.expert.avatar.url
   end
 
   json.vote_value claim.vote_value
@@ -106,7 +106,7 @@ json.most_accurate_experts @most_accurate_experts.each do |expert|
   json.id expert.id
   json.name expert.name
   json.description expert.description
-  json.avatar expert.avatar_file_name
+  json.avatar expert.avatar.url
   json.alias expert.alias
   json.categories expert.categories.each do |category|
     json.id category.id
@@ -132,7 +132,7 @@ json.least_accurate_experts @least_accurate_experts.each do |expert|
   json.id expert.id
   json.name expert.name
   json.description expert.description
-  json.avatar expert.avatar_file_name
+  json.avatar expert.avatar.url
   json.alias expert.alias
   json.categories expert.categories.each do |category|
     json.id category.id
@@ -158,7 +158,7 @@ json.most_popular_experts @most_popular_experts.each do |expert|
   json.id expert.id
   json.name expert.name
   json.description expert.description
-  json.avatar expert.avatar_file_name
+  json.avatar expert.avatar.url
   json.alias expert.alias
   json.categories expert.categories.each do |category|
     json.id category.id
@@ -199,7 +199,7 @@ json.most_popular_predictions @most_popular_predictions.each do |prediction|
     json.id pe.expert.id
     json.name pe.expert.name
     json.alias pe.expert.alias
-    json.avatar pe.expert.avatar_file_name
+    json.avatar pe.expert.avatar.url
   end
 
   json.vote_value prediction.vote_value
@@ -225,7 +225,7 @@ json.most_popular_claims @most_popular_claims.each do |claim|
     json.id ce.expert.id
     json.name ce.expert.name
     json.alias ce.expert.alias
-    json.avatar ce.expert.avatar_file_name
+    json.avatar ce.expert.avatar.url
   end
 
   json.vote_value claim.vote_value

@@ -20,6 +20,7 @@ end
 
 # Use Puma as the app server
 gem 'puma', '~> 3.0'
+gem 'the_lone_dyno'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
@@ -74,6 +75,7 @@ gem 'pundit'
 gem 'mailgun-ruby', require: 'mailgun'
 
 gem "paperclip", "~> 5.0.0"
+gem 'aws-sdk', '~> 2.3'
 
 gem 'sidekiq-scheduler'
 

@@ -17,7 +17,7 @@ json.predictions @predictions.each do |prediction|
     json.id pe.expert.id
     json.name pe.expert.name
     json.alias pe.expert.alias
-    json.avatar pe.expert.avatar_file_name
+    json.avatar pe.expert.avatar.url
   end
 
   json.vote_value prediction.vote_value

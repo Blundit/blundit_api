@@ -2,7 +2,7 @@ json.prediction do
   json.id @prediction.id
   json.title @prediction.title
   json.description @prediction.description
-  json.pic @prediction.pic_file_name
+  json.pic @prediction.pic.url
   json.alias @prediction.alias
   json.categories @prediction.categories.each do |category|
     json.id category.id
@@ -30,7 +30,7 @@ json.experts @prediction.prediction_experts.order('updated_at DESC').each do |pe
   json.alias pe.expert.alias
   json.name pe.expert.name
   json.accuracy pe.expert.accuracy
-  json.avatar pe.expert.avatar_file_name
+  json.avatar pe.expert.avatar.url
   if ExpertPrediction.where({prediction_id: @prediction.id, expert_id: pe.expert.id}).length > 0
     json.evidence_of_beliefs ExpertPrediction.where({prediction_id: @prediction.id, expert_id: pe.expert.id}).first.evidence_of_beliefs.count
   else

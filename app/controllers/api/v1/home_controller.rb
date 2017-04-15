@@ -12,7 +12,7 @@ module Api::V1
       @most_recent_active_claims = Claim.order('updated_at DESC').where({status: 0}).limit(@homepage_items)
 
       # most recent claims (settled)
-      @most_recent_settled_claims = Claim.order('updated_at DESC').where({status: 0}).limit(@homepage_items)
+      @most_recent_settled_claims = Claim.order('updated_at DESC').where({status: 1}).limit(@homepage_items)
       
 
       # random expert

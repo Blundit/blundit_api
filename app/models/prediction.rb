@@ -70,7 +70,7 @@ class Prediction < ApplicationRecord
             id: self.id
         }
 
-        @sidekiq_time = self.prediction_date.to_time + ENV['claim_voting_window'].to_i.days
+        @sidekiq_time = self.prediction_date.to_i + ENV['claim_voting_window'].to_i.days.to_i
         PredictionWorker.perform_at(@sidekiq_time, params)
     end
 

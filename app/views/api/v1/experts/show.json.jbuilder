@@ -12,6 +12,7 @@ json.expert do
   json.facebook @expert.facebook
   json.instagram @expert.instagram
   json.youtube @expert.youtube
+  json.wikipedia @expert.wikipedia
   json.categories @expert.categories.each do |category|
     json.id category.id
     json.name category.name

@@ -713,6 +713,7 @@ module Api::V1
           :website,
           :occupation,
           :tag_list,
+          :wikipedia,
           :evidence_of_belief_url,
           :avatar
         )

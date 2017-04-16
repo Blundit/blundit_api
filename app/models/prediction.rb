@@ -40,7 +40,9 @@ class Prediction < ApplicationRecord
             removed_tag: "Removed Tag From Prediction",
             added_expert: "Added Expert to Prediction",
             removed_expert: "Removed Expert from Prediction",
-            voted: "Voted on Prediction"
+            voted: "Voted on Prediction",
+            updated_image: "Updated Prediction Image",
+            deleted_image: "Deleted Prediction Image"
         }
     end
 
@@ -68,7 +70,7 @@ class Prediction < ApplicationRecord
             id: self.id
         }
 
-        @sidekiq_time = self.prediction_date.to_time + ENV['claim_voting_window'].to_i.days.from_now
+        @sidekiq_time = self.prediction_date.to_time + ENV['claim_voting_window'].to_i.days
         PredictionWorker.perform_at(@sidekiq_time, params)
     end
 

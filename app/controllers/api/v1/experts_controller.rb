@@ -145,6 +145,7 @@ module Api::V1
       end
 
       if @expert.update(image_params)
+        add_contribution(@expert, :updated_image)
         render json: { status: "Success!" }
       else
         render json: { error: "There was an error updating" }, status:422
@@ -166,6 +167,7 @@ module Api::V1
       end
 
       if @expert.delete_image
+        add_contribution(@expert, :deleted_image)
         render json: { status: "Success!" }
       else
         render json: { error: "Error" }, status: 422

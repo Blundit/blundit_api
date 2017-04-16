@@ -40,6 +40,8 @@ class Claim < ApplicationRecord
             added_tag: "Added Tag to Claim",
             removed_tamg: "Removed Tag From Claim",
             voted: "Voted on Claim",
+            updated_image: "Updated Claim Image",
+            deleted_image: "Deleted Claim Image"
         }
     end
 

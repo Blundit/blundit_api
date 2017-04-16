@@ -269,6 +269,7 @@ module Api::V1
       end
 
       if @claim.update(image_params)
+        add_contribution(@claim, :updated_image)
         render json: { status: "Success!" }
       else
         render json: { error: "There was an error updating" }, status:422
@@ -290,6 +291,7 @@ module Api::V1
       end
 
       if @claim.delete_image
+        add_contribution(@claim, :deleted_image)
         render json: { status: "Success!" }
       else
         render json: { error: "Error" }, status: 422

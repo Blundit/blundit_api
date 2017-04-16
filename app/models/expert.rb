@@ -46,7 +46,10 @@ class Expert < ApplicationRecord
       added_bona_fide: "Added Bona Fide to Expert",
       removed_bona_fide: "Removed Bona Fide from Expert",
       added_tag: "Added Tag to Expert",
-      removed_tag: "Removed Tag From Expert"
+      removed_tag: "Removed Tag From Expert",
+      updated_image: "Updated Expert Image",
+      deleted_image: "Deleted Expert Image"
+
     }
   end
 

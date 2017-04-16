@@ -17,7 +17,7 @@ json.array! @claims.each do |claim|
     json.id ce.expert.id
     json.name ce.expert.name
     json.alias ce.expert.alias
-    json.avatar ce.expert.avatar.url
+    json.avatar ce.expert.avatar.url(:thumb)
   end
 
   json.vote_value claim.vote_value

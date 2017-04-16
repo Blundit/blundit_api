@@ -4,6 +4,14 @@ json.expert do
   json.description @expert.description
   json.avatar @expert.avatar.url
   json.alias @expert.alias
+  json.occupation @expert.occupation
+  json.website @expert.website
+  json.city @expert.city
+  json.country @expert.country
+  json.twitter @expert.twitter
+  json.facebook @expert.facebook
+  json.instagram @expert.instagram
+  json.youtube @expert.youtube
   json.categories @expert.categories.each do |category|
     json.id category.id
     json.name category.name

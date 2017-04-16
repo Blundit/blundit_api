@@ -175,7 +175,7 @@ class ApplicationController < ActionController::Base
     if params.has_key?(:per_page)
       @per_page = params[:per_page]
     else
-      @per_page = 2
+      @per_page = 12
     end
 
     @per_page

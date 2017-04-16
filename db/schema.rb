@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170410200322) do
+ActiveRecord::Schema.define(version: 20170416002846) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -245,6 +245,10 @@ ActiveRecord::Schema.define(version: 20170410200322) do
     t.float    "prediction_accuracy"
     t.float    "claim_accuracy"
     t.integer  "expert_comments_count", default: 0
+    t.string   "website"
+    t.string   "occupation"
+    t.string   "country"
+    t.string   "city"
   end
 
   create_table "flags", force: :cascade do |t|
@@ -461,7 +465,6 @@ ActiveRecord::Schema.define(version: 20170410200322) do
     t.datetime "locked_at"
     t.string   "first_name"
     t.string   "last_name"
-    t.string   "name"
     t.string   "avatar_file_name"
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"

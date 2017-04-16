@@ -4,6 +4,7 @@ json.experts @experts.each do |expert|
   json.description expert.description
   json.avatar expert.avatar.url
   json.alias expert.alias
+  json.occupation expert.occupation
   json.categories expert.categories.each do |category|
     json.id category.id
     json.name category.name

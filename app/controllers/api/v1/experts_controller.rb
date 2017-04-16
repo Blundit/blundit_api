@@ -708,6 +708,10 @@ module Api::V1
           :facebook,
           :instagram,
           :youtube,
+          :city,
+          :country,
+          :website,
+          :occupation,
           :tag_list,
           :evidence_of_belief_url,
           :avatar

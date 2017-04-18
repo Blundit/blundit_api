@@ -19,7 +19,7 @@ module Api::V1
 
     
     def set_user
-      current_user = get_current_user
+      current_user = get_current_user_2
     end
 
 
@@ -51,7 +51,7 @@ module Api::V1
         @bookmark = current_user.bookmarks.find_by_claim_id(@claim.id)
       end
 
-      @user_vote = get_current_user
+      @user_vote = get_current_user_2
 
 
       mark_as_read(@claim)

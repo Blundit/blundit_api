@@ -8,10 +8,10 @@ module Api::V1
 
     def authenticate_current_user
     
-      head :unauthorized if get_current_user.nil?
+      head :unauthorized if get_current_user_2.nil?
     end
 
-    def get_current_user
+    def get_current_user_2
       if request.headers['Access-Token'].nil? or request.headers['Client'].nil? or request.headers['Uid'].nil?
         return nil
       end

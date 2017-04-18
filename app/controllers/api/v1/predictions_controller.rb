@@ -52,7 +52,7 @@ module Api::V1
 
 
     def set_user
-      current_user = get_current_user
+      current_user = get_current_user_2
     end
 
 

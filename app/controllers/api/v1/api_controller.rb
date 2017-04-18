@@ -7,6 +7,7 @@ module Api::V1
     end
 
     def authenticate_current_user
+    
       head :unauthorized if get_current_user.nil?
     end
 

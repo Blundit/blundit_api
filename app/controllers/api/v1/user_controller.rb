@@ -2,7 +2,7 @@
 module Api::V1
     class UserController < ApiController
         before_action :authenticate_current_user
-
+        
         def get_bookmarks
             @bookmarks = []
 

@@ -40,7 +40,7 @@ json.predictions @predictions.each do |prediction|
 
   json.number_of_experts prediction.experts.count
   json.recent_experts prediction.prediction_experts.order('updated_at DESC').limit(3).each do |pe|
-    json.id pe expert.id
+    json.id pe.expert.id
     json.name pe.expert.name
     json.alias pe.expert.alias
     json.avatar pe.expert.avatar.url(:medium)

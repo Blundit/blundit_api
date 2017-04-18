@@ -12,14 +12,14 @@ module Api::V1
     end
 
     def get_current_user
-      if request.headers['access-token'].nil? or request.headers['client'].nil? or request.headers['uid'].nil?
+      if request.headers['Access-Token'].nil? or request.headers['Client'].nil? or request.headers['Uid'].nil?
         return nil
       end
+      current_user = User.find_by(uid: request.headers['Uid'])
 
-      current_user = User.find_by(uid: request.headers['uid'])
 
-      if current_user && current_user.tokens.has_key?(request.headers["client"])
-          token = current_user.tokens[request.headers["client"]]
+      if current_user && current_user.tokens.has_key?(request.headers["Client"])
+          token = current_user.tokens[request.headers["Client"]]
           expiration_datetime = DateTime.strptime(token["expiry"].to_s, "%s")
 
           if expiration_datetime > DateTime.now

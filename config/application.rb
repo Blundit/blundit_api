@@ -29,7 +29,7 @@ module Blundit
         origins '*'
         resource '*',
           :headers => :any, 
-          :expose => ['access-token', 'expiry', 'token-type', 'uid', 'client'],
+          :expose => ['Access-Token', 'Expiry', 'Token-Type', 'Uid', 'Client'],
           :methods => [:get, :post, :patch, :delete, :options, :put]
       end
     end

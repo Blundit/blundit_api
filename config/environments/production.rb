@@ -60,7 +60,7 @@ Rails.application.configure do
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   config.action_mailer.raise_delivery_errors = false
-  config.action_mailer.default_url_options = { host: 'blundit.hoggworks.com', port: 5000 }
+  config.action_mailer.default_url_options = { host: 'fast-earth-30912.herokuapp.com' }
 
   config.action_mailer.perform_caching = false
 

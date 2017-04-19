@@ -64,6 +64,10 @@ module Api::V1
                 return
             end
             current_user = User.find_by({ uid: params[:uid] })
+            p "!!!!!"
+            p params
+            p params[:uid]
+            p params['uid']
             if current_user.nil?
                 render json: { error: "User not found" }, status: 401
                 return

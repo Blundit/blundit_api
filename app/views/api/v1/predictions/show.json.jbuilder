@@ -20,7 +20,7 @@ json.prediction do
 
   json.evidences @prediction.evidences.order('updated_at DESC').each do |evidence|
     json.title evidence.title
-    json.url evidence.pic.url
+    json.url evidence.url
     json.description evidence.description
     json.image evidence.image
   end

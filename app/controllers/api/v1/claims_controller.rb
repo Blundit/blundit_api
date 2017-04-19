@@ -146,10 +146,10 @@ module Api::V1
         add_or_update_publication(@page.host)
         add_bookmark("claim", claim.id)
 
-        if claim.pic_file_name.nil?
-          claim.pic = URI.parse(@page.images.best)
-          claim.save
-        end
+        # if claim.pic_file_name.nil? and URI
+        #   claim.pic = URI.parse(@page.images.best)
+        #   claim.save
+        # end
 
         attrs = {
           claim_id: claim.id,

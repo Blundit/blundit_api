@@ -344,13 +344,13 @@ module Api::V1
           user_id: current_user.id,
           expert_id: @expert.id,
           item_type: "expert_bona_fide_added",
-          message: "Bona Fide '#{@page.best_title}' added to Expert"
+          message: "Credential '#{@page.best_title}' added to Expert"
         }
         NotificationQueue::delay.process(attrs)
 
         render json: { status: 'success' }
       else
-        render json: { error: 'Unable to Add Bona Fide to Expert' }, status: 422
+        render json: { error: 'Unable to Add Credential to Expert' }, status: 422
       end
     end
 

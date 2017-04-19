@@ -1,7 +1,7 @@
 
 module Api::V1
     class UserController < ApiController
-        before_action :authenticate_current_user
+        before_action :authenticate_current_user, except: [:authenticate]
         
         def get_bookmarks
             @bookmarks = []
@@ -22,6 +22,7 @@ module Api::V1
             end
         end
 
+
         def do_remove_bookmark
             render json: { thing: "yep" }
         end
@@ -32,6 +33,15 @@ module Api::V1
             @claim_votes = ClaimVote.joins(:vote).where("votes.user_id = #{current_user.id}")
         end
 
+
+        def get_avatar
+            if current_user.nil?
+                render json: { error: "Must be logged in." }, status: 422
+            end
+
+            render json: { avatar: current_user.avatar.url }
+        end
+
         
         def update_user
             if current_user.nil?
@@ -39,12 +49,39 @@ module Api::V1
                 return
             end
 
-            u = User.find(current_user.id)
-            if u.update(user_params)
-                u.reload
-                render json: { status: "User updated", user: u }
+            user = User.find(current_user.id)
+            if user.update(user_params)
+                user.reload
             else
                 render json: { status: "Error updating user" }, status: 422
+            end
+        end
+
+
+        def authenticate
+            if !params.has_key?(:uid) or !params.has_key?(:client)
+                render json: { error: "Data missing." }, status: 401
+                return
+            end
+            current_user = User.find_by({ uid: params[:uid] })
+            if current_user.nil?
+                render json: { error: "User not found" }, status: 401
+                return
+            end
+
+            if current_user && current_user.tokens.has_key?(params[:client])
+                token = current_user.tokens[params[:client]]
+                expiration_datetime = DateTime.strptime(token["expiry"].to_s, "%s")
+
+                if expiration_datetime > DateTime.now
+                    @current_user = current_user
+                end
+            end
+
+            if @current_user
+                render json: { status: "You're currently logged in.", data: params }
+            else
+                render json: { error: "Authentication failed." }, status: 401
             end
         end
 

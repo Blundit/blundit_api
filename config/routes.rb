@@ -104,6 +104,8 @@ Rails.application.routes.draw do
         get 'bookmarks' => 'user#get_bookmarks'
         get 'votes' => 'user#get_votes'
         put 'update' => 'user#update_user'
+        post 'get_avatar' => 'user#get_avatar'
+        get 'authenticate' => 'user#authenticate'
       end
 
       resource :home do

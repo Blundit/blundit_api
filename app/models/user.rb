@@ -66,7 +66,7 @@ class User < ApplicationRecord
 
 
   def comments_count
-    return self.user_comments_count
+    self.user_comments_count
   end
   
 

@@ -6,6 +6,7 @@ json.predictions @predictions.each do |prediction|
   json.description prediction.description
   json.comments_count prediction.comments_count
   json.votes_count prediction.votes_count
+  json.prediction_date prediction.prediction_date
 
   json.categories prediction.categories.each do |category|
     json.id category.id

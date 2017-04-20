@@ -19,7 +19,7 @@ group :production do
 end
 
 # Use Puma as the app server
-gem 'puma', '~> 3.0'
+gem 'puma'
 gem 'the_lone_dyno'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'

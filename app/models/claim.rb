@@ -98,7 +98,11 @@ class Claim < ApplicationRecord
     
 
     scope :do_search, -> (q, p = 0) do
-        qstr = q.split(" ")
+        if !q.nil?
+            qstr = q.split(" ")
+        else
+            qstr = [""]
+        end
         fields = %w(claims.title claims.description tags.name)
         clause = []
 

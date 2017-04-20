@@ -4,7 +4,8 @@ module Api::V1
       @homepage_items = 4
       @most_popular_items = 10
       # most recent predictions (active)
-      @most_recent_active_predictions = Prediction.order('prediction_date DESC').where(["status = ? and prediction_date >= ? and prediction_date < ?", 0, (Time.now-2), Time.now]).limit(@homepage_items)
+      @most_recent_active_predictions = Prediction.order('prediction_date DESC').where(["status = ? and prediction_date <= ?", 0, Time.now]).limit(@homepage_items)
+      
       # most recent predictions (settled)
       @most_recent_settled_predictions = Prediction.order('updated_at DESC').where({status: 1}).limit(@homepage_items)
 

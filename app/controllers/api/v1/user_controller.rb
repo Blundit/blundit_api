@@ -39,7 +39,7 @@ module Api::V1
                 render json: { error: "Must be logged in." }, status: 422
             end
 
-            render json: { avatar: current_user.avatar.url }
+            render json: { avatar: current_user.avatar.url(:medium) }
         end
 
         
@@ -64,10 +64,6 @@ module Api::V1
                 return
             end
             current_user = User.find_by({ uid: params[:uid] })
-            p "!!!!!"
-            p params
-            p params[:uid]
-            p params['uid']
             if current_user.nil?
                 render json: { error: "User not found" }, status: 401
                 return

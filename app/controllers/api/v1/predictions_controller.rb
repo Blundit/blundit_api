@@ -98,6 +98,7 @@ module Api::V1
       
       return if url.nil? or prediction.nil?
       return if url.index("://").nil?
+      
 
       @page = MetaInspector.new(url, :allow_non_html_content => true)
       evidence_params = {
@@ -145,6 +146,8 @@ module Api::V1
         render json: { result: "Prediction #{params[:prediction_id]}" }, status: 422
         return
       end
+
+      # TODO: MAKE THIS CHANGE VOTE IF NECESSARY
 
       if @prediction.votes << Vote.create({ user_id: current_user.id, vote: params[:value].to_i })
         add_bookmark("prediction", @prediction.id)
@@ -382,6 +385,12 @@ module Api::V1
         render json: { error: "Expert Not Found" }, status: 422
         return
       end
+
+      if @prediction.experts.where({id: params[:id]}).count > 0
+        render json: { error: "Expert already has this prediction." }, status: 422
+        return
+      end
+      
 
       if @prediction.experts << @expert
         @expert.predictions << @prediction

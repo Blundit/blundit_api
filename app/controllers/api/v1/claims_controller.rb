@@ -392,6 +392,11 @@ module Api::V1
         return
       end
 
+      if @claim.experts.where({id: params[:id]}).count > 0
+        render json: { error: "Expert already has this claim." }, status: 422
+        return
+      end
+      
       if @claim.experts << @expert
         @expert.claims << @claim
         add_contribution(@claim, :added_expert)

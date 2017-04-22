@@ -423,26 +423,30 @@ module Api::V1
       end
       
       if params.has_key?(:id)
-          @claim.experts << @expert
-          @expert.claims << @claim
-          @expert.calc_accuracy
+        if @expert.claims.where({id: params[:id]}).count > 0
+          render json: { error: "This expert already has this claim." }, status: 422
+          return
+        end
+        @claim.experts << @expert
+        @expert.claims << @claim
+        @expert.calc_accuracy
 
-          if params.has_key?(:evidence_of_belief_url)
-            add_evidence_of_belief(params[:evidence_of_belief_url], params[:id], "claim")
-          end
+        if params.has_key?(:evidence_of_belief_url) and params[:evidence_of_belief_url].is_valid_url?
+          add_evidence_of_belief(params[:evidence_of_belief_url], params[:id], "claim")
+        end
 
-          add_contribution(@expert, :added_claim)
-          add_bookmark("expert", @expert.id)
-          attrs = {
-            user_id: current_user.id,
-            claim_id: @claim.id,
-            expert_id: @expert.id,
-            item_type: "expert_claim_added",
-            message: "#{@claim.title} added to Expert"
-          }
-          NotificationQueue::delay.process(attrs)
+        add_contribution(@expert, :added_claim)
+        add_bookmark("expert", @expert.id)
+        attrs = {
+          user_id: current_user.id,
+          claim_id: @claim.id,
+          expert_id: @expert.id,
+          item_type: "expert_claim_added",
+          message: "#{@claim.title} added to Expert"
+        }
+        NotificationQueue::delay.process(attrs)
       else
-          render json: { error: "Claim ID Not Found" }, status: 422
+        render json: { error: "Claim ID Not Found" }, status: 422
       end
     end
 
@@ -512,13 +516,17 @@ module Api::V1
       end
       
       if params.has_key?(:id)
+        if @expert.predictions.where({id: params[:id]}).count > 0
+          render json: { error: "This expert already has this prediction." }, status: 422
+          return
+        end
         @prediction.experts << @expert
         @expert.predictions << @prediction
         @expert.calc_accuracy
         add_contribution(@expert, :added_claim)
         add_bookmark("expert", @expert.id)
 
-        if params.has_key?(:evidence_of_belief_url)
+        if params.has_key?(:evidence_of_belief_url) and params[:evidence_of_belief_url].is_valid_url?
           add_evidence_of_belief(params[:evidence_of_belief_url], params[:id], "prediction")
         end
 

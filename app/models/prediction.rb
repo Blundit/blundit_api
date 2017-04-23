@@ -293,7 +293,7 @@ class Prediction < ApplicationRecord
         return false if self.prediction_date.nil?
 
         @can_close = true
-        if (Time.now - self.prediction_date) > ENV['prediction_voting_window'].to_i.days.from_now and self.votes.length >= VOTES_REQUIRED_TO_CLOSE_PREDICTION
+        if (Time.now - self.prediction_date) > ENV['prediction_voting_window'].to_i.days.from_now and self.votes.length >= ENV['votes_required_to_close_prediction']
             return true
         end
 

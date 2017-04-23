@@ -609,6 +609,7 @@ module Api::V1
 
         attrs = {
           expert_id: @expert.id,
+          current_user: current_user.id,
           type: @type,
           item_id: @item.id,
           item_type: "expert_evidence_of_belief_added",

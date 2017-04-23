@@ -126,6 +126,7 @@ module Api::V1
 
         attrs = {
           prediction_id: prediction.id,
+          user_id: current_user.id,
           item_type: "prediction_evidence_added",
           message: "Evidence added to #{prediction.title}"
         }
@@ -323,6 +324,7 @@ module Api::V1
         attrs = {
           prediction_id: @prediction.id,
           item_type: "prediction_category_added",
+          user_id: current_user.id,
           message: "Category '#{@category.name}' added to #{@prediction.title}"
         }
         NotificationQueue::delay.process(attrs)
@@ -360,6 +362,7 @@ module Api::V1
         attrs = {
           prediction_id: @prediction.id,
           item_type: "prediction_category_removed",
+          user_id: current_user.id,
           message: "Category '#{@category.name}' removed from #{@prediction.title}"
         }
         NotificationQueue::delay.process(attrs)
@@ -399,6 +402,7 @@ module Api::V1
 
         attrs = {
           expert_id: @expert.id,
+          user_id: current_user.id,
           prediction_id: @prediction.id,
           item_type: "prediction_expert_added",
           message: "#{@expert.name} added to #{@prediction.title}"
@@ -451,6 +455,7 @@ module Api::V1
         attrs = {
           expert_id: @expert.id,
           prediction_id: @prediction.id,
+          user_id: current_user.id,
           item_type: "prediction_expert_removed",
           message: "#{@expert.title} removed from #{@prediction.title}"
         }

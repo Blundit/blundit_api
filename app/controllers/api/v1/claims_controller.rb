@@ -152,6 +152,7 @@ module Api::V1
         # end
 
         attrs = {
+          user_id: current_user.id,
           claim_id: claim.id,
           item_type: "claim_evidence_added",
           message: "Evidence added to #{claim.title}"
@@ -330,6 +331,7 @@ module Api::V1
 
         attrs = {
           claim_id: @claim.id,
+          user_id: current_user.id,
           item_type: "claim_category_added",
           message: "Category '#{@category.name}' added to #{@claim.title}"
         }
@@ -367,6 +369,7 @@ module Api::V1
 
         attrs = {
           claim_id: @claim.id,
+          user_id: current_user.id,
           item_type: "claim_category_removed",
           message: "Category '#{@category.name}' removed from #{@claim.title}"
         }
@@ -455,6 +458,7 @@ module Api::V1
         add_bookmark("claim", @claim.id)
         attrs = {
           claim_id: @claim.id,
+          user_id: current_user.id,
           item_type: "claim_expert_removed",
           message: "#{@expert.name} removed from Claim '#{@claim.title}'"
         }

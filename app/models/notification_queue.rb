@@ -86,7 +86,7 @@ class NotificationQueue < ApplicationRecord
     def self.compile_and_send_email(items, digest_type = nil)
         if digest_type.nil?
             item = items.first
-            @user = User.find(item.user_id)
+            @user = User.find_by_id(item.user_id)
 
             @email = @user.email
             @name = @user.name

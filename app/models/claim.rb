@@ -258,7 +258,7 @@ class Claim < ApplicationRecord
 
     def can_close
         @can_close = true
-        if (Time.now - self.created_at) > ENV['voting_window'].to_i.days.from_now and self.votes.length >= VOTES_REQUIRED_TO_CLOSE_PREDICTION
+        if (Time.now - self.created_at) > ENV['claim_voting_window'].to_i.days.from_now and self.votes.length >= VOTES_REQUIRED_TO_CLOSE_PREDICTION
             return true
         end
 

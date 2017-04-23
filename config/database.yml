@@ -25,3 +25,4 @@ production:
   encoding: utf8
   database: blundit_production
   port: 3306
+  pool: <%= ENV["DB_POOL"] || ENV['RAILS_MAX_THREADS'] || 5 %>

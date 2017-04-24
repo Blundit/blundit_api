@@ -19,7 +19,7 @@ module Api::V1
 
     def all
       # TODO: Limit to active
-      @experts = Expert.all
+      @experts = Expert.all.order('name ASC')
     end
 
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170416021546) do
+ActiveRecord::Schema.define(version: 20170424132200) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -161,7 +161,7 @@ ActiveRecord::Schema.define(version: 20170416021546) do
     t.string   "title"
     t.string   "url"
     t.text     "description"
-    t.string   "image"
+    t.text     "image"
     t.text     "url_content"
     t.string   "domain"
   end

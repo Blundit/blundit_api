@@ -1,9 +1,9 @@
 class NotificationQueueItem < ApplicationRecord
-    has_one :claim
-    has_one :prediction
-    has_one :expert
-    has_one :comment
-    has_one :category
+    belongs_to :claim
+    belongs_to :prediction
+    belongs_to :expert
+    belongs_to :comment
+    belongs_to :category
 
     def type?
         return "expert" if !self.expert.nil?

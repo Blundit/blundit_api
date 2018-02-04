@@ -162,42 +162,6 @@ module Api::V1
     end
 
 
-    # def edit
-    #   # PUT /pundits/:id
-    #   if @claim.update(claim_params)
-    #     add_contribution(@claim, :edited_claim)
-    #     add_bookmark("claim", @claim.id)
-
-    #     render json: { result: "success" }
-    #   else
-    #     render json: { result: "error" }
-    #   end
-    # end
-
-
-    # def destroy
-    #   # DELETE /pundits/:id
-
-    #   if !has_permission_to_destroy
-    #     render json: { result: "You don't have permission to destroy." }, status: 422
-    #     return
-    #   end
-
-    #   if params.has_key?[:id]
-    #     # TODO: Make this set the item to 'invalid' or something, without destorying
-    #     if @claim.destroy
-    #       add_contribution(@claim, :destroyed_claim)
-    #       remove_bookmark(@claim.id, "claim")
-    #       render json: { result: "success" }
-    #     else
-    #       render json: { result: "error" }
-    #     end
-    #   else
-    #     render json: { result: "ID Not Found" }, status: 422
-    #   end
-    # end
-
-
     def search
       @claim = Claim.do_search(params[:term]).page(current_page).per(per_page)
       @current_page = current_page

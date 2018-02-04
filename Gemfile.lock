@@ -125,6 +125,7 @@ GEM
     builder (3.2.3)
     byebug (9.0.6)
     cancan (1.6.10)
+    choice (0.2.0)
     climate_control (0.1.0)
     cocaine (0.5.8)
       climate_control (>= 0.0.3, < 1.0)
@@ -296,6 +297,11 @@ GEM
     rails-dom-testing (2.0.2)
       activesupport (>= 4.2.0, < 6.0)
       nokogiri (~> 1.6)
+    rails-erd (1.5.2)
+      activerecord (>= 3.2)
+      activesupport (>= 3.2)
+      choice (~> 0.2.0)
+      ruby-graphviz (~> 1.2)
     rails-html-sanitizer (1.0.3)
       loofah (~> 2.0)
     railties (5.0.2)
@@ -322,6 +328,7 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
+    ruby-graphviz (1.2.3)
     rufus-scheduler (3.3.4)
       tzinfo
     sass (3.4.23)
@@ -415,6 +422,7 @@ DEPENDENCIES
   pundit
   rack-cors
   rails (~> 5.0.1)
+  rails-erd
   sass-rails (~> 5.0)
   sidekiq (~> 4.0.0)
   sidekiq-scheduler

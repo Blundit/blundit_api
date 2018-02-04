@@ -18,7 +18,7 @@ class NotificationQueue < ApplicationRecord
             if bookmark.notify == true
                 if bookmark.user.notification_frequency == 1
                     @newItem = self.add_to_notification_queue(attrs)
-                    self.delay.compile_and_send_email([@newItem])
+                    self.delay.compile_and_send_email([@newItem], nil, bookmark.user)
                 else
 
                     self.delay.add_to_notification_queue(attrs)
@@ -45,6 +45,7 @@ class NotificationQueue < ApplicationRecord
             u = User.find_by_id(user)
             if !u.nil? and u.notification_frequency == 2
                 @queueItems = NotificationQueueItem.where("created_at >= '#{@range_from}' and created_at <= '#{@range_to}'").where("user_id = ?", user)
+                # TODO: Add bit here to strip out items created/added by current user
                 self.delay.compile_and_send_email(@queueItems, "daily")
             end
         end
@@ -61,6 +62,7 @@ class NotificationQueue < ApplicationRecord
             u = User.find_by_id(user)
             if !u.nil? and u.notification_frequency == 3
                 @queueItems = NotificationQueueItem.where("created_at >= #{@range_from} and created_at <= #{@range_to}").where("user_id = ?", user)
+                # TODO: Add bit here to strip out items created/added by current user
                 self.delay.compile_and_send_email(@queueItems, "weekly")
             end
         end
@@ -77,22 +79,26 @@ class NotificationQueue < ApplicationRecord
             u = User.find_by_id(user)
             if !u.nil? and u.notification_frequency == 4
                 @queueItems = NotificationQueueItem.where("created_at >= #{@range_from} and created_at <= #{@range_to}").where("user_id = ?", user)
+                
+                # TODO: Add bit here to strip out items created/added by current user
                 self.delay.compile_and_send_email(@queueItems, "monthly")
             end
         end
     end
 
 
-    def self.compile_and_send_email(items, digest_type = nil)
+    def self.compile_and_send_email(items, digest_type = nil, user)
         if digest_type.nil?
             item = items.first
             @user = User.find_by_id(item.user_id)
 
             @email = @user.email
             @name = @user.name
-
-            ImmediateMailer.as_they_happen(item).deliver
-            item.destroy
+            
+            if (!user.nil? and user.id != @user.id) or user.nil?
+                ImmediateMailer.as_they_happen(item).deliver
+                item.destroy
+            end
         else
             # send digest
             if digest_type == "daily"

@@ -445,6 +445,8 @@ module Api::V1
           message: "#{@claim.title} added to Expert"
         }
         NotificationQueue::delay.process(attrs)
+
+        render json: { status: "Success" }
       else
         render json: { error: "Claim ID Not Found" }, status: 422
       end

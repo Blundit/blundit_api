@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170424132200) do
+ActiveRecord::Schema.define(version: 20180210124336) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -393,6 +393,8 @@ ActiveRecord::Schema.define(version: 20170424132200) do
     t.datetime "updated_at", null: false
     t.integer  "user_id"
     t.integer  "claim_id"
+    t.index ["claim_id"], name: "index_user_claims_on_claim_id"
+    t.index ["user_id"], name: "index_user_claims_on_user_id"
   end
 
   create_table "user_comments", force: :cascade do |t|
@@ -400,6 +402,8 @@ ActiveRecord::Schema.define(version: 20170424132200) do
     t.datetime "updated_at", null: false
     t.integer  "user_id"
     t.integer  "comment_id"
+    t.index ["comment_id"], name: "index_user_comments_on_comment_id"
+    t.index ["user_id"], name: "index_user_comments_on_user_id"
   end
 
   create_table "user_contributions", force: :cascade do |t|
@@ -407,6 +411,8 @@ ActiveRecord::Schema.define(version: 20170424132200) do
     t.datetime "updated_at",      null: false
     t.integer  "user_id"
     t.integer  "contribution_id"
+    t.index ["contribution_id"], name: "index_user_contributions_on_contribution_id"
+    t.index ["user_id"], name: "index_user_contributions_on_user_id"
   end
 
   create_table "user_experts", force: :cascade do |t|
@@ -414,6 +420,8 @@ ActiveRecord::Schema.define(version: 20170424132200) do
     t.datetime "updated_at", null: false
     t.integer  "user_id"
     t.integer  "expert_id"
+    t.index ["expert_id"], name: "index_user_experts_on_expert_id"
+    t.index ["user_id"], name: "index_user_experts_on_user_id"
   end
 
   create_table "user_flags", force: :cascade do |t|
@@ -421,6 +429,8 @@ ActiveRecord::Schema.define(version: 20170424132200) do
     t.datetime "updated_at", null: false
     t.integer  "user_id"
     t.integer  "flag_id"
+    t.index ["flag_id"], name: "index_user_flags_on_flag_id"
+    t.index ["user_id"], name: "index_user_flags_on_user_id"
   end
 
   create_table "user_predictions", force: :cascade do |t|
@@ -428,6 +438,8 @@ ActiveRecord::Schema.define(version: 20170424132200) do
     t.datetime "updated_at",    null: false
     t.integer  "user_id"
     t.integer  "prediction_id"
+    t.index ["prediction_id"], name: "index_user_predictions_on_prediction_id"
+    t.index ["user_id"], name: "index_user_predictions_on_user_id"
   end
 
   create_table "user_votes", force: :cascade do |t|
@@ -435,6 +447,8 @@ ActiveRecord::Schema.define(version: 20170424132200) do
     t.datetime "updated_at", null: false
     t.integer  "user_id"
     t.integer  "vote_id"
+    t.index ["user_id"], name: "index_user_votes_on_user_id"
+    t.index ["vote_id"], name: "index_user_votes_on_vote_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -485,6 +499,7 @@ ActiveRecord::Schema.define(version: 20170424132200) do
     t.datetime "updated_at", null: false
     t.integer  "user_id"
     t.integer  "vote"
+    t.index ["user_id"], name: "index_votes_on_user_id"
   end
 
 end

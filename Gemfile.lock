@@ -123,6 +123,9 @@ GEM
       railties (>= 4.0.0, < 5.1)
       sprockets (>= 3.6.0)
     builder (3.2.3)
+    bullet (5.7.2)
+      activesupport (>= 3.0.0)
+      uniform_notifier (~> 1.11.0)
     byebug (9.0.6)
     cancan (1.6.10)
     choice (0.2.0)
@@ -380,6 +383,7 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.2)
+    uniform_notifier (1.11.0)
     warden (1.2.7)
       rack (>= 1.0)
     web-console (3.4.0)
@@ -400,6 +404,7 @@ DEPENDENCIES
   acts-as-taggable-on (~> 4.0)
   aws-sdk (~> 2.3)
   browserify-rails
+  bullet
   byebug
   cancan
   coffee-rails (~> 4.2)

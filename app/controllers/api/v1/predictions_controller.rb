@@ -6,7 +6,7 @@ module Api::V1
 
     def index
       # GET /CONTROLLER
-      @predictions = Prediction.do_search(params[:query], params[:sort]).includes(:prediction_categories, :categories).order('created_at DESC').page(current_page).per(per_page)
+      @predictions = Prediction.do_search(params[:query], params[:sort]).includes(:categories).includes(prediction_categories: :category).includes(prediction_experts: :expert).order('created_at DESC').page(current_page).per(per_page)
       @current_page = current_page
       @per_page = per_page
     end
@@ -30,9 +30,9 @@ module Api::V1
       end
       
       if params[:id].to_i != 0
-        @prediction = Prediction.find_by_id(params[:id])
+        @prediction = Prediction.includes(prediction_experts: :expert).find_by_id(params[:id])
       else
-        @prediction = Prediction.where(alias: params[:id]).first
+        @prediction = Prediction.where(alias: params[:id]).includes(prediction_experts: :expert).first
 
         if @prediction.nil?
           render json: { errors: "Prediction Not Found" }, status: 422

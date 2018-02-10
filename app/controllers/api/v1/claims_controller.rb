@@ -7,7 +7,8 @@ module Api::V1
 
     def index
       # GET /CONTROLLER
-      @claims = Claim.do_search(params[:query], params[:sort]).includes(:claim_categories, :categories).order('created_at DESC').page(current_page).per(per_page)
+      @claims = Claim.do_search(params[:query], params[:sort]).includes(:experts).includes(claim_categories: :category).includes(:categories).order('created_at DESC').page(current_page).per(per_page)
+
       @current_page = current_page
       @per_page = per_page
     end
@@ -34,9 +35,9 @@ module Api::V1
       end
 
       if params[:id].to_i != 0
-        @claim = Claim.find_by_id(params[:id])
+        @claim = Claim.includes(claim_experts: :expert).find_by_id(params[:id])
       else
-        @claim = Claim.where(alias: params[:id]).first
+        @claim = Claim.where(alias: params[:id]).includes(claim_experts: :expert).first
 
         if @claim.nil?
           render json: { errors: "Claim Not Found" }, status: 422

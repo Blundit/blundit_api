@@ -34,9 +34,9 @@ module Api::V1
       end
       
       if params[:id].to_i != 0
-        @expert = Expert.find_by_id(params[:id])
+        @expert = Expert.includes(expert_predictions: :prediction).includes(expert_claims: :claim).find_by_id(params[:id])
       else
-        @expert = Expert.where(alias: params[:id]).first
+        @expert = Expert.where(alias: params[:id]).includes(expert_predictions: :prediction).includes(expert_claims: :claim).first
 
         if @expert.nil?
           render json: { errors: "Expert Not Found" }, status: 422

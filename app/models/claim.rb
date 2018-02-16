@@ -19,6 +19,8 @@ class Claim < ApplicationRecord
     has_many :claim_comments, dependent: :destroy
     has_many :comments, -> { distinct }, :through => :claim_comments
 
+    has_many :vote_overrides
+
     validates_presence_of :title
 
     has_attached_file :pic, styles: { medium: "300x300>", thumb: "100x100>" }
@@ -218,10 +220,22 @@ class Claim < ApplicationRecord
             status = 1
         end
 
-        self.status = status
+        self.status = 1
         self.save
 
         if status == 1
+            # TODO: Post-save actions, notifications, etc.
+
+            # add status changed notification
+            send_status_notifications
+            calc_expert_accuracy
+        end
+    end
+
+    def override_vote(val)
+        self.vote_value = val
+        self.status = 1
+        if self.save
             # TODO: Post-save actions, notifications, etc.
 
             # add status changed notification

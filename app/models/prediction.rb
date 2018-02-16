@@ -19,6 +19,8 @@ class Prediction < ApplicationRecord
     has_many :prediction_flags, dependent: :destroy
     has_many :flags, :through => :prediction_flags
 
+    has_many :vote_overrides
+
     validates_presence_of :title
 
     has_attached_file :pic, styles: { medium: "300x300>", thumb: "100x100>" }
@@ -258,6 +260,19 @@ class Prediction < ApplicationRecord
 
         if status == 1
             # TODO: Post-save actions, notifications, etc.
+            send_status_notifications
+            calc_expert_accuracy
+        end
+    end
+
+
+    def override_vote
+        self.vote_value = params[:vote_value]
+        self.status = 1
+        if self.save
+            # TODO: Post-save actions, notifications, etc.
+
+            # add status changed notification
             send_status_notifications
             calc_expert_accuracy
         end

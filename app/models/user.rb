@@ -64,6 +64,13 @@ class User < ApplicationRecord
     return @rank
   end
 
+  def admin?
+    permissions > 0
+  end
+
+  def superadmin?
+    permissions > 1
+  end
 
   def comments_count
     self.user_comments_count

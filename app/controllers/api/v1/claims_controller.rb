@@ -80,6 +80,28 @@ module Api::V1
       end
     end
 
+    
+    def override
+      if !params.has_key?(:claim_id) or !params.has_key?(:value) or !params.has_key?(:reason)
+        render json: { result: "claim_id and value are both required" }, status: 422
+        return
+      end
+
+      @v = VoteOverride.new
+      @v.user_id = current_user.id
+      @v.claim_id = params[:claim_id]
+      @v.value = params[:value]
+      @v.reason = params.reason
+
+      if @v.save
+        @c = Claim.find(params[:claim_id])
+        @c.override_vote(params[:value])
+        render json: { result: "success" }
+      else
+        render json: { result: "Unable to override vote" }, status: 422
+      end
+    end
+
 
     def new
       # GET /pundits/new

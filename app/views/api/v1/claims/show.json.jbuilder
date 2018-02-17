@@ -11,7 +11,17 @@ json.claim do
   json.comments_count @claim.claim_comments_count
   json.votes_count @claim.claim_votes_count
   json.vote_value @claim.vote_value
-  json.status @claim.status
+
+  if @claim.status == 0 and @claim.vote_value.nil?
+    json.status "unknown"
+  elsif @claim.status == 0 and !@claim.vote_value.nil?
+    json.status "false"
+  elsif @claim.status == 1 and @claim.vote_value >= 0.5
+    json.status "true"
+  elsif @claim.status == 1 and @claim.vote_value < 0.5
+    json.status "false"
+  end
+
   json.number_of_experts @claim.experts.count
   json.user_vote @user_vote
   json.open @claim.active?

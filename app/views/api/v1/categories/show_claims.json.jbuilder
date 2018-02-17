@@ -5,7 +5,7 @@ json.array! @claims.each do |claim|
   json.created_at claim.created_at
   json.title claim.title
   json.comments_count claim.comments_count
-  json.votes_count = claim.votes_count
+  json.votes_count claim.votes_count
 
   json.categories claim.categories.each do |category|
     json.id category.id
@@ -21,5 +21,5 @@ json.array! @claims.each do |claim|
   end
 
   json.vote_value claim.vote_value
-  json.status claim.status
+  json.status claim.status == 0 ? "false" : "true"
 end

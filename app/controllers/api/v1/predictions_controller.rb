@@ -144,8 +144,8 @@ module Api::V1
       @v = VoteOverride.new
       @v.user_id = current_user.id
       @v.prediction_id = params[:prediction_id]
-      @v.value = params[:value]
-      @v.reason = params.reason
+      @v.value = params[:vote_value]
+      @v.reason = params[:reason]
 
       if @v.save
         @p = Prediction.find(params[:prediction_id])

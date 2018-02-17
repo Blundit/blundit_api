@@ -5,15 +5,15 @@ class VoteOverride < ApplicationRecord
 
 
   def type?
-    return "claim" if !self.claim.nil?
-    return "prediction" if !self.prediction.nil?
+    return "claim" if !self.claim_id.nil?
+    return "prediction" if !self.prediction_id..nil?
     return ""
   end
 
 
   def object
-    return self.claim if !self.claim.nil?
-    return self.prediction if !self.prediction.nil?
+    return Claim.find(self.claim_id) if !self.claim_id.nil?
+    return Prediction.find(self.prediction) if !self.prediction_id.nil?
   end
 
 end

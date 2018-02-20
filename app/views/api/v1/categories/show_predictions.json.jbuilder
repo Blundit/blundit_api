@@ -21,5 +21,13 @@ json.array! @predictions.each do |prediction|
   end
 
   json.vote_value prediction.vote_value
-  json.status prediction.status
+  if prediction.status == 0 and prediction.vote_value.nil?
+    json.status "unknown"
+  elsif prediction.status == 0 and !prediction.vote_value.nil?
+    json.status "false"
+  elsif prediction.status == 1 and prediction.vote_value >= 0.5
+    json.status "true"
+  elsif prediction.status == 1 and prediction.vote_value < 0.5
+    json.status "false"
+  end
 end

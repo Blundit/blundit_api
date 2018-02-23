@@ -16,9 +16,9 @@ json.claim do
     json.status "unknown"
   elsif @claim.status == 0 and !@claim.vote_value.nil?
     json.status "false"
-  elsif @claim.status == 1 and @claim.vote_value >= 0.5
+  elsif @claim.status == 1 and !@claim.vote_value.nil? and claim.vote_value >= 0.5
     json.status "true"
-  elsif @claim.status == 1 and @claim.vote_value < 0.5
+  elsif @claim.status == 1 and !@claim.vote_value.nil? and claim.vote_value < 0.5
     json.status "false"
   end
 

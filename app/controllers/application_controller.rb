@@ -150,7 +150,7 @@ class ApplicationController < ActionController::Base
         else
           @port = ""
         end
-        
+
         @host = request.protocol + request.host + @port + "/embed/v1/show?key="
         render json: { message: "success", embed: @saved_embed, host: @host }
       else

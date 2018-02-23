@@ -1,18 +1,23 @@
 <html>
 <head>
   <title><%= @object.title %></title>
+  <link rel="stylesheet" href="css/normalize.css">
+  <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
   <style>
-    @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,800,700);
-    @import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:900);
-    @import url("https://fonts.googleapis.com/css?family=Roboto:400,500,700,900");
-    .hidden-link {
+    
+    .hidden-link, .hidden-link:hover, .hidden-link:active, .hidden-link:visited {
       text-decoration: none;
       color: #666666; }
-
+    
     body { 
       margin: 0;
       padding: 0;
       background-color: #ffffff;
+    }
+
+    a, a:link {
+      text-decoration: none
     }
 
     .claim-card {
@@ -37,7 +42,7 @@
       .claim-card__status--true {
         background-color: #43C021; }
       .claim-card__status--false {
-        background-color: #7B7B7B; }
+        background-color: #D51818; }
     .claim-card__title {
       width: 100%;
       box-sizing: border-box;
@@ -97,92 +102,118 @@
       display: grid;
       padding: 8px;
       grid-template-columns: 1fr 1fr; }
+      .claim-card__bottom__votes {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr; }
+      .claim-card__bottom__meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr; }
+
+      .claim-card__bottom__meta-bookmarks, .claim-card__bottom__meta-comments {
+        text-align: right;
+      }
+
+      .powered-by {
+        width: 300px;
+        text-align: right;
+        font-size: 10px;
+        font-family: "Open Sans", sans-serif;
+        display: grid;
+        grid-template-columns: 1fr 74px;
+        padding-top: 5px
+      }
+      .powered-by__text {
+        text-align: right;
+        padding: 1px 2px 0px 0px;
+      }
+
+      .powered-by__image { }
+      .powered-by img {
+        height: 20px;
+      }
 
   </style>
-  <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 </head>
 <body>
-  <a href="http://dev.blundit.com/claims/<%= @object.alias %>" class="hidden-link">
+  <a href="http://dev.blundit.com/claims/<%= @object.alias %>" class="hidden-link" target="_blank">
       <div class="claim-card">
-        {this.validStatusType(status) && <div class={this.getStatusClass(status)}>{this.formatStatusText(status)}</div>}
+        <div class="<%= @status_class %>"><%= @status_text %></div>
 
         <div class="claim-card__title">
           <div class="claim-card__title-text"><%= @object.title %></div>
         </div>
         <div class="claim-card__description">
-          <% if !@object.description.nil?
-            puts '<div class="claim-card__description-text">'+@object.description+'</div>'
-          end %>
-          {categories && <div class="claim-card__description-category">{this.getCategoryIcon(categories[0])}</div>}
+          <div class="claim-card__description-text"><%= @object.description %></div>
+          <div class="claim-card__description-category">
+            <%= @category_icon.html_safe %>
+          </div>
         </div>
         <div class="claim-card__supporting">
           <div class="claim-card__supporting__experts">
             <div class="claim-card__supporting__experts-agree">
-              <span class="icon fa fa-user-circle" />
-              {experts_agree ? experts_agree : 'N/A'}
+              <span class="icon fa fa-user-circle"></span>
+              <%= @experts_agree %>
             </div>
             <div class="claim-card__supporting__experts-disagree">
-              <span class="icon fa fa-user-circle" />
-              {experts_disagree ? experts_disagree: 'N/A'}
+              <span class="icon fa fa-user-circle"></span>
+              <%= @experts_disagree %>
             </div>
           </div>
           <div class="claim-card__supporting__evidence">
             <div class="claim-card__supporting__evidence-against">
-              <span class="icon fa fa-file-alt" />
-              {evidence_against ? evidence_against : 'N/A'}
+              <span class="icon fa fa-file-alt"></span>
+              <%= @evidence_against %>
             </div>
             <div class="claim-card__supporting__evidence-for">
-              <span class="icon fa fa-file-alt" />
-              {evidence_for ? evidence_for : 'N/A'}
+              <span class="icon fa fa-file-alt"></span>
+              <%= @evidence_for %>
             </div>
           </div>
         </div>
         <div class="claim-card__bottom">
           <div class="claim-card__bottom__votes">
-            {this.voteStatus(voteable_at, status) === "open" &&
-              <React.Fragment>
+            <% if @vote_status == "open" %>
                 <div class="claim-card__bottom__vote-now">
                   Vote Now: 
                   <span class="fas fa-check icon"></span>
                   <span class="fas fa-question icon"></span>
                   <span class="fas fa-times icon"></span>
                 </div>
-              </React.Fragment>
-            }
-            {this.voteStatus(voteable_at, status) === "pending" &&
-              <React.Fragment>
-                <div class="claim-card__bottom__vote-in">Vote In {this.timeToVote(voteable_at)}</div>
-              </React.Fragment>
-            }
-            {this.voteStatus(voteable_at, status) === "closed" &&
-              <React.Fragment>
+            <% end
+            if @vote_status == "pending" %>
+              <div class="claim-card__bottom__vote-in">Vote In <%= @time_to_vote %></div>
+            <% end
+            if @vote_status == "closed" %>
               <div class="claim-card__bottom__votes-yes">
-                <span class="icon fas fa-check" />
-                {votes_yes ? votes_yes : 'N/A'}
+                <span class="icon fas fa-check"></span>
+                <%= @votes_yes %>
               </div>
               <div class="claim-card__bottom__votes-unsure">
-                <span class="icon fas fa-question" />
-                {votes_unsure ? votes_unsure : 'N/A'}
+                <span class="icon fas fa-question"></span>
+                <%= @votes_unsure %>
               </div>
               <div class="claim-card__bottom__votes-no">
-                <span class="icon fas fa-times" />
-                {votes_no ? votes_no : 'N/A'}
+                <span class="icon fas fa-times"></span>
+                <%= @votes_no %>
               </div>
-              </React.Fragment>
-            }
+            <% end %>
           </div>
           <div class="claim-card__bottom__meta">
             <div class="claim-card__bottom__meta-comments">
-              <span class="icon far fa-comment" />
-              {comments_count ? comments_count : 'N/A'}
+              <span class="icon far fa-comment"></span>
+             <%= @object.comments_count %>
             </div>
             <div class="claim-card__bottom__meta-bookmarks">
-              <span class="icon far fa-bookmark" />
-              {bookmarks_count ? bookmarks_count : 'N/A'}
+              <span class="icon far fa-bookmark"></span>
+              <%= @bookmarks_count %>
             </div>
           </div>
         </div>
       </div>
     </a>
+    <div class="powered-by">
+        <span class="powered-by__text">Powered by </span>
+        <span class="powered-by__image"><a href="http://www.blundit.com" target="_blank"><img src="http://dev.blundit.com/images/logo_wordmark.png"></a></span>
+    </div>
 </body>
 </html>

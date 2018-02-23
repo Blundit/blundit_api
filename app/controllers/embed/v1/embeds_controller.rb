@@ -29,9 +29,9 @@ module Embed::V1
         @status_type = "unknown"
       elsif @object.status == 0 and !@object.vote_value.nil?
         @status_type = "false"
-      elsif @object.status == 1 and @object.vote_value >= 0.5
+      elsif @object.status == 1 and !@object.vote_value.nil? and @object.vote_value >= 0.5
         @status_type = "true"
-      elsif @object.status == 1 and @object.vote_value < 0.5
+      elsif @object.status == 1 and !@object.vote_value.nil? and @object.vote_value < 0.5
         @status_type = "false"
       end
       @status_class = "claim-card__status--" + @status_type

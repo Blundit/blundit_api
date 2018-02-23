@@ -121,6 +121,46 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def create_embed(type)
+    # TODO: Make this work with multiple embeds
+    
+    embed = Embed.new
+    if !current_user.nil?
+      embed.user_id = current_user.id
+    end
+
+    embed.title = params[:title]
+    embed.description = params[:description]
+
+    if embed.save
+      embed_item = EmbedItem.new
+      embed_item.embed_id = embed.id
+      if type == 'claim'
+        embed_item.claim_id = params[:claim_id]
+      elsif type == 'prediction'
+        embed_item.prediction_id = params[:prediction_id]
+      elsif type == 'expert'
+        embed_item.expert_id = params[:expert_id]
+      end
+
+      if embed_item.save
+        @saved_embed = Embed.includes(:embed_items).find(embed.id)
+        if request.port != 80 and request.port != 8080
+          @port = ":" + request.port.to_s
+        else
+          @port = ""
+        end
+        
+        @host = request.protocol + request.host + @port + "/embed/v1/show?key="
+        render json: { message: "success", embed: @saved_embed, host: @host }
+      else
+        render json: { errors: "Unable to Add Embed Items" }, status: 422
+      end
+    else
+      render json: { errors: "Unable to save Embed" }, status: 422
+    end
+  end
+
 
   String.class_eval do
       def is_valid_url?
@@ -132,6 +172,10 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  def allow_iframe
+    response.headers.delete "X-Frame-Options"
+  end
 
   def add_contribution (object, type)
     if !@current_user

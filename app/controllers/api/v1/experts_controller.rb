@@ -1,6 +1,6 @@
 module Api::V1
   class ExpertsController < ApiController
-    before_action :authenticate_current_user, except: [:index, :show, :search, :comments, :all, :get_substantiations]
+    before_action :authenticate_current_user, except: [:index, :show, :search, :comments, :all, :get_substantiations, :add_embed]
     before_action :set_expert, only: [:edit, :update, :destroy]
     before_filter :set_user, only: [:index, :show, :search, :comments]
 
@@ -702,6 +702,12 @@ module Api::V1
       else
         render json: { status: "Error" }
       end
+    end
+
+
+    def add_embed
+      # TODO: Track embed counts per claims, predictions, etc? For popularity?
+      create_embed('expert')
     end
 
 

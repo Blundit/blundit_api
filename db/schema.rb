@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180216193332) do
+ActiveRecord::Schema.define(version: 20180223154121) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -139,6 +139,33 @@ ActiveRecord::Schema.define(version: 20180216193332) do
     t.text     "payload"
     t.integer  "bona_fide_id"
     t.integer  "bonafide_id"
+  end
+
+  create_table "embed_items", force: :cascade do |t|
+    t.integer  "embed_id"
+    t.integer  "claim_id"
+    t.integer  "prediction_id"
+    t.integer  "expert_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  create_table "embed_views", force: :cascade do |t|
+    t.string   "ip"
+    t.integer  "embed_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "embeds", force: :cascade do |t|
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+    t.string   "embed_key"
+    t.integer  "user_id"
+    t.string   "title"
+    t.text     "description"
+    t.boolean  "show_chrome",       default: true
+    t.integer  "embed_views_count", default: 0
   end
 
   create_table "evidence_of_beliefs", force: :cascade do |t|

@@ -7,6 +7,12 @@ Rails.application.routes.draw do
 
   match '*path', via: [:options], to: lambda {|_| [204, { 'Content-Type' => 'text/plain' }]}
   
+  namespace :embed do
+    namespace :v1 do
+      get 'show' => "embeds#show"
+    end
+  end
+  
   namespace :api do
     namespace :v1 do
       get 'predictions/all' => 'predictions#all'
@@ -36,6 +42,7 @@ Rails.application.routes.draw do
       post 'predictions/:prediction_id/add_evidence' => 'predictions#add_evidence'
       patch 'predictions/:prediction_id/update_image' => 'predictions#update_image'
       delete 'predictions/:prediction_id/delete_image' => 'predictions#delete_image'
+      post 'predictions/:prediction_id/add_embed' => 'predictions#add_embed'
 
       resources :claims do
         resources :claim_comments
@@ -60,7 +67,8 @@ Rails.application.routes.draw do
       post 'claims/:claim_id/add_evidence' => 'claims#add_evidence'
       patch 'claims/:claim_id/update_image' => 'claims#update_image'
       delete 'claims/:claim_id/delete_image' => 'claims#delete_image'
-      
+      post 'claims/:claim_id/add_embed' => 'claims#add_embed'
+
       resources :categories
 
       get 'categories/:category_id/all' => 'categories#show_all'
@@ -93,6 +101,7 @@ Rails.application.routes.draw do
       post 'experts/:expert_id/get_substantiations' => 'experts#get_substantiations'
       patch 'experts/:expert_id/update_image' => 'experts#update_image'
       delete 'experts/:expert_id/delete_image' => 'experts#delete_image'
+      post 'experts/:expert_id/add_embed' => 'experts#add_embed'
 
 
       resources :publications

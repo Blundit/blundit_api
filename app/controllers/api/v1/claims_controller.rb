@@ -1,6 +1,6 @@
 module Api::V1
   class ClaimsController < ApiController
-    before_action :authenticate_current_user, except: [:index, :show, :search, :all, :comments]
+    before_action :authenticate_current_user, except: [:index, :show, :search, :all, :comments, :add_embed]
     before_action :set_claim, only: [:edit, :update, :destroy]
     before_filter :set_user, only: [:index, :show, :search, :comments]
 
@@ -502,6 +502,12 @@ module Api::V1
       else
         render json: { status: "Error" }, status: 422
       end
+    end
+
+
+    def add_embed
+      # TODO: Track embed counts per claims, predictions, etc? For popularity?
+      create_embed('claim')
     end
 
 

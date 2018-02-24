@@ -1,3 +1,134 @@
-<div>
-<%= @object.title %>
-</div>
+<html>
+<head>
+  <title><%= @object.title %></title>
+  <link rel="stylesheet" href="css/normalize.css">
+  <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+  <style>
+    
+    .hidden-link, .hidden-link:hover, .hidden-link:active, .hidden-link:visited {
+      text-decoration: none;
+      color: #666666; }
+    
+    body { 
+      margin: 0;
+      padding: 0;
+      background-color: #ffffff;
+    }
+
+    a, a:link {
+      text-decoration: none
+    }
+
+    .prediction-card{width:100%}.prediction-card__status,.prediction-card__status--false,.prediction-card__status--in-progress,.prediction-card__status--true,.prediction-card__status--unknown{width:100%;font-size:20px;font-family:Open Sans,sans-serif;font-weight:700;color:#fff;text-align:center;text-transform:uppercase;padding:2px 0}.prediction-card__status--unknown{background-color:#7b7b7b}.prediction-card__status--in-progress{background-color:#08298a}.prediction-card__status--true{background-color:#43c021}.prediction-card__status--false{background-color:#d51818}.prediction-card__title{width:100%;-webkit-box-sizing:border-box;box-sizing:border-box;padding:8px}.prediction-card__title-text{height:75px;font-size:20px;font-family:Open Sans,sans-serif;font-weight:700;line-height:1.2em;overflow:hidden;color:#333;text-transform:uppercase}.prediction-card__by{padding:2px 7px;font-family:Open Sans,sans-serif;font-size:12px}.prediction-card__by .icon{font-size:20px;margin-right:5px;color:#9a9a9a;padding-bottom:3px;vertical-align:top}.prediction-card__by-date{font-weight:700;font-style:italic;padding-left:4px}.prediction-card__by-status--closed:before,.prediction-card__by-status--open:before,.prediction-card__by-status:before{content:" - "}.prediction-card__by-status--closed{color:#d51818}.prediction-card__by-status--open{color:#43c021}.prediction-card__description{border-top:1px solid #edeeef;border-bottom:1px solid #edeeef;padding:8px;display:grid;grid-template-columns:1fr 60px;overflow:hidden;height:40px}.prediction-card__description-text{font-size:12px;font-weight:400;color:#333}.prediction-card__description-category{width:40px;font-size:30px;color:#95989a;-ms-flex-item-align:center;align-self:center;text-align:center;justify-self:center}.prediction-card__supporting{display:grid;border-top:1px solid #edeeef;border-bottom:1px solid #edeeef;padding:8px;grid-template-columns:1fr 1fr;font-family:Open Sans,sans-serif;font-size:12px}.prediction-card__supporting__experts{display:inline-block}.prediction-card__supporting__evidence{display:inline-block;text-align:right}.prediction-card__supporting__evidence-for,.prediction-card__supporting__experts-agree{margin-right:10px;float:left}.prediction-card__supporting__evidence-for .icon,.prediction-card__supporting__experts-agree .icon{color:#43c021;margin-right:4px;font-size:14px}.prediction-card__supporting__evidence-against,.prediction-card__supporting__experts-disagree{float:left}.prediction-card__supporting__evidence-against .icon,.prediction-card__supporting__experts-disagree .icon{color:#d51818;margin-right:4px;font-size:14px}.prediction-card__supporting__evidence-against,.prediction-card__supporting__evidence-for{float:right}.prediction-card__bottom{display:grid;padding:8px;grid-template-columns:1fr 1fr}.prediction-card__bottom__votes{display:inline-block;text-align:left}.prediction-card__bottom__votes-no,.prediction-card__bottom__votes-unsure,.prediction-card__bottom__votes-yes{font-size:12px;float:left;margin-right:4px}.prediction-card__bottom__votes-no .icon,.prediction-card__bottom__votes-unsure .icon,.prediction-card__bottom__votes-yes .icon{margin-right:4px;font-size:14px}.prediction-card__bottom__vote-in,.prediction-card__bottom__vote-now{font-size:12px;font-weight:700;font-family:Open Sans,sans-serif;text-transform:uppercase}.prediction-card__bottom__vote-now .icon{margin-left:4px;font-size:14px}.prediction-card__bottom__meta{display:inline-block;text-align:right}.prediction-card__bottom__meta-bookmarks{margin-right:3px;float:right;font-size:12px}.prediction-card__bottom__meta-bookmarks .icon{margin-right:4px;font-size:14px}.prediction-card__bottom__meta-comments{float:right;font-size:12px;margin-left:4px}.prediction-card__bottom__meta-comments .icon{margin-right:4px;font-size:14px}.expert-card{width:100%}.expert-card__avatar{position:relative;width:100%;height:333px;background-repeat:no-repeat;background-position:50% 50%;background-size:cover;-webkit-background-size:cover}
+
+      .powered-by {
+        width: 300px;
+        text-align: right;
+        font-size: 10px;
+        font-family: "Open Sans", sans-serif;
+        display: grid;
+        grid-template-columns: 1fr 74px;
+        padding-top: 5px
+      }
+      .powered-by__text {
+        text-align: right;
+        padding: 1px 2px 0px 0px;
+      }
+
+      .powered-by__image { }
+      .powered-by img {
+        height: 20px;
+      }
+
+  </style>
+</head>
+<body>
+  <a href="http://dev.blundit.com/predictions/<%= @object.alias %>" class="hidden-link" target="_blank">
+    <div class="prediction-card">
+        <div class="<%= @prediction_status_class %>"><%= @status_text %></div>
+
+      <div class="prediction-card__title">
+        <div class="prediction-card__title-text"><%= @object.title %></div>
+      </div>
+      <div class="prediction-card__by">
+        <span class="far fa-clock icon"></span>
+        <span class="prediction-card__by-on">on</span>
+        <span class="prediction-card__by-date"><%= @object.prediction_date.strftime("%B %e, %Y") %></span>
+        <%= @prediction_vote_status.html_safe %>
+      </div>
+      <div class="prediction-card__description">
+        <div class="prediction-card__description-text"><%= @object.description %></div>
+        <div class="prediction-card__description-category">
+          <%= @category_icon.html_safe %>
+        </div>
+      </div>
+      <div class="prediction-card__supporting">
+        <div class="prediction-card__supporting__experts">
+          <div class="prediction-card__supporting__experts-agree">
+            <span class="icon fa fa-user-circle"></span>
+            <%= @experts_agree %>
+          </div>
+          <div class="prediction-card__supporting__experts-disagree">
+            <span class="icon fa fa-user-circle"></span>
+            <%= @experts_disagree %>
+          </div>
+        </div>
+        <div class="prediction-card__supporting__evidence">
+          <div class="prediction-card__supporting__evidence-against">
+            <span class="icon fa fa-file-alt"></span>
+            <%= @evidence_against %>
+          </div>
+          <div class="prediction-card__supporting__evidence-for">
+            <span class="icon fa fa-file-alt"></span>
+            <%= @evidence_for %>
+          </div>
+        </div>
+      </div>
+      <div class="prediction-card__bottom">
+        <div class="prediction-card__bottom__votes">
+          <% if @vote_status == "open" %>
+            <div class="prediction-card__bottom__vote-now">
+              Vote Now: 
+              <span class="fas fa-check icon"></span>
+              <span class="fas fa-question icon"></span>
+              <span class="fas fa-times icon"></span>
+            </div>
+          <% end
+          if @vote_status == "pending" %>
+            <div class="prediction-card__bottom__vote-in">Vote In <%= (@time_to_vote - @now).to_i / 1.day %> days</div>
+          <% end
+          if @vote_status == "closed" %>
+            <div class="prediction-card__bottom__votes-yes">
+              <span class="icon fas fa-check"></span>
+              <%= votes_yes %>
+            </div>
+            <div class="prediction-card__bottom__votes-unsure">
+              <span class="icon fas fa-question"></span>
+              <%= votes_unsure %>
+            </div>
+            <div class="prediction-card__bottom__votes-no">
+              <span class="icon fas fa-times"></span>
+              <%= @votes_no %>
+            </div>
+          <% end %>
+        </div>
+        <div class="prediction-card__bottom__meta">
+          <div class="prediction-card__bottom__meta-comments">
+            <span class="icon far fa-comment"></span>
+            <%= @object.comments_count %>
+          </div>
+          <div class="prediction-card__bottom__meta-bookmarks">
+            <span class="icon far fa-bookmark"></span>
+            <%= @bookmarks_count %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </a>
+  <div class="powered-by">
+      <span class="powered-by__text">Powered by </span>
+      <span class="powered-by__image"><a href="http://www.blundit.com" target="_blank"><img src="http://dev.blundit.com/images/logo_wordmark.png"></a></span>
+  </div>
+</body>
+</html>

@@ -19,7 +19,7 @@ module Embed::V1
 
       @object = embed.embed_items.first.object
       @type = embed.embed_items.first.type
-      if @object.categories
+      if @object.categories.count > 0
         @category_icon = "<span class='#{get_category_icon(@object.categories[0].id)}'></span>"
       else
         @category_icon = "<span></span>"
@@ -35,7 +35,7 @@ module Embed::V1
         @status_type = "false"
       end
       @status_class = "claim-card__status--" + @status_type
-
+      @prediction_status_class = "prediction-card__status--" + @status_type
       @statuses = { 
         "unknown": "unknown",
         "in-progress": "voting in progress",
@@ -61,6 +61,17 @@ module Embed::V1
         render :claim
         return
       elsif @type == 'prediction'
+        @experts_agree = (rand()*100).floor
+        @experts_disagree = (rand()*100).floor
+        @evidence_for = (rand()*100).floor
+        @evidence_against = (rand()*100).floor
+        @vote_status = vote_status(@object)
+        @time_to_vote = time_to_vote(@object)
+        @votes_yes = (rand()*100).floor
+        @votes_no = (rand()*100).floor
+        @votes_unsure = (rand()*100).floor
+        @bookmarks_count = (rand()*100).floor
+        @prediction_vote_status = prediction_vote_status(@object)
         render :prediction
         return
       elsif @type == 'expert'
@@ -68,6 +79,8 @@ module Embed::V1
         return
       end
     end
+
+
 
 
     def no_item
@@ -88,6 +101,30 @@ module Embed::V1
       end
       if (@voteable >= @now)
         return "pending"
+      end
+    end
+
+
+    def prediction_vote_status(object)
+      @now = Time.now
+      @voteable = Time.parse(object.prediction_date.to_s)
+      # TODO: Make this accurately check the date
+      @voting_closes = @voteable + 12.days
+
+      if object.status == 1
+        return ""
+      end
+  
+      if ((@voting_closes - @voteable).to_i / 1.day).to_i < 12
+        return ""
+      end
+  
+      if ((@voting_closes - @now).to_i / 1.day) > 0
+        return '<span class="prediction-card__by-status--open">Voting open!</span>'
+      end
+  
+      if ((@voting_closes - @now).to_i / 1.day) <= 0
+        return '<span class="prediction-card__by-status--closed">Voting Closed</span>'
       end
     end
 

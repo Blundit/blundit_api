@@ -24,26 +24,29 @@ module Embed::V1
       else
         @category_icon = "<span></span>"
       end
-      @status_type = "unknown"
-      if @object.status == 0 and @object.vote_value.nil?
-        @status_type = "unknown"
-      elsif @object.status == 0 and !@object.vote_value.nil?
-        @status_type = "false"
-      elsif @object.status == 1 and !@object.vote_value.nil? and @object.vote_value >= 0.5
-        @status_type = "true"
-      elsif @object.status == 1 and !@object.vote_value.nil? and @object.vote_value < 0.5
-        @status_type = "false"
-      end
-      @status_class = "claim-card__status--" + @status_type
-      @prediction_status_class = "prediction-card__status--" + @status_type
-      @statuses = { 
-        "unknown": "unknown",
-        "in-progress": "voting in progress",
-        "true": "true",
-        "false": "false"
-      }
 
-      @status_text = @statuses[@status_type.to_sym]
+      if @type != "expert"
+        @status_type = "unknown"
+        if @object.status == 0 and @object.vote_value.nil?
+          @status_type = "unknown"
+        elsif @object.status == 0 and !@object.vote_value.nil?
+          @status_type = "false"
+        elsif @object.status == 1 and !@object.vote_value.nil? and @object.vote_value >= 0.5
+          @status_type = "true"
+        elsif @object.status == 1 and !@object.vote_value.nil? and @object.vote_value < 0.5
+          @status_type = "false"
+        end
+        @status_class = "claim-card__status--" + @status_type
+        @prediction_status_class = "prediction-card__status--" + @status_type
+        @statuses = { 
+          "unknown": "unknown",
+          "in-progress": "voting in progress",
+          "true": "true",
+          "false": "false"
+        }
+
+        @status_text = @statuses[@status_type.to_sym]
+      end
       
 
       if @type == 'claim'
@@ -75,11 +78,55 @@ module Embed::V1
         render :prediction
         return
       elsif @type == 'expert'
+        @rating_class = get_rating_class(@object.accuracy)
+        @expert_rating = format_rating_text(@object.accuracy)
         render :expert
         return
       end
     end
 
+
+    def get_letter_grade(rating)
+      @grade = ""
+  
+      case rating
+        when 0.0..0.50
+          @grade = "f"
+        when 0.51..0.60
+          @grade = "d"
+        when 0.61..0.70
+          @grade = "c"
+        when 0.71..0.80
+          @grade = "b"
+        when 0.81..1.0
+          @grade = "a"
+        else
+          @grade = "?"
+        end
+  
+      return @grade
+    end
+  
+  
+    def get_rating_class(rating)
+      @class = "expert-card__rating--"
+      if !rating
+        @class += "unknown"
+      else
+        @class += get_letter_grade(rating)
+      end
+
+      return @class
+    end
+  
+  
+    def format_rating_text(rating)
+      if !rating
+        return "UNKNOWN"
+      end
+  
+      return "RATING: #{get_letter_grade(rating).upcase} (#{rating}%)"
+    end
 
 
 

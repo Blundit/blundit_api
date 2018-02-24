@@ -1,3 +1,104 @@
-<div>
-<%= @object.name %>
+<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+<style>
+  
+  .hidden-link, .hidden-link:hover, .hidden-link:active, .hidden-link:visited {
+    text-decoration: none;
+    color: #666666; }
+  
+  body { 
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+  }
+
+  a, a:link {
+    text-decoration: none
+  }
+
+  .expert-card{-webkit-box-shadow:0 3px 6px rgba(0,0,0,.1);box-shadow:0 3px 6px rgba(0,0,0,.1);background-color:#fff;border:1px solid rgba(0,0,0,.1);height:100%}
+  .expert-card{width:calc(100% - 4px)}.expert-card__avatar{position:relative;width:100%;height:333px;background-repeat:no-repeat;background-position:50% 50%;background-size:cover;-webkit-background-size:cover}.expert-card__rating,.expert-card__rating--a,.expert-card__rating--b,.expert-card__rating--c,.expert-card__rating--d,.expert-card__rating--f,.expert-card__rating--unknown{width:100%;font-size:20px;font-family:Open Sans,sans-serif;font-weight:700;color:#fff;text-align:center;text-transform:uppercase;padding:2px 0}.expert-card__rating--unknown{background-color:#7b7b7b}.expert-card__rating--f{background-color:#d51818}.expert-card__rating--d{background-color:#d58c18}.expert-card__rating--c{background-color:#d5d518}.expert-card__rating--b{background-color:#7ed518}.expert-card__rating--a{background-color:#43c021}.expert-card__name{position:absolute;bottom:10px;left:10px;padding:2px 8px;font-family:Open Sans,sans-serif;font-size:24px;color:#fff;text-transform:uppercase;font-weight:700;background-color:rgba(0,0,0,.16)}.expert-card__description{border-top:1px solid #edeeef;border-bottom:1px solid #edeeef;padding:8px;display:grid;grid-template-columns:1fr 60px;overflow:hidden;min-height:40px}.expert-card__description-job-title{font-style:italic}.expert-card__description-job-at,.expert-card__description-job-title{font-size:12px;font-weight:400;color:#5a5a5a}.expert-card__description-job-company{font-size:12px;font-weight:700;font-style:italic;color:#5a5a5a}.expert-card__description-location{font-size:12px;font-weight:400;color:#5a5a5a}.expert-card__description-url{font-weight:700;font-size:13px;color:#5a5a5a;margin-top:6px}.expert-card__description-url .icon{font-weight:13px;color:#95989a;padding-right:5px}.expert-card__description-category{width:40px;font-size:30px;color:#95989a;-ms-flex-item-align:center;align-self:center;text-align:center;justify-self:center}.expert-card__bottom{display:grid;padding:8px;grid-template-columns:1fr 1fr}.expert-card__bottom__positions{display:inline-block;text-align:left}.expert-card__bottom__positions__number-of-claims{margin-right:3px;float:left;font-size:12px}.expert-card__bottom__positions__number-of-claims .icon{margin-right:4px;font-size:14px}.expert-card__bottom__positions__number-of-predictions{float:left;font-size:12px;margin-right:4px}.expert-card__bottom__positions__number-of-predictions .icon{margin-right:4px;font-size:14px}.expert-card__bottom__meta{display:inline-block;text-align:right}.expert-card__bottom__meta-bookmarks{margin-right:3px;float:right;font-size:12px}.expert-card__bottom__meta-bookmarks .icon{margin-right:4px;font-size:14px}.expert-card__bottom__meta-comments{float:right;font-size:12px;margin-left:4px}.expert-card__bottom__meta-comments .icon{margin-right:4px;font-size:14px}
+
+
+  .powered-by {
+    width: 100%;
+    text-align: right;
+    font-size: 10px;
+    font-family: "Open Sans", sans-serif;
+    display: grid;
+    grid-template-columns: 1fr 74px;
+    padding-top: 5px
+  }
+  .powered-by__text {
+    text-align: right;
+    padding: 1px 2px 0px 0px;
+  }
+
+  .powered-by__image { }
+  .powered-by img {
+    height: 20px;
+  }
+
+</style>
+</head>
+<body>
+<a href="http://dev.blundit.com/experts/<%= @object.alias %>" class="hidden-link" target="_blank">
+  <div class="expert-card">
+    <div class="expert-card__avatar" style="background-image: url('<%= @object.avatar %>')" >
+      <div class="<%= @rating_class %>"><%= @expert_rating %></div>
+      <span class="expert-card__name">
+        <% @object.name %>
+      </span>
+    </div>
+    <div class="expert-card__description">
+      <React.Fragment>
+        <div>
+          <div class="expert-card__description-job">
+            <span class="expert-card__description-job-title"><%= "Unknown" %></span>
+            <span class="expert-card__description-job-at"> at </span>
+            <span class="expert-card__description-job-company">Unknown</span>
+          </div>
+          <div class="expert-card__description-location">Unknown</div>
+          <div class="expert-card__description-url">
+            <span class="icon fas fa-link"></span>
+            <% if @object.website %>
+            <%= @object.website %>
+            <% else %>
+            <%= "URL Unknown" %>
+            <% end %>
+          </div>
+        </div>
+      </React.Fragment>
+      <div class="expert-card__description-category">
+        <%= @category_icon.html_safe %>
+      </div>
+    </div>
+    <div class="expert-card__bottom">
+      <div class="expert-card__bottom__positions">
+        <div class="expert-card__bottom__positions__number-of-predictions">
+          <span class="icon fas fa-bolt"></span>
+          <% # TODO: Add counter cache for number of predicitons and claims %>
+          <%= @object.predictions.count %>
+        </div>
+        <div class="expert-card__bottom__positions__number-of-claims">
+          <span class="icon far fa-lightbulb"></span>
+          <%= @object.claims.count %>
+        </div>
+      </div>
+      <div class="expert-card__bottom__meta">
+        <div class="expert-card__bottom__meta-comments">
+          <span class="icon far fa-comment"></span>
+          <%= @object.expert_comments_count %>
+        </div>
+        <div class="expert-card__bottom__meta-bookmarks">
+          <span class="icon far fa-bookmark"></span>
+          <%= @bookmarks_count %>
+        </div>
+      </div>
+    </div>
+  </div>
+</a>
+<div class="powered-by">
+    <span class="powered-by__text">Powered by </span>
+    <span class="powered-by__image"><a href="http://www.blundit.com" target="_blank"><img src="http://dev.blundit.com/images/logo_wordmark.png"></a></span>
 </div>

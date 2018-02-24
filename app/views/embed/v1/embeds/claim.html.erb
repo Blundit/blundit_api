@@ -1,219 +1,214 @@
-<html>
-<head>
-  <title><%= @object.title %></title>
-  <link rel="stylesheet" href="css/normalize.css">
-  <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-  <style>
-    
-    .hidden-link, .hidden-link:hover, .hidden-link:active, .hidden-link:visited {
-      text-decoration: none;
-      color: #666666; }
-    
-    body { 
-      margin: 0;
-      padding: 0;
-      background-color: #ffffff;
-    }
+<link rel="stylesheet" href="css/normalize.css">
+<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+<style>
+  
+  .hidden-link, .hidden-link:hover, .hidden-link:active, .hidden-link:visited {
+    text-decoration: none;
+    color: #666666; }
+  
+  body { 
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+  }
 
-    a, a:link {
-      text-decoration: none
-    }
+  a, a:link {
+    text-decoration: none
+  }
 
-    .claim-card {
-      box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
-      border: 1px solid rgba(0, 0, 0, 0.1);
-      height: 100%;
-      width: 300px; 
-    }
-    .claim-card__status, .claim-card__status--unknown, .claim-card__status--in-progress, .claim-card__status--true, .claim-card__status--false {
-      width: 100%;
+  .claim-card {
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    height: 100%;
+    width: 100%; 
+  }
+  .claim-card__status, .claim-card__status--unknown, .claim-card__status--in-progress, .claim-card__status--true, .claim-card__status--false {
+    width: 100%;
+    font-size: 20px;
+    font-family: "Open Sans", sans-serif;
+    font-weight: bold;
+    color: #ffffff;
+    text-align: center;
+    text-transform: uppercase;
+    padding: 2px 0px; }
+    .claim-card__status--unknown {
+      background-color: #7B7B7B; }
+    .claim-card__status--in-progress {
+      background-color: #486982; }
+    .claim-card__status--true {
+      background-color: #43C021; }
+    .claim-card__status--false {
+      background-color: #D51818; }
+  .claim-card__title {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px; }
+    .claim-card__title-text {
       font-size: 20px;
       font-family: "Open Sans", sans-serif;
       font-weight: bold;
-      color: #ffffff;
+      color: #333333;
+      text-transform: uppercase; }
+  .claim-card__description {
+    border-top: 1px solid #EDEEEF;
+    border-bottom: 1px solid #EDEEEF;
+    padding: 8px;
+    display: grid;
+    grid-template-columns: 1fr 60px; }
+    .claim-card__description-text {
+      font-size: 12px;
+      font-weight: normal;
+      color: #333333; }
+    .claim-card__description-category {
+      width: 40px;
+      font-size: 30px;
+      color: #95989A;
+      align-self: center;
       text-align: center;
-      text-transform: uppercase;
-      padding: 2px 0px; }
-      .claim-card__status--unknown {
-        background-color: #7B7B7B; }
-      .claim-card__status--in-progress {
-        background-color: #486982; }
-      .claim-card__status--true {
-        background-color: #43C021; }
-      .claim-card__status--false {
-        background-color: #D51818; }
-    .claim-card__title {
+      justify-self: center; }
+  .claim-card__supporting {
+    display: grid;
+    border-top: 1px solid #EDEEEF;
+    border-bottom: 1px solid #EDEEEF;
+    padding: 8px;
+    grid-template-columns: 1fr 1fr;
+    font-family: "Open Sans", sans-serif;
+    font-size: 12px; }
+    .claim-card__supporting__experts {
+      display: inline-block; }
+    .claim-card__supporting__evidence {
+      display: inline-block;
+      text-align: right; }
+    .claim-card__supporting__experts-agree, .claim-card__supporting__evidence-for {
+      margin-right: 10px;
+      float: left; }
+      .claim-card__supporting__experts-agree .icon, .claim-card__supporting__evidence-for .icon {
+        color: #43C021;
+        margin-right: 4px;
+        font-size: 14px; }
+    .claim-card__supporting__experts-disagree, .claim-card__supporting__evidence-against {
+      float: left; }
+      .claim-card__supporting__experts-disagree .icon, .claim-card__supporting__evidence-against .icon {
+        color: #D51818;
+        margin-right: 4px;
+        font-size: 14px; }
+    .claim-card__supporting__evidence-for, .claim-card__supporting__evidence-against {
+      float: right; }
+  .claim-card__bottom {
+    display: grid;
+    padding: 8px;
+    grid-template-columns: 1fr 1fr; }
+    .claim-card__bottom__votes {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr; }
+    .claim-card__bottom__meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr; }
+
+    .claim-card__bottom__meta-bookmarks, .claim-card__bottom__meta-comments {
+      text-align: right;
+    }
+
+    .powered-by {
       width: 100%;
-      box-sizing: border-box;
-      padding: 8px; }
-      .claim-card__title-text {
-        font-size: 20px;
-        font-family: "Open Sans", sans-serif;
-        font-weight: bold;
-        color: #333333;
-        text-transform: uppercase; }
-    .claim-card__description {
-      border-top: 1px solid #EDEEEF;
-      border-bottom: 1px solid #EDEEEF;
-      padding: 8px;
-      display: grid;
-      grid-template-columns: 1fr 60px; }
-      .claim-card__description-text {
-        font-size: 12px;
-        font-weight: normal;
-        color: #333333; }
-      .claim-card__description-category {
-        width: 40px;
-        font-size: 30px;
-        color: #95989A;
-        align-self: center;
-        text-align: center;
-        justify-self: center; }
-    .claim-card__supporting {
-      display: grid;
-      border-top: 1px solid #EDEEEF;
-      border-bottom: 1px solid #EDEEEF;
-      padding: 8px;
-      grid-template-columns: 1fr 1fr;
+      text-align: right;
+      font-size: 10px;
       font-family: "Open Sans", sans-serif;
-      font-size: 12px; }
-      .claim-card__supporting__experts {
-        display: inline-block; }
-      .claim-card__supporting__evidence {
-        display: inline-block;
-        text-align: right; }
-      .claim-card__supporting__experts-agree, .claim-card__supporting__evidence-for {
-        margin-right: 10px;
-        float: left; }
-        .claim-card__supporting__experts-agree .icon, .claim-card__supporting__evidence-for .icon {
-          color: #43C021;
-          margin-right: 4px;
-          font-size: 14px; }
-      .claim-card__supporting__experts-disagree, .claim-card__supporting__evidence-against {
-        float: left; }
-        .claim-card__supporting__experts-disagree .icon, .claim-card__supporting__evidence-against .icon {
-          color: #D51818;
-          margin-right: 4px;
-          font-size: 14px; }
-      .claim-card__supporting__evidence-for, .claim-card__supporting__evidence-against {
-        float: right; }
-    .claim-card__bottom {
       display: grid;
-      padding: 8px;
-      grid-template-columns: 1fr 1fr; }
-      .claim-card__bottom__votes {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr; }
-      .claim-card__bottom__meta {
-      display: grid;
-      grid-template-columns: 1fr 1fr; }
+      grid-template-columns: 1fr 74px;
+      padding-top: 5px
+    }
+    .powered-by__text {
+      text-align: right;
+      padding: 1px 2px 0px 0px;
+    }
 
-      .claim-card__bottom__meta-bookmarks, .claim-card__bottom__meta-comments {
-        text-align: right;
-      }
+    .powered-by__image { }
+    .powered-by img {
+      height: 20px;
+    }
 
-      .powered-by {
-        width: 300px;
-        text-align: right;
-        font-size: 10px;
-        font-family: "Open Sans", sans-serif;
-        display: grid;
-        grid-template-columns: 1fr 74px;
-        padding-top: 5px
-      }
-      .powered-by__text {
-        text-align: right;
-        padding: 1px 2px 0px 0px;
-      }
-
-      .powered-by__image { }
-      .powered-by img {
-        height: 20px;
-      }
-
-  </style>
+</style>
 </head>
 <body>
-  <a href="http://dev.blundit.com/claims/<%= @object.alias %>" class="hidden-link" target="_blank">
-      <div class="claim-card">
-        <div class="<%= @status_class %>"><%= @status_text %></div>
+<a href="http://dev.blundit.com/claims/<%= @object.alias %>" class="hidden-link" target="_blank">
+  <div class="claim-card">
+    <div class="<%= @status_class %>"><%= @status_text %></div>
 
-        <div class="claim-card__title">
-          <div class="claim-card__title-text"><%= @object.title %></div>
+    <div class="claim-card__title">
+      <div class="claim-card__title-text"><%= @object.title %></div>
+    </div>
+    <div class="claim-card__description">
+      <div class="claim-card__description-text"><%= @object.description %></div>
+      <div class="claim-card__description-category">
+        <%= @category_icon.html_safe %>
+      </div>
+    </div>
+    <div class="claim-card__supporting">
+      <div class="claim-card__supporting__experts">
+        <div class="claim-card__supporting__experts-agree">
+          <span class="icon fa fa-user-circle"></span>
+          <%= @experts_agree %>
         </div>
-        <div class="claim-card__description">
-          <div class="claim-card__description-text"><%= @object.description %></div>
-          <div class="claim-card__description-category">
-            <%= @category_icon.html_safe %>
-          </div>
-        </div>
-        <div class="claim-card__supporting">
-          <div class="claim-card__supporting__experts">
-            <div class="claim-card__supporting__experts-agree">
-              <span class="icon fa fa-user-circle"></span>
-              <%= @experts_agree %>
-            </div>
-            <div class="claim-card__supporting__experts-disagree">
-              <span class="icon fa fa-user-circle"></span>
-              <%= @experts_disagree %>
-            </div>
-          </div>
-          <div class="claim-card__supporting__evidence">
-            <div class="claim-card__supporting__evidence-against">
-              <span class="icon fa fa-file-alt"></span>
-              <%= @evidence_against %>
-            </div>
-            <div class="claim-card__supporting__evidence-for">
-              <span class="icon fa fa-file-alt"></span>
-              <%= @evidence_for %>
-            </div>
-          </div>
-        </div>
-        <div class="claim-card__bottom">
-          <div class="claim-card__bottom__votes">
-            <% if @vote_status == "open" %>
-                <div class="claim-card__bottom__vote-now">
-                  Vote Now: 
-                  <span class="fas fa-check icon"></span>
-                  <span class="fas fa-question icon"></span>
-                  <span class="fas fa-times icon"></span>
-                </div>
-            <% end
-            if @vote_status == "pending" %>
-              <div class="claim-card__bottom__vote-in">Vote In <%= @time_to_vote %></div>
-            <% end
-            if @vote_status == "closed" %>
-              <div class="claim-card__bottom__votes-yes">
-                <span class="icon fas fa-check"></span>
-                <%= @votes_yes %>
-              </div>
-              <div class="claim-card__bottom__votes-unsure">
-                <span class="icon fas fa-question"></span>
-                <%= @votes_unsure %>
-              </div>
-              <div class="claim-card__bottom__votes-no">
-                <span class="icon fas fa-times"></span>
-                <%= @votes_no %>
-              </div>
-            <% end %>
-          </div>
-          <div class="claim-card__bottom__meta">
-            <div class="claim-card__bottom__meta-comments">
-              <span class="icon far fa-comment"></span>
-             <%= @object.comments_count %>
-            </div>
-            <div class="claim-card__bottom__meta-bookmarks">
-              <span class="icon far fa-bookmark"></span>
-              <%= @bookmarks_count %>
-            </div>
-          </div>
+        <div class="claim-card__supporting__experts-disagree">
+          <span class="icon fa fa-user-circle"></span>
+          <%= @experts_disagree %>
         </div>
       </div>
-    </a>
-    <div class="powered-by">
-        <span class="powered-by__text">Powered by </span>
-        <span class="powered-by__image"><a href="http://www.blundit.com" target="_blank"><img src="http://dev.blundit.com/images/logo_wordmark.png"></a></span>
+      <div class="claim-card__supporting__evidence">
+        <div class="claim-card__supporting__evidence-against">
+          <span class="icon fa fa-file-alt"></span>
+          <%= @evidence_against %>
+        </div>
+        <div class="claim-card__supporting__evidence-for">
+          <span class="icon fa fa-file-alt"></span>
+          <%= @evidence_for %>
+        </div>
+      </div>
     </div>
-</body>
-</html>
+    <div class="claim-card__bottom">
+      <div class="claim-card__bottom__votes">
+        <% if @vote_status == "open" %>
+            <div class="claim-card__bottom__vote-now">
+              Vote Now: 
+              <span class="fas fa-check icon"></span>
+              <span class="fas fa-question icon"></span>
+              <span class="fas fa-times icon"></span>
+            </div>
+        <% end
+        if @vote_status == "pending" %>
+          <div class="claim-card__bottom__vote-in">Vote In <%= @time_to_vote %></div>
+        <% end
+        if @vote_status == "closed" %>
+          <div class="claim-card__bottom__votes-yes">
+            <span class="icon fas fa-check"></span>
+            <%= @votes_yes %>
+          </div>
+          <div class="claim-card__bottom__votes-unsure">
+            <span class="icon fas fa-question"></span>
+            <%= @votes_unsure %>
+          </div>
+          <div class="claim-card__bottom__votes-no">
+            <span class="icon fas fa-times"></span>
+            <%= @votes_no %>
+          </div>
+        <% end %>
+      </div>
+      <div class="claim-card__bottom__meta">
+        <div class="claim-card__bottom__meta-comments">
+          <span class="icon far fa-comment"></span>
+          <%= @object.comments_count %>
+        </div>
+        <div class="claim-card__bottom__meta-bookmarks">
+          <span class="icon far fa-bookmark"></span>
+          <%= @bookmarks_count %>
+        </div>
+      </div>
+    </div>
+  </div>
+</a>
+<div class="powered-by">
+    <span class="powered-by__text">Powered by </span>
+    <span class="powered-by__image"><a href="http://www.blundit.com" target="_blank"><img src="http://dev.blundit.com/images/logo_wordmark.png"></a></span>
+</div>

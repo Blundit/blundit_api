@@ -507,7 +507,7 @@ module Api::V1
 
     def add_embed
       # TODO: Track embed counts per claims, predictions, etc? For popularity?
-      create_embed('claim')
+      do_add_embed('claim')
     end
 
 

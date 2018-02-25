@@ -121,7 +121,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def create_embed(type)
+  def do_add_embed(type)
     # TODO: Make this work with multiple embeds
     
     embed = Embed.new

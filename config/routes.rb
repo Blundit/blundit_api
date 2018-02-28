@@ -18,6 +18,8 @@ Rails.application.routes.draw do
       get 'predictions/all' => 'predictions#all'
       get 'claims/all' => 'claims#all'
       get 'experts/all' => 'experts#all'
+
+      get 'announcements/get' => 'announcements#get'
       
       resources :predictions do
         resources :prediction_comments

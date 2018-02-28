@@ -1,0 +1,1 @@
+json.announcements(@announcements, :dismissable, :announcement, :announcement_key, :link, :link_text, :icon, :dismissable, :slug)

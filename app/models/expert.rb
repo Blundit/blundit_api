@@ -69,9 +69,27 @@ class Expert < ApplicationRecord
       end
     end
   end
+
+
+  def self.most_popular(since, num)
+    if since == 'weekly'
+      timeframe = Time.now.beginning_of_week
+    elsif since == 'monthly'
+      timeframe = Time.now.beginning_of_month
+    elsif since == 'yearly'
+      timeframe = Time.now.beginning_of_year
+    end
+
+    @query = Expert.all.left_joins(:expert_comments).group(:id).order("COUNT(expert_comments.id) DESC").select("*, COUNT(expert_comments.id) as in_timeframe")
+    if !timeframe.nil?
+      @query = @query.where("expert_comments.created_at >= ?", timeframe)
+    end
+
+    return @query.limit(num)
+  end
   
 
-  after_save :push_update_notifications
+  after_save :push_update_notificationsr
   def push_update_notifications
       # TODO: Only send this when certain things are changed.
       attrs = {

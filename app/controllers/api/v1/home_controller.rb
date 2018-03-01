@@ -43,5 +43,18 @@ module Api::V1
       # most popular claims
       @most_popular_claims = Claim.order('claim_comments_count DESC').limit(@most_popular_items)
     end
+
+
+    def most_popular
+      @most_popular_items = 10
+      # most popular experts
+      @most_popular_experts = Expert.most_popular(nil, @most_popular_items)
+
+      # most popular predictions
+      @most_popular_predictions = Prediction.most_popular(nil, @most_popular_items)
+
+      # most popular claims
+      @most_popular_claims = Claim.most_popular(nil, @most_popular_items)
+    end
   end
 end

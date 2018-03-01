@@ -195,6 +195,21 @@ class Claim < ApplicationRecord
         return self.claim_comments_count
     end
 
+    def self.most_popular(since, num)
+        if since == 'weekly'
+            timeframe = Time.now.beginning_of_week
+        elsif since == 'monthly'
+            timeframe = Time.now.beginning_of_month
+        elsif since == 'yearly'
+            timeframe = Time.now.beginning_of_year
+        end
+        @query = Claim.where('claim_comments_count > 0').left_joins(:claim_comments).group(:id).order("COUNT(claim_comments.id) DESC").select("*, COUNT(claim_comments.id) as in_timeframe")
+        if timeframe
+            @query = @query.where("claim_comments.created_at >= ?", timeframe)
+        end
+        return @query
+    end
+
 
     def vote (value = nil, user = nil)
         return "not active" if !self.active?

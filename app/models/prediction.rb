@@ -266,6 +266,24 @@ class Prediction < ApplicationRecord
     end
 
 
+    def self.most_popular(since, num)
+        if since == 'weekly'
+          timeframe = Time.now.beginning_of_week
+        elsif since == 'monthly'
+          timeframe = Time.now.beginning_of_month
+        elsif since == 'yearly'
+          timeframe = Time.now.beginning_of_year
+        end
+    
+        @query = Prediction.all.left_joins(:prediction_comments).group(:id).order("COUNT(prediction_comments.id) DESC").select("*, COUNT(prediction_comments.id) as in_timeframe")
+        if !timeframe.nil?
+          @query = @query.where("prediction_comments.created_at >= ?", timeframe)
+        end
+    
+        return @query.limit(num)
+      end
+
+
     def override_vote
         self.vote_value = params[:vote_value]
         self.status = 1

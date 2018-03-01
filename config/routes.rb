@@ -123,6 +123,7 @@ Rails.application.routes.draw do
 
       resource :home do
         get 'homepage' => 'home#homepage'
+        get 'most_popular' => 'home#most_popular'
       end
 
       resource :evidences do

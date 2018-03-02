@@ -11,6 +11,7 @@ json.claims do
       :claim_comments_count
       ) 
     json.in_timeframe claim.in_timeframe
+    json.category claim.categories.first.try(:id)
   end
 end
 
@@ -27,6 +28,7 @@ json.predictions do
       :prediction_comments_count
     )
     json.in_timeframe prediction.in_timeframe
+    json.category prediction.categories.first.try(:id)
   end
 end
 
@@ -41,6 +43,7 @@ json.experts do
     )
     json.avatar Expert.find(expert.id).avatar.url(:medium)
     json.in_timeframe expert.in_timeframe
+    json.category expert.categories.first.try(:id)
   end
 end
 

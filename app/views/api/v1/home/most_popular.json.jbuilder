@@ -38,7 +38,6 @@ json.experts do
       :alias,
       :description,
       :website,
-      :expert_comments_count
     )
     json.avatar Expert.find(expert.id).avatar.url(:medium)
     json.in_timeframe expert.in_timeframe

@@ -8,7 +8,6 @@ json.claims do
       :status,
       :claim_votes_count,
       :vote_value, 
-      :pic,
       :claim_comments_count
       ) 
     json.in_timeframe claim.in_timeframe
@@ -25,7 +24,6 @@ json.predictions do
       :status,
       :prediction_votes_count,
       :vote_value, 
-      :pic,
       :prediction_comments_count
     )
     json.in_timeframe prediction.in_timeframe
@@ -40,9 +38,9 @@ json.experts do
       :alias,
       :description,
       :website,
-      :avatar, 
       :expert_comments_count
     )
+    json.avatar = expert.avatar.url(:medium)
     json.in_timeframe expert.in_timeframe
   end
 end

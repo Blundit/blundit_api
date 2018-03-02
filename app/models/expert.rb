@@ -80,16 +80,16 @@ class Expert < ApplicationRecord
       timeframe = Time.now.beginning_of_year
     end
 
-    @query = Expert.all.left_joins(:expert_comments).group(:id).order("COUNT(expert_comments.id) DESC").select("*, COUNT(expert_comments.id) as in_timeframe")
+    @query = Expert.all.left_joins(:expert_comments).group(:id).order("COUNT(expert_comments.id) DESC").select("expert.id as id, expert.name as name, expert.alias as alias, expert.description as description, expert.website as website, COUNT(expert_comments.id) as in_timeframe")
     if !timeframe.nil?
       @query = @query.where("expert_comments.created_at >= ?", timeframe)
     end
-
+    
     return @query.limit(num)
   end
   
 
-  after_save :push_update_notificationsr
+  after_save :push_update_notifications
   def push_update_notifications
       # TODO: Only send this when certain things are changed.
       attrs = {

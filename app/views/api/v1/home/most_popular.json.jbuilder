@@ -40,7 +40,7 @@ json.experts do
       :website,
       :expert_comments_count
     )
-    json.avatar = expert.avatar.url(:medium)
+    json.avatar Expert.find(expert.id).avatar.url(:medium)
     json.in_timeframe expert.in_timeframe
   end
 end

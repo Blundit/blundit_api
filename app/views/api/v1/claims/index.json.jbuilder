@@ -5,7 +5,8 @@ json.claims @claims.each do |claim|
   json.created_at claim.created_at
   json.title claim.title
   json.comments_count claim.comments_count
-  json.votes_count = claim.votes_count
+  json.votes_count claim.votes_count
+  json.status claim.status
 
   json.categories claim.categories.each do |category|
     json.id category.id

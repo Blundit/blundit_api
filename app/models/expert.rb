@@ -114,7 +114,7 @@ class Expert < ApplicationRecord
   end
 
 
-  scope :do_search, -> (q, p = 0) do
+  scope :do_search, -> (q, p = 2) do
     if !q.nil?
       qstr = q.split(" ")
     else
@@ -138,6 +138,8 @@ class Expert < ApplicationRecord
     else
         @order = ""
     end        
+
+    p "order = ", @order
     
     qstr.each do |qs|
       if !STOP_WORDS.include?(qs.downcase)

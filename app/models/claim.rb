@@ -99,7 +99,10 @@ class Claim < ApplicationRecord
     end
     
 
-    scope :do_search, -> (q, p = 0, s = 0) do
+    scope :do_search, -> (q, p, s) do
+        p s
+        p "??????"
+        p q
         if !q.nil?
             qstr = q.split(" ")
         else
@@ -127,11 +130,15 @@ class Claim < ApplicationRecord
         end
         end
         
-        select('distinct claims.*').joins("LEFT JOIN taggings on claims.id = taggings.taggable_id")
+        @query = Claim.select('distinct claims.*').joins("LEFT JOIN taggings on claims.id = taggings.taggable_id")
         .joins("LEFT JOIN tags on tags.id = taggings.tag_id")
         .order(@order)
         .where(clause.join(" OR ")).page(1).per(2)
-        .where("status = ?", s)
+        if s
+            @query = @query.where("status = ?", s.to_i)
+        end
+
+        @query
     end
 
 

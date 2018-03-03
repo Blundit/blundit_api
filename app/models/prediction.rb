@@ -101,7 +101,7 @@ class Prediction < ApplicationRecord
     end
 
 
-    scope :do_search, -> (q, p = 0, s = 0) do
+    scope :do_search, -> (q, p, s) do
         if !q.nil?
             qstr = q.split(" ")
         else
@@ -130,11 +130,16 @@ class Prediction < ApplicationRecord
             end
         end
         
-        select('distinct predictions.*').joins("LEFT JOIN taggings on predictions.id = taggings.taggable_id")
+        @query = Prediction.select('distinct predictions.*').joins("LEFT JOIN taggings on predictions.id = taggings.taggable_id")
         .joins("LEFT JOIN tags on tags.id = taggings.tag_id")
         .order(@order)
         .where(clause.join(" OR ")).page(1).per(2)
-        .where("status = ?", s)
+
+        if s
+            @query = @query.where("status = ?", s.to_i)
+        end
+
+        @query
     end
 
 

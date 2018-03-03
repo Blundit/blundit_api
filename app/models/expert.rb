@@ -131,6 +131,10 @@ class Expert < ApplicationRecord
         @order = "updated_at DESC"
     elsif p.to_i == 3
         @order = "updated_at ASC"
+    elsif p.to_i == 4
+        @order = "accuracy DESC"
+    elsif p.to_i == 5
+        @order = "accuracy ASC"
     else
         @order = ""
     end        

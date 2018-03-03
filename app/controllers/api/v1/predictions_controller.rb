@@ -6,7 +6,7 @@ module Api::V1
 
     def index
       # GET /CONTROLLER
-      @predictions = Prediction.do_search(params[:query], params[:sort], params[:status]).includes(:categories).includes(prediction_categories: :category).includes(prediction_experts: :expert).order('created_at DESC').page(current_page).per(per_page)]
+      @predictions = Prediction.do_search(params[:query], params[:sort], params[:status]).includes(:categories).includes(prediction_categories: :category).includes(prediction_experts: :expert).order('created_at DESC').page(current_page).per(per_page)
 
       @current_page = current_page
       @per_page = per_page

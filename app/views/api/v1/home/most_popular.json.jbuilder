@@ -11,7 +11,7 @@ json.claims do
       :claim_comments_count
       ) 
     json.in_timeframe claim.in_timeframe
-    json.category claim.categories.first.try(:id)
+    json.category Claim.find(claim.id).categories.first.try(:id)
   end
 end
 
@@ -28,7 +28,7 @@ json.predictions do
       :prediction_comments_count
     )
     json.in_timeframe prediction.in_timeframe
-    json.category prediction.categories.first.try(:id)
+    json.category Prediction.find(prediction.id).categories.first.try(:id)
   end
 end
 

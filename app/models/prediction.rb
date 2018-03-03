@@ -275,7 +275,7 @@ class Prediction < ApplicationRecord
           timeframe = Time.now.beginning_of_year
         end
     
-        @query = Prediction.all.left_joins(:prediction_comments).group(:id).order("COUNT(prediction_comments.id) DESC").select("*, COUNT(prediction_comments.id) as in_timeframe")
+        @query = Prediction.all.left_joins(:prediction_comments).group(:id).order("COUNT(prediction_comments.id) DESC").select("predictions.id as id, predictions.title as title, predictions.alias as alias, predictions.description as description, predictions.status as status, predictions.prediction_votes_count as prediction_votes_count, predictions.vote_value as vote_value, predictions.prediction_comments_count as prediction_comments_count, COUNT(prediction_comments.id) as in_timeframe")
         if !timeframe.nil?
           @query = @query.where("prediction_comments.created_at >= ?", timeframe)
         end

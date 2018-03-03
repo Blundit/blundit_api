@@ -203,7 +203,7 @@ class Claim < ApplicationRecord
         elsif since == 'yearly'
             timeframe = Time.now.beginning_of_year
         end
-        @query = Claim.where('claim_comments_count > 0').left_joins(:claim_comments).group(:id).order("COUNT(claim_comments.id) DESC").select("*, COUNT(claim_comments.id) as in_timeframe")
+        @query = Claim.where('claim_comments_count > 0').left_joins(:claim_comments).group(:id).order("COUNT(claim_comments.id) DESC").select("claims.id as id, claims.title as title, claims.alias as alias, claims.description as description, claims.status as status, claims.claim_votes_count as claim_votes_count, claims.vote_value as vote_value, claims.claim_comments_count as claim_comments_count, COUNT(claim_comments.id) as in_timeframe")
         if timeframe
             @query = @query.where("claim_comments.created_at >= ?", timeframe)
         end

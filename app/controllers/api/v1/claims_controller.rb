@@ -7,7 +7,7 @@ module Api::V1
 
     def index
       # GET /CONTROLLER
-      @claims = Claim.do_search(params[:query], params[:sort]).includes(:experts).includes(claim_categories: :category).includes(:categories).order('created_at DESC').page(current_page).per(per_page)
+      @claims = Claim.do_search(params[:query], params[:sort], params[:status]).includes(:experts).includes(claim_categories: :category).includes(:categories).order('created_at DESC').page(current_page).per(per_page)
 
       @current_page = current_page
       @per_page = per_page

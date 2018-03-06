@@ -124,10 +124,10 @@ class Claim < ApplicationRecord
         end        
         
         qstr.each do |qs|
-        if !STOP_WORDS.include?(qs.downcase)
-            q = "'%#{qs.downcase}%'"
-            clause << fields.map{ |f| "LOWER(#{f}) LIKE #{q}"}.join(" OR ")
-        end
+            if !STOP_WORDS.include?(qs.downcase)
+                q = "'%#{qs.downcase}%'"
+                clause << fields.map{ |f| "LOWER(#{f}) LIKE #{q}"}.join(" OR ")
+            end
         end
         
         @query = Claim.select('distinct claims.*').joins("LEFT JOIN taggings on claims.id = taggings.taggable_id")

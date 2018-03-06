@@ -55,7 +55,8 @@ json.predictions @predictions.each do |prediction|
     json.status "true"
   elsif prediction.status == 1 and prediction.vote_value < 0.5
     json.status "false"
-  endjson.status prediction.status
+  end
+
 end
 
 json.claims @claims.each do |claim|
@@ -89,7 +90,7 @@ json.claims @claims.each do |claim|
     json.status "true"
   elsif claim.status == 1 and claim.vote_value < 0.5
     json.status "false"
-  endjson.status claim.status
+  end
 end
 
-json.query params[:query]
+# json.query params[:query]

@@ -100,9 +100,6 @@ class Claim < ApplicationRecord
     
 
     scope :do_search, -> (q, p, s) do
-        p s
-        p "??????"
-        p q
         if !q.nil?
             qstr = q.split(" ")
         else

@@ -12,9 +12,9 @@ module Api::V1
             # 2 - Most Recently Updated
             # 3 - Least Recently Updated
 
-            @claims = Claim.do_search(params[:query], params[:sort])
+            @claims = Claim.do_search(params[:query], params[:sort], nil)
             @experts = Expert.do_search(params[:query], params[:sort])
-            @predictions = Prediction.do_search(params[:query], params[:sort])
+            @predictions = Prediction.do_search(params[:query], params[:sort], nil)
 
 
             # record search history

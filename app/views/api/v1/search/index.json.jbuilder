@@ -23,6 +23,7 @@ json.experts @experts.each do |expert|
     json.vote_value ep.prediction.vote_value
   end
 end
+json.experts_count @experts_count
 
 json.predictions @predictions.each do |prediction|
   json.id prediction.id
@@ -56,8 +57,8 @@ json.predictions @predictions.each do |prediction|
   elsif prediction.status == 1 and prediction.vote_value < 0.5
     json.status "false"
   end
-
 end
+json.predictions_count @predictions_count
 
 json.claims @claims.each do |claim|
   json.id claim.id
@@ -92,5 +93,6 @@ json.claims @claims.each do |claim|
     json.status "false"
   end
 end
+json.claims_count @claims_count
 
 # json.query params[:query]

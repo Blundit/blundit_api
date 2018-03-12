@@ -1,7 +1,7 @@
 
 module Api::V1
     class UserController < ApiController
-        before_action :authenticate_current_user, except: [:authenticate]
+        before_action :authenticate_current_user, except: [:authenticate, :get_avatar]
         
         def get_bookmarks
             @bookmarks = []
@@ -35,7 +35,11 @@ module Api::V1
 
 
         def get_avatar
-            if current_user.nil?
+            if current_user.nil? and params[:user_id]
+                current_user = User.find(params[:user_id])
+            end
+
+            if current_user.nil? 
                 render json: { error: "Must be logged in." }, status: 422
             end
 

@@ -56,6 +56,7 @@ module Api::V1
             user = User.find(current_user.id)
             if user.update(user_params)
                 user.reload
+                render json: { user: user, avatar: user.avatar.url(:medium) }
             else
                 render json: { status: "Error updating user" }, status: 422
             end

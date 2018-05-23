@@ -48,6 +48,9 @@ class User < ApplicationRecord
     { min: 51, max: 75, rank: "pro", badge: "" },
   ]
 
+  def jwt_payload
+    { 'test' => 'tester' }
+  end
 
   def voting_rank
     @votes = self.votes_count

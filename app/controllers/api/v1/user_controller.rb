@@ -84,7 +84,7 @@ module Api::V1
             end
 
             if @current_user
-                render json: { status: "You're currently logged in.", data: params }
+                render json: { status: "You're currently logged in.", data: "params" }
             else
                 render json: { error: "Authentication failed." }, status: 401
             end

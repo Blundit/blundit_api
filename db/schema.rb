@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180228175112) do
+ActiveRecord::Schema.define(version: 20180523234803) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -548,11 +548,25 @@ ActiveRecord::Schema.define(version: 20180228175112) do
     t.integer  "vote_value"
   end
 
+  create_table "vote_sets", force: :cascade do |t|
+    t.integer  "claim_id"
+    t.integer  "prediction_id"
+    t.boolean  "current"
+    t.boolean  "type",          default: false
+    t.string   "status"
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+  end
+
   create_table "votes", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
     t.integer  "user_id"
-    t.integer  "vote"
+    t.boolean  "is_true",       default: false
+    t.boolean  "is_false",      default: false
+    t.boolean  "is_unknown",    default: false
+    t.boolean  "is_unknowable", default: false
+    t.integer  "vote_set_id"
     t.index ["user_id"], name: "index_votes_on_user_id"
   end
 

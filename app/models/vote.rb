@@ -1,14 +1,9 @@
 class Vote < ApplicationRecord
-    # belongs_to :user_vote, dependent: :destroy
-    # has_one :user, :through => :user_vote
-
     belongs_to :user, :counter_cache => true
 
-    has_one :claim_vote, dependent: :destroy
-    has_one :claim, :through => :claim_vote
-    
-    has_one :prediction_vote, dependent: :destroy
-    has_one :prediction, :through => :prediction_vote
+    has_one :vote_set
+    has_one :claim, :through => :vote_set
+    has_one :prediction, :through => :vote_set
 
     attr_reader :contributions_list
     def contributions_list

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180228175112) do
+ActiveRecord::Schema.define(version: 20180803140930) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -129,6 +129,7 @@ ActiveRecord::Schema.define(version: 20180228175112) do
     t.string   "pic_content_type"
     t.integer  "pic_file_size"
     t.datetime "pic_updated_at"
+    t.integer  "vote_set_id"
   end
 
   create_table "comments", force: :cascade do |t|
@@ -174,13 +175,13 @@ ActiveRecord::Schema.define(version: 20180228175112) do
   end
 
   create_table "embeds", force: :cascade do |t|
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
-    t.string   "embed_key"
     t.integer  "user_id"
     t.string   "title"
     t.text     "description"
     t.boolean  "show_chrome",       default: true
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+    t.string   "embed_key"
     t.integer  "embed_views_count", default: 0
   end
 
@@ -309,11 +310,16 @@ ActiveRecord::Schema.define(version: 20180228175112) do
     t.integer  "claim_id"
     t.integer  "prediction_id"
     t.integer  "expert_id"
+    t.integer  "category_id"
     t.string   "message"
     t.integer  "comment_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
-    t.integer  "category_id"
+    t.index ["category_id"], name: "index_notification_queue_items_on_category_id"
+    t.index ["claim_id"], name: "index_notification_queue_items_on_claim_id"
+    t.index ["comment_id"], name: "index_notification_queue_items_on_comment_id"
+    t.index ["expert_id"], name: "index_notification_queue_items_on_expert_id"
+    t.index ["prediction_id"], name: "index_notification_queue_items_on_prediction_id"
   end
 
   create_table "notification_queues", force: :cascade do |t|
@@ -326,6 +332,8 @@ ActiveRecord::Schema.define(version: 20180228175112) do
     t.datetime "updated_at",    null: false
     t.integer  "prediction_id"
     t.integer  "category_id"
+    t.index ["category_id"], name: "index_prediction_categories_on_category_id"
+    t.index ["prediction_id"], name: "index_prediction_categories_on_prediction_id"
   end
 
   create_table "prediction_comments", force: :cascade do |t|
@@ -333,6 +341,8 @@ ActiveRecord::Schema.define(version: 20180228175112) do
     t.datetime "updated_at",    null: false
     t.integer  "prediction_id"
     t.integer  "comment_id"
+    t.index ["comment_id"], name: "index_prediction_comments_on_comment_id"
+    t.index ["prediction_id"], name: "index_prediction_comments_on_prediction_id"
   end
 
   create_table "prediction_evidences", force: :cascade do |t|
@@ -340,6 +350,8 @@ ActiveRecord::Schema.define(version: 20180228175112) do
     t.datetime "updated_at",    null: false
     t.integer  "prediction_id"
     t.integer  "evidence_id"
+    t.index ["evidence_id"], name: "index_prediction_evidences_on_evidence_id"
+    t.index ["prediction_id"], name: "index_prediction_evidences_on_prediction_id"
   end
 
   create_table "prediction_experts", force: :cascade do |t|
@@ -347,6 +359,8 @@ ActiveRecord::Schema.define(version: 20180228175112) do
     t.datetime "updated_at",    null: false
     t.integer  "prediction_id"
     t.integer  "expert_id"
+    t.index ["expert_id"], name: "index_prediction_experts_on_expert_id"
+    t.index ["prediction_id"], name: "index_prediction_experts_on_prediction_id"
   end
 
   create_table "prediction_flags", force: :cascade do |t|
@@ -354,6 +368,8 @@ ActiveRecord::Schema.define(version: 20180228175112) do
     t.datetime "updated_at",    null: false
     t.integer  "prediction_id"
     t.integer  "flag_id"
+    t.index ["flag_id"], name: "index_prediction_flags_on_flag_id"
+    t.index ["prediction_id"], name: "index_prediction_flags_on_prediction_id"
   end
 
   create_table "prediction_votes", force: :cascade do |t|
@@ -361,6 +377,8 @@ ActiveRecord::Schema.define(version: 20180228175112) do
     t.datetime "updated_at",    null: false
     t.integer  "prediction_id"
     t.integer  "vote_id"
+    t.index ["prediction_id"], name: "index_prediction_votes_on_prediction_id"
+    t.index ["vote_id"], name: "index_prediction_votes_on_vote_id"
   end
 
   create_table "predictions", force: :cascade do |t|
@@ -378,6 +396,7 @@ ActiveRecord::Schema.define(version: 20180228175112) do
     t.string   "pic_content_type"
     t.integer  "pic_file_size"
     t.datetime "pic_updated_at"
+    t.integer  "vote_set_id"
   end
 
   create_table "publications", force: :cascade do |t|
@@ -548,11 +567,22 @@ ActiveRecord::Schema.define(version: 20180228175112) do
     t.integer  "vote_value"
   end
 
+  create_table "vote_sets", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "reason"
+    t.boolean  "active",        default: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.integer  "claim_id"
+    t.integer  "prediction_id"
+  end
+
   create_table "votes", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
     t.integer  "user_id"
     t.integer  "vote"
+    t.integer  "vote_set_id"
     t.index ["user_id"], name: "index_votes_on_user_id"
   end
 

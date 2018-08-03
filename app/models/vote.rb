@@ -3,6 +3,7 @@ class Vote < ApplicationRecord
     # has_one :user, :through => :user_vote
 
     belongs_to :user, :counter_cache => true
+    belongs_to :vote_set
 
     has_one :claim_vote, dependent: :destroy
     has_one :claim, :through => :claim_vote

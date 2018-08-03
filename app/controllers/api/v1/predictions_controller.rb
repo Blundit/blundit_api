@@ -44,7 +44,7 @@ module Api::V1
         @user_vote = nil
         @bookmark = nil
       else
-        @user_vote = @prediction.votes.where({user_id: current_user.id}).first
+        @user_vote = @prediction.all_votes.where({user_id: current_user.id}).last
         @bookmark = current_user.bookmarks.find_by_prediction_id(@prediction.id)
       end
 

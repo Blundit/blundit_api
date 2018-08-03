@@ -14,12 +14,13 @@ class Prediction < ApplicationRecord
     has_many :experts, :through => :prediction_experts
 
     has_many :prediction_votes, dependent: :destroy
-    has_many :votes, :through => :prediction_votes
+    # has_many :votes, :through => :prediction_votes
 
     has_many :prediction_flags, dependent: :destroy
     has_many :flags, :through => :prediction_flags
 
     has_many :vote_overrides
+    has_many :vote_sets
 
     validates_presence_of :title
 
@@ -98,6 +99,30 @@ class Prediction < ApplicationRecord
         }
         
         NotificationQueue::delay.process(attrs)
+    end
+
+
+    def votes
+        @vote_set = current_vote_set
+        if @vote_set.nil?
+            return Vote.where({claim_id: self.id })
+        else
+            @vote_set.votes
+        end
+    end
+
+
+    def all_votes
+        Vote.where({claim_id: self.id})
+    end
+
+
+    def current_vote_set
+        if self.vote_set_id.nil?
+            return nil
+        end
+
+        VoteSet.where((self.vote_set_id)
     end
 
 
@@ -238,15 +263,40 @@ class Prediction < ApplicationRecord
 
 
     def vote (value = nil, user = nil)
-        return "not active" if !self.active?
         return "missing params" if user.nil? or value.nil?
+        @vote = Vote.create({
+            user_id: user, 
+            is_true: (value == "true" ? true : false),
+            is_false: (value == "false" ? true : false), 
+            is_unknown: (value == "unknown" ? true : false), 
+            is_unknowable: (value == "unknowable" ? true : false),
+            vote_set: self.vote_set_id
+          })
+          self.votes << @vote
+        
+        add_contribution(@prediction, :voted)
+        calc_votes
+    end
 
-        if self.votes.where(user_id: user.id).count == 0
-            @vote = Vote.create({user_id: user, vote: value})
-            self.votes << @vote
-            add_contribution(@vote, :voted)
-            calc_votes
+
+    def active_vote_set
+        if self.vote_set_id.nil?
+            return self.vote_set_id
         end
+        
+        return self.vote_sets.where({active: true}).first.id
+    end
+
+
+    def vote_tally
+        # TODO MAKE THIS 
+        votes = [
+          { type: "true", value: self.votes.where({is_true: true, vote_set_id: active_vote_set}).count },
+          { type: "false", value: self.votes.where({is_false: true, vote_set_id: active_vote_set}).count },
+          { type: "unknown", value: self.votes.where({is_unknown: true, vote_set_id: active_vote_set}).count },
+          { type: "unknowable", value: self.votes.where({is_unknowable: true, vote_set_id: active_vote_set}).count }
+        ]
+        return votes.max_by{|k| k[:value] }[:type] 
     end
 
 

@@ -49,7 +49,7 @@ module Api::V1
         @user_vote = nil
         @bookmark = nil
       else
-        @user_vote = @claim.votes.where({user_id: current_user.id}).first
+        @user_vote = @claim.all_votes.where({user_id: current_user.id}).last
         @bookmark = current_user.bookmarks.find_by_claim_id(@claim.id)
       end
 

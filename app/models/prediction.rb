@@ -77,6 +77,28 @@ class Prediction < ApplicationRecord
         PredictionWorker.perform_at(@sidekiq_time, params)
     end
 
+    def create_vote_set(user_id = nil, reason = "Prediction Activated")
+        disable_other_vote_sets
+        @vote_set = VoteSet.new
+        @vote_set.user_id = user_id
+        @vote_set.reason = reason
+        @vote_set.prediction_id = self.id
+        @vote_set.active = true
+
+        @vote_set.save
+
+        self.vote_sets << @vote_set
+        self.vote_set_id = @vote_set.id
+    end
+
+
+    def disable_other_vote_sets
+        self.vote_sets.each do |set|
+            set.active = false
+            set.save
+        end
+    end
+
 
     after_save :push_update_notifications
     def push_update_notifications
@@ -205,11 +227,29 @@ class Prediction < ApplicationRecord
     end
 
 
-    def correct?
+    def is_pending?
         return false if self.prediction_date.nil?
-        if self.status == 1 and self.vote_value >= ENV['prediction_vote_threshold'].to_f
-            return true
-        end
+        return true if self.status == 0
+    end
+
+    def is_true?
+        return true if self.status == 1 and vote_winner[:type] == "true"
+        return false
+    end
+
+    def is_false?
+        return true if self.status == 1 and vote_winner[:type] == "false"
+        return false
+    end
+
+    def is_unknown?
+        return true if self.status == 1 and vote_winner[:type] == "unknown"
+        return false
+    end
+
+    def is_unknowable?
+        return true if self.status == 1 and vote_winner[:type] == "unknowable"
+        return false
     end
 
 
@@ -229,23 +269,27 @@ class Prediction < ApplicationRecord
 
 
     def self.correct_predictions
-        where("prediction_date <= '#{Time.now}' and status = 1 and vote_value >= #{ENV['claim_vote_threshold'].to_f}")
+        where("prediction_date <= '#{Time.now}' and status = 1 and vote_value = 'true'")
     end
 
 
     def self.incorrect_predictions
-        where("prediction_date <= '#{Time.now}' and status = 1 and vote_value < #{ENV['claim_vote_threshold'].to_f}")
+        where("prediction_date <= '#{Time.now}' and status = 1 and vote_value = 'false'")
+    end
+
+
+    def self.unknown_predictions
+        where("prediction_date <= '#{Time.now}' and status = 1 and vote_value = 'unknown'")
+    end
+
+
+    def self.unknowable_predictions
+        where("prediction_date <= '#{Time.now}' and status = 1 and vote_value = 'unknowable'")
     end
 
 
     def calc_votes
-        vote_value = 0
-        
-        self.votes.each do |vote|
-            vote_value += vote.vote
-        end
-
-        self.vote_value = vote_value.to_f / self.votes.length
+        self.vote_value = vote_winner[:type]
         self.save
 
         calc_status
@@ -289,14 +333,16 @@ class Prediction < ApplicationRecord
 
 
     def vote_tally
-        # TODO MAKE THIS 
-        votes = [
+        return [
           { type: "true", value: self.votes.where({is_true: true, vote_set_id: active_vote_set}).count },
           { type: "false", value: self.votes.where({is_false: true, vote_set_id: active_vote_set}).count },
           { type: "unknown", value: self.votes.where({is_unknown: true, vote_set_id: active_vote_set}).count },
           { type: "unknowable", value: self.votes.where({is_unknowable: true, vote_set_id: active_vote_set}).count }
         ]
-        return votes.max_by{|k| k[:value] }[:type] 
+    end
+
+    def vote_winner
+        return vote_tally.max_by{|k| k[:value] } 
     end
 
 
@@ -305,8 +351,9 @@ class Prediction < ApplicationRecord
             return false
         end
 
-        num_votes = self.votes.length
+        num_votes = active_vote_set.votes.length
         status = 0
+
         if num_votes >= ENV['votes_required_to_close_prediction'].to_i and self.can_close
             status = 1
         end
@@ -316,6 +363,13 @@ class Prediction < ApplicationRecord
 
         if status == 1
             # TODO: Post-save actions, notifications, etc.
+            self.vote_set_id = nil
+            self.save
+
+            @vote_set = self.vote_sets.last
+            @vote_set.active = false
+            @vote_set.save
+
             send_status_notifications
             calc_expert_accuracy
         end
@@ -340,8 +394,8 @@ class Prediction < ApplicationRecord
       end
 
 
-    def override_vote
-        self.vote_value = params[:vote_value]
+    def override_vote(val)
+        self.vote_value = val
         self.status = 1
         if self.save
             # TODO: Post-save actions, notifications, etc.

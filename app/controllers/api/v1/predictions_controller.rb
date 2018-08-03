@@ -150,7 +150,7 @@ module Api::V1
 
       if @v.save
         @p = Prediction.find(params[:prediction_id])
-        @c.override_vote(params[:value])
+        @p.override_vote(params[:value])
         render json: { result: "success" }
       else
         render json: { result: "Unable to override vote" }, status: 422

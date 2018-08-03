@@ -53,9 +53,6 @@ module Api::V1
         @bookmark = current_user.bookmarks.find_by_claim_id(@claim.id)
       end
 
-      @user_vote = get_current_user_2
-
-
       mark_as_read(@claim)
     end
 
@@ -96,7 +93,7 @@ module Api::V1
 
       if @v.save
         @c = Claim.find(params[:claim_id])
-        @c.override_vote(params[:vote_value])
+        @c.override_vote(params[:value])
         render json: { result: "success" }
       else
         render json: { result: "Unable to override vote" }, status: 422

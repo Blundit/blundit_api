@@ -29,9 +29,13 @@ json.expert do
     json.claim_accuracy eca.claim_accuracy
     json.correct_claims eca.correct_claims
     json.incorrect_claims eca.incorrect_claims
+    json.unknown_claims eca.unknown_claims
+    json.unknowable_claims eca.unknowable_claims
     json.prediction_accuracy eca.prediction_accuracy
     json.correct_predictions eca.correct_predictions
     json.incorrect_predictions eca.incorrect_predictions
+    json.unknown_predictions eca.unknown_predictions
+    json.unknowable_predictions eca.unknowable_predictions
   end
   json.bona_fides @expert.bona_fides
 end

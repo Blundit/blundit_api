@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180803140930) do
+ActiveRecord::Schema.define(version: 20180803175120) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -115,13 +115,13 @@ ActiveRecord::Schema.define(version: 20180803140930) do
   end
 
   create_table "claims", force: :cascade do |t|
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
     t.string   "title"
     t.text     "description"
     t.string   "url"
     t.string   "alias"
-    t.integer  "status",               default: 0
+    t.string   "status",               default: "0"
     t.integer  "claim_votes_count",    default: 0
     t.float    "vote_value"
     t.integer  "claim_comments_count", default: 0
@@ -382,11 +382,11 @@ ActiveRecord::Schema.define(version: 20180803140930) do
   end
 
   create_table "predictions", force: :cascade do |t|
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
     t.string   "title"
     t.text     "description"
-    t.integer  "status",                    default: 0
+    t.string   "status",                    default: "0"
     t.integer  "prediction_votes_count",    default: 0
     t.float    "vote_value"
     t.string   "alias"

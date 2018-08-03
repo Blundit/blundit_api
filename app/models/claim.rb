@@ -66,13 +66,35 @@ class Claim < ApplicationRecord
     end
 
 
-    after_create :add_to_sidekiq
+    after_create :create_vote_set, :add_to_sidekiq
     def add_to_sidekiq
         params = {
             id: self.id
         }
 
         ClaimWorker.perform_at(ENV['claim_voting_window'].to_i.days.from_now, params)
+    end
+
+    def create_vote_set(user_id = nil, reason = "Claim Created and Active")
+        disable_other_vote_sets
+        @vote_set = VoteSet.new
+        @vote_set.user_id = user_id
+        @vote_set.reason = reason
+        @vote_set.claim_id = self.id
+        @vote_set.active = true
+
+        @vote_set.save
+
+        self.vote_sets << @vote_set
+        self.vote_set_id = @vote_set.id
+    end
+
+
+    def disable_other_vote_sets
+        self.vote_sets.each do |set|
+            set.active = false
+            set.save
+        end
     end
 
 
@@ -176,11 +198,24 @@ class Claim < ApplicationRecord
     end
 
 
-    def correct?
-        return false if self.prediction_date.nil?
-        if self.status == 1 and self.vote_value >= ENV['claim_vote_threshold'].to_f
-            return true
-        end
+    def is_true?
+        return true if self.status == 1 and vote_winner[:type] == "true"
+        return false
+    end
+
+    def is_false?
+        return true if self.status == 1 and vote_winner[:type] == "false"
+        return false
+    end
+
+    def is_unknown?
+        return true if self.status == 1 and vote_winner[:type] == "unknown"
+        return false
+    end
+
+    def is_unknowable?
+        return true if self.status == 1 and vote_winner[:type] == "unknowable"
+        return false
     end
 
 
@@ -195,23 +230,27 @@ class Claim < ApplicationRecord
 
 
     def self.correct_claims
-        where("status = 1 and vote_value >= #{ENV['claim_vote_threshold'].to_f}")
+        where("status = 1 and vote_value = 'true'")
     end
 
 
     def self.incorrect_claims
-        where("status = 1 and vote_value < #{ENV['claim_vote_threshold'].to_f}")
+        where("status = 1 and vote_value = 'false'")
+    end
+
+
+    def self.unknown_claims
+        where("status = 1 and vote_value = 'unknown'")
+    end
+
+
+    def self.unknowable_claims
+        where("status = 1 and vote_value = 'unknowable'")
     end
 
 
     def calc_votes
-        vote_value = 0
-        
-        self.votes.each do |vote|
-            vote_value += vote.vote
-        end
-
-        self.vote_value = vote_value.to_f / self.votes.length
+        self.vote_value = vote_winner[:type]
         self.save
 
         calc_status
@@ -268,14 +307,16 @@ class Claim < ApplicationRecord
 
 
     def vote_tally
-        # TODO MAKE THIS 
-        votes = [
+        return [
           { type: "true", value: self.votes.where({is_true: true, vote_set_id: active_vote_set}).count },
           { type: "false", value: self.votes.where({is_false: true, vote_set_id: active_vote_set}).count },
           { type: "unknown", value: self.votes.where({is_unknown: true, vote_set_id: active_vote_set}).count },
           { type: "unknowable", value: self.votes.where({is_unknowable: true, vote_set_id: active_vote_set}).count }
         ]
-        return votes.max_by{|k| k[:value] }[:type] 
+    end
+
+    def vote_winner
+        return votes.max_by{|k| k[:value] }
     end
 
 
@@ -295,6 +336,12 @@ class Claim < ApplicationRecord
 
         if status == 1
             # TODO: Post-save actions, notifications, etc.
+            self.vote_set_id = nil
+            self.save
+
+            @vote_set = self.vote_sets.last
+            @vote_set.active = false
+            @vote_set.save
 
             # add status changed notification
             send_status_notifications

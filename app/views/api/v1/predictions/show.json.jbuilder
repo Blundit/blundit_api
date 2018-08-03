@@ -9,17 +9,12 @@ json.prediction do
     json.name category.name
   end
   json.comments_count @prediction.prediction_comments_count
-  json.votes_count @prediction.prediction_votes_count
+  json.votes_count @prediction.votes.count
+  json.all_votes_count @prediction.all_votes.count
   json.vote_value @prediction.vote_value
-  if @prediction.status == 0 and @prediction.vote_value.nil?
-    json.status "unknown"
-  elsif @prediction.status == 0 and !@prediction.vote_value.nil?
-    json.status "false"
-  elsif @prediction.status == 1 and @prediction.vote_value >= 0.5
-    json.status "true"
-  elsif @prediction.status == 1 and @prediction.vote_value < 0.5
-    json.status "false"
-  end
+
+  json.status @prediction.status
+
   json.number_of_experts @prediction.experts.count
   json.prediction_date @prediction.prediction_date
   json.open @prediction.open?

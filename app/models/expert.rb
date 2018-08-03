@@ -156,10 +156,10 @@ class Expert < ApplicationRecord
 
 
   def calc_accuracy
-    @number_of_correct_predictions = self.predictions.where(status: 1).where("vote_value >= #{ENV['prediction_vote_threshold'].to_f}").count
+    @number_of_correct_predictions = self.predictions.where(status: 1).where("vote_value = 'true'").count
     @number_of_predictions = self.predictions.where(status: 1).count
 
-    @number_of_correct_claims = self.claims.where(status: 1).where("vote_value >= #{ENV['claim_vote_threshold'].to_f}").count
+    @number_of_correct_claims = self.claims.where(status: 1).where("vote_value = 'true'}").count
     @number_of_claims = self.claims.where(status: 1).count
 
     if @number_of_predictions > 0
@@ -201,7 +201,7 @@ class Expert < ApplicationRecord
           @category_accuracies[@key] = { correct: 0, incorrect: 0, id: category.id  }
         end
 
-        if prediction.vote_value >= ENV['prediction_vote_threshold'].to_f
+        if prediction.vote_value == 'true'
           @category_accuracies[@key][:correct] += 1
         else
           @category_accuracies[@key][:incorrect] += 1
@@ -245,7 +245,7 @@ class Expert < ApplicationRecord
           @category_accuracies[@key] = { correct: 0, incorrect: 0, id: category.id  }
         end
 
-        if claim.vote_value >= ENV['claim_vote_threshold'].to_f
+        if claim.vote_value == 'true'
           @category_accuracies[@key][:correct] += 1
         else
           @category_accuracies[@key][:incorrect] += 1
